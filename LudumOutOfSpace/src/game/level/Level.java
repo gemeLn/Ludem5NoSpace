@@ -25,13 +25,6 @@ public class Level {
 	
 	public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
-	private Comparator<Node> nodeSorter = new Comparator<Node>() {
-		public int compare(Node n0, Node n1) {
-			if (n1.fCost < n0.fCost) return +1;
-			if (n1.fCost > n0.fCost) return -1;
-			return 0;
-		}
-	};
 
 	//public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
