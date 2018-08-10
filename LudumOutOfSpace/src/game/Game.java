@@ -16,12 +16,13 @@ import game.graphics.Screen;
 import game.input.Keyboard;
 import game.input.Mouse;
 import game.level.Level;
+import game.level.Sector;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
-	private static int width = 1920/3;
-	private static int height = 1080/3;
+	private static int width = 1920 / 3;
+	private static int height = 1080 / 3;
 	private static int scale = 2;
 	public static String title = "Rain";
 
@@ -31,13 +32,13 @@ public class Game extends Canvas implements Runnable {
 	public Level level;
 	private Player player;
 	private boolean running = false;
-	
+
 	private static UIManager uiManager;
 
 	private Screen screen;
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-
+	final String[] sectornames= {"sector1"};
 	public Game() {
 
 		Dimension size = new Dimension(width * scale, height * scale);
@@ -48,13 +49,12 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame();
 		key = new Keyboard();
 
-
 		player = new Player("Cherno", 10, 10, key);
-		
+
 		level = Level.spawn;
-		
+
 		level.add(player);
-		
+
 		addKeyListener(key);
 
 		Mouse mouse = new Mouse();
@@ -69,13 +69,14 @@ public class Game extends Canvas implements Runnable {
 	public static int getWindowHeight() {
 		return height * scale;
 	}
-	
+
 	public static UIManager getUIManager() {
 		return uiManager;
 	}
 
 	public synchronized void start() {
 		running = true;
+		Sector.init(sectornames);
 		thread = new Thread(this, "Display");
 		thread.start();
 	}
@@ -140,8 +141,8 @@ public class Game extends Canvas implements Runnable {
 		}
 		Graphics g = bs.getDrawGraphics();
 		g.setColor(new Color(0xff00ff));
-		g.fillRect(0,  0, getWidth(), getHeight());
-		g.drawImage(image, 0, 0, width * scale, height * scale, null);		
+		g.fillRect(0, 0, getWidth(), getHeight());
+		g.drawImage(image, 0, 0, width * scale, height * scale, null);
 		g.dispose();
 		bs.show();
 	}
