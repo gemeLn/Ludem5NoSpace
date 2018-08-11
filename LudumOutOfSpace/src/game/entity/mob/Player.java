@@ -18,11 +18,13 @@ public class Player extends Mob {
 	private Keyboard input;
 	private Sprite sprite;
 	private boolean walking = false;
-
-	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3);
-	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3);
-	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 3);
-	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 3);
+	int halfwidth;
+	int spriteSize = 32;
+	int halfSpriteSize = spriteSize / 2;
+	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, spriteSize, spriteSize, 3);
+	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, spriteSize, spriteSize, 3);
+	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, spriteSize, spriteSize, 3);
+	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, spriteSize, spriteSize, 3);
 
 	private AnimatedSprite animSprite = down;
 
@@ -41,8 +43,10 @@ public class Player extends Mob {
 		this.x = x;
 		this.y = y + 16;
 		this.input = input;
-		w = 32;
+		w = 20;
+		halfwidth = w / 2;
 		h = 32;
+		hitbox = new Rectangle(x, y, w, h);
 		sprite = Sprite.player_forward;
 		// Player default attributes
 		health = 100;
@@ -80,31 +84,32 @@ public class Player extends Mob {
 			x += 3;
 		}
 		gravity();
-		Rectangle predictedHitbox = new Rectangle(x, (int) (y + yVel), w, h);
-		boolean OK = true;
+		Rectangle predictedHitbox = new Rectangle(x + halfSpriteSize - halfwidth, (int) (y + yVel), w, h);
+		boolean yOK = true;
 		for (Platform plat : level.platforms) {
 			if (plat.intersects(predictedHitbox)) {
-				if (yVel > 0&&y+h<plat.y+plat.height) {
+				if (yVel > 0 && y + h < plat.y + plat.height) {
 					y = plat.y - h;
 					yVel = 0;
 					jump = 1;
 					wallNum = 0;
-					OK = false;
+					yOK = false;
 				}
 
 			}
 		}
-		if (OK)
+		if (yOK) {
 			y += yVel;
-		System.out.println(level.entities.get(0).getWidth()*2 +1);
-		if(level.entities.get(0).getHitbox().intersects(predictedHitbox)){
-			x = level.entities.get(0).getHitbox().width-10;
+			hitbox = predictedHitbox;
 		}
-		
-		else if(level.entities.get(1).getHitbox().intersects(predictedHitbox)){
-			x = level.entities.get(1).getHitbox().x-32;
+		System.out.println(level.entities.get(0).getWidth() * 2 + 1);
+		if (level.entities.get(0).getHitbox().intersects(predictedHitbox)) {
+			x = level.entities.get(0).getHitbox().width - 10 - halfSpriteSize + halfwidth;
 		}
-		hitbox = predictedHitbox;
+
+		else if (level.entities.get(1).getHitbox().intersects(predictedHitbox)) {
+			x = level.entities.get(1).getHitbox().x - 32 + halfSpriteSize - halfwidth;
+		}
 	}
 
 	public void gravity() {
@@ -115,6 +120,7 @@ public class Player extends Mob {
 		int flip = 0;
 		sprite = animSprite.getSprite();
 		screen.renderMob(x, y, sprite, flip);
+		screen.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height, 0xff0000, false);
 
 	}
 
