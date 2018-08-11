@@ -34,10 +34,15 @@ public class Level {
 		platforms.add(new Platform(100,200,40,10));
 		platforms.add(new Platform(100,140,40,10));
 		platforms.add(new Platform(0,ground,Game.getWindowWidth(),200));
-		player = new Player("Matty", 100, 100, Game.main.key, this);
 		add(new Wall(false));
 		add(new Wall(true));
 		// generateLevel();
+		
+		
+		
+		
+		//KEEP THIS LAST
+		player = new Player("Matty", 100, 100, Game.main.key, this);
 	}
 
 	public void update() {
