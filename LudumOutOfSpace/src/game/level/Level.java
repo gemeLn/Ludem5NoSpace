@@ -7,6 +7,7 @@ import game.Game;
 import game.entity.Block;
 import game.entity.Entity;
 import game.entity.Platform;
+import game.entity.Spike;
 import game.entity.Wall;
 import game.entity.mob.Player;
 import game.graphics.Screen;
@@ -17,11 +18,14 @@ public class Level {
 	protected int[] tilesInt;
 	protected int[] tiles;
 	protected int tile_size;
+	protected int nextLevel;
 	public int dY = 0;
 	public int ground = 350;
 	public List<Entity> entities = new ArrayList<Entity>();
-	public List<Platform> platforms = new ArrayList<Platform>();
-	public List<Block> blocks = new ArrayList<Block>();
+	private List<Platform> platforms = new ArrayList<Platform>();
+	private List<Block> blocks = new ArrayList<Block>();
+	private List<Spike> spikes = new ArrayList<Spike>();
+	public List<Section> sections = new ArrayList<Section>();
 	public Player player;
 
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
@@ -30,22 +34,25 @@ public class Level {
 		this.width = width;
 		this.height = height;
 		tilesInt = new int[width * height];
-		platforms.add(new Platform(0, 0, 0, Game.getWindowHeight()));
-		platforms.add(new Platform(Game.getWindowWidth(), 0, 0, Game.getWindowHeight()));
-		platforms.add(new Platform(100, 260, 40, 10));
-		platforms.add(new Platform(100, 200, 40, 10));
-		platforms.add(new Platform(100, 140, 40, 10));
-		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
-		blocks.add(new Block(100,300,30,10));
+		getPlatforms().add(new Platform(0, 0, 0, Game.getWindowHeight()));
+		getPlatforms().add(new Platform(Game.getWindowWidth(), 0, 0, Game.getWindowHeight()));
+		getPlatforms().add(new Platform(100, 260, 40, 10));
+		getPlatforms().add(new Platform(0, 200, Game.getWindowWidth(), 10));
+		getPlatforms().add(new Platform(0, ground, Game.getWindowWidth(), 200));
+		getBlocks().add(new Block(100,300,30,10));
+		getSpikes().add(new Spike(200, 330, 30, 10));
+		nextLevel = Game.getWindowHeight()-200;
 		add(new Wall(false));
 		add(new Wall(true));
+		addSection();
 		// generateLevel();
 
 		// KEEP THIS LAST
-		player = new Player("Matty", 100, 100, Game.main.key, this);
+		player = new Player("Matty", 100, 350, Game.main.key, this);
 	}
 
 	public void update() {
+
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
 		}
@@ -61,8 +68,20 @@ public class Level {
 				dY -= 5;
 		}
 
-
 		remove();
+	}
+	
+	public void addSection() {
+		switch((int)(Math.random() + 1)){
+			case 0:
+				sections.add(new Section1(nextLevel));
+				nextLevel += Section1.getSectionHeight();
+				break;
+			case 1:
+				sections.add(new Section2(nextLevel));
+				nextLevel += Section2.getSectionHeight();
+				break;
+		}
 	}
 
 	private void remove() {
@@ -82,17 +101,21 @@ public class Level {
 	public void render(Screen screen) {
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
-
+		
+		for (Platform p : getPlatforms()) {
+			p.render(screen, dY);
+		}
+		for(Block b:getBlocks()) {
+			b.render(screen, dY);
+		}
+		for(Spike s:getSpikes()) {
+			s.render(screen, dY);
+		}
+		
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen, dY);
 		}
-
-		for (Platform p : platforms) {
-			p.render(screen, dY);
-		}
-		for(Block b:blocks) {
-			b.render(screen, dY);
-		}
+		sections.get(0).render(screen, dY);
 		player.render(screen, dY);
 	}
 
@@ -120,17 +143,60 @@ public class Level {
 		return result;
 	}
 
-	// Grass = 0xFF00FF00
-	// Flower = 0xFFFFFF00
-	// Rock = 0xFF7F7F00
-	/*
-	 * public Tile getTile(int x, int y) { if (x < 0 || y < 0 || x >= width || y >=
-	 * height) return Tile.voidTile; if (tiles[x + y * width] ==
-	 * Tile.col_spawn_floor) return Tile.spawn_floor; if (tiles[x + y * width] ==
-	 * Tile.col_spawn_grass) return Tile.spawn_grass; if (tiles[x + y * width] ==
-	 * Tile.col_spawn_hedge) return Tile.spawn_hedge; if (tiles[x + y * width] ==
-	 * Tile.col_spawn_wall1) return Tile.spawn_wall1; if (tiles[x + y * width] ==
-	 * Tile.col_spawn_wall2) return Tile.spawn_wall2; if (tiles[x + y * width] ==
-	 * Tile.col_spawn_water) return Tile.spawn_water; return Tile.voidTile; }
-	 */
+
+	public List<Block> getBlocks() {
+		for(Section s: sections) {
+			if(s.hitbox.contains(player.getX(), player.getY())) {
+				List<Block> blocks = new ArrayList<Block>();
+				blocks.addAll(this.blocks);
+				blocks.addAll(s.blocks);
+				return blocks;
+			}
+		}
+		return blocks;
+	}
+
+
+	public void setBlocks(List<Block> blocks) {
+		this.blocks = blocks;
+	}
+
+
+	public List<Spike> getSpikes() {
+		for(Section s: sections) {
+			if(s.hitbox.contains(player.getX(), player.getY())) {
+				List<Spike> spikes = new ArrayList<Spike>();
+				spikes.addAll(this.spikes);
+				spikes.addAll(s.spikes);
+				return spikes;
+			}
+		}
+		return spikes;
+	}
+
+
+	public void setSpikes(List<Spike> spikes) {
+		this.spikes = spikes;
+	}
+
+
+	public List<Platform> getPlatforms() {
+		
+		for(Section s: sections) {
+			if(s.hitbox.contains(player.getX(), player.getY())) {
+				List<Platform> platforms = new ArrayList<Platform>();
+				platforms.addAll(this.platforms);
+				platforms.addAll(s.platforms);
+				return platforms;
+			}
+		}
+		return platforms;
+	}
+
+
+	public void setPlatforms(List<Platform> platforms) {
+		this.platforms = platforms;
+	}
+
+
 }

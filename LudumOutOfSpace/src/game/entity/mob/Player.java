@@ -6,6 +6,7 @@ import javax.swing.UIManager;
 
 import game.entity.Block;
 import game.entity.Platform;
+import game.entity.Spike;
 import game.entity.Wall;
 import game.graphics.AnimatedSprite;
 import game.graphics.Screen;
@@ -93,7 +94,7 @@ public class Player extends Mob {
 		Rectangle predictedHitbox = new Rectangle((getRealX() + xVel), (int) (y + yVel), w, h);
 		boolean yOK = true;
 		boolean xOK = true;
-		for (Block b : level.blocks) {
+		for (Block b : level.getBlocks()) {
 			if (b.intersects(predictedHitbox)) {
 				int cx1 = b.x + (int) (b.width / 2);
 				int cy1 = b.y + (int) (b.height / 2);
@@ -111,9 +112,14 @@ public class Player extends Mob {
 					}
 				}
 			}
-
 		}
-		for (Platform plat : level.platforms) {
+		
+		for (Spike spike : level.getSpikes()) {
+			if(spike.intersects(hitbox)) {
+				System.out.println("dead");
+			}
+		}
+		for (Platform plat : level.getPlatforms()) {
 			if (plat.intersects(predictedHitbox)) {
 				if (yVel > 0 && y + h < plat.y + plat.height) {
 					y = plat.y - h;
