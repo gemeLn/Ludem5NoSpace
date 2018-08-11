@@ -47,9 +47,13 @@ public class Level {
 
 		player.update();
 		if(player.getY() + dY <= 150) {	
-			dY += 5;	
-		} else if(player.getY()+dY >= 320) {	
-			dY += -5;
+			dY -= (int) player.getYVel();
+			if(player.getYVel() == 0)
+				dY += 5;
+		} else if(player.getY() + dY >= 320) {	
+			dY -= (int) player.getYVel();
+			if(player.getYVel() == 0)
+				dY -= 5;
 		}
 		
 		System.out.println(dY);
@@ -72,7 +76,9 @@ public class Level {
 	 */
 
 	public void render(Screen screen) {
-
+		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
+		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
+		
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen, dY);
 		}
