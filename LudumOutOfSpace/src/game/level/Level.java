@@ -16,7 +16,7 @@ public class Level {
 	protected int[] tilesInt;
 	protected int[] tiles;
 	protected int tile_size;
-	protected int dY;
+	protected int dY = 0;
 	public int ground = 350;
 	public List<Entity> entities = new ArrayList<Entity>();
 	public List<Platform> platforms = new ArrayList<Platform>();
@@ -31,6 +31,8 @@ public class Level {
 		platforms.add(new Platform(0,0,0, Game.getWindowHeight()));
 		platforms.add(new Platform(Game.getWindowWidth(),0,0, Game.getWindowHeight()));
 		platforms.add(new Platform(100,260,40,10));
+		platforms.add(new Platform(100,200,40,10));
+		platforms.add(new Platform(100,140,40,10));
 		platforms.add(new Platform(0,ground,Game.getWindowWidth(),200));
 		player = new Player("Matty", 100, 100, Game.main.key, this);
 		add(new Wall(false));
@@ -44,6 +46,14 @@ public class Level {
 		}
 
 		player.update();
+		if(player.getY()+dY <= 150) {	
+			dY += player.getY();	
+		} else if(player.getY()+dY >= 375) {	
+			dY += player.getY() - 375;
+		}
+		
+		System.out.println(dY);
+		
 		remove();
 	}
 
@@ -64,13 +74,13 @@ public class Level {
 	public void render(Screen screen) {
 
 		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).render(screen);
+			entities.get(i).render(screen, dY);
 		}
 		
 		for (Platform p : platforms) {
-			p.render(screen);
+			p.render(screen, dY);
 		}
-		player.render(screen);
+		player.render(screen, dY);
 	}
 
 	public void add(Entity e) {

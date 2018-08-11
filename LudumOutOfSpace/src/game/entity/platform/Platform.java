@@ -26,8 +26,8 @@ public class Platform extends Rectangle {
 		return Integer.parseInt(s);
 	}
 
-	public void render(Screen screen) {
-		screen.drawRect(x, y, width, height, 0xff0000, false);
+	public void render(Screen screen, int dy) {
+		screen.drawRect(x, y+dy, width, height, 0xff0000, false);
 	}
 	
 	public void update(Rectangle e) {

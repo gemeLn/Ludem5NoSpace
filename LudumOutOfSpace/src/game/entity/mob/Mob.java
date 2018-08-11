@@ -24,7 +24,7 @@ public abstract class Mob extends Entity {
 
 	public abstract void update();
 
-	public abstract void render(Screen screen);
+	public abstract void render(Screen screen, int dy);
 
 	protected void shoot(int x, int y, double dir) {
 		/*

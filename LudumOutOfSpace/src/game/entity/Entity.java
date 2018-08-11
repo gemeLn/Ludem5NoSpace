@@ -29,7 +29,7 @@ public class Entity {
 		updateHitbox();
 	}
 
-	public void render(Screen screen) {
+	public void render(Screen screen, int dy) {
 		if (sprite != null) screen.renderSprite(x, y, sprite, true);
 	}
 	
