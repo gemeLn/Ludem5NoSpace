@@ -15,6 +15,7 @@ public class Wall extends Entity {
 	double speed = 0.125;
 	int windowwidth = Game.getWindowWidth();
 	int tick;
+	int dy;
 
 	public boolean canJump() {
 		return System.currentTimeMillis()>nextJump;
@@ -48,7 +49,7 @@ public class Wall extends Entity {
 			System.out.println("DIE");
 		}
 		hitbox.x = (int) x;
-		hitbox.y = (int) y;
+		hitbox.y = (int) y - dy;
 		hitbox.width = (int) w;
 		hitbox.height = (int) h;
 		tick++;
@@ -65,5 +66,6 @@ public class Wall extends Entity {
 
 	public void render(Screen screen, int dy) {
 		screen.drawRect((int) x, 0, (int) w, (int) h, 0xffffff, false);
+		this.dy = dy;
 	}
 }
