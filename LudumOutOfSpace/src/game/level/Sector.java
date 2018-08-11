@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import game.entity.Platform;
 import game.entity.mob.Enemy;
-import game.entity.platform.Platform;
 
 public class Sector {
 	String type;

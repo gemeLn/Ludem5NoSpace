@@ -4,8 +4,8 @@ import java.awt.Rectangle;
 
 import javax.swing.UIManager;
 
+import game.entity.Platform;
 import game.entity.Wall;
-import game.entity.platform.Platform;
 import game.graphics.AnimatedSprite;
 import game.graphics.Screen;
 import game.graphics.Sprite;

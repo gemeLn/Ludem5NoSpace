@@ -5,9 +5,9 @@ import java.util.List;
 
 import game.Game;
 import game.entity.Entity;
+import game.entity.Platform;
 import game.entity.Wall;
 import game.entity.mob.Player;
-import game.entity.platform.Platform;
 import game.graphics.Screen;
 
 public class Level {
