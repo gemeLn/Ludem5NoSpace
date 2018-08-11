@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import javax.swing.UIManager;
 
+import game.Game;
 import game.graphics.AnimatedSprite;
 import game.graphics.Screen;
 import game.graphics.Sprite;
@@ -25,17 +26,20 @@ public class Player extends Mob {
 	private AnimatedSprite animSprite = down;
 
 	private int fireRate = 0;
-
+	int ground;
 	private double yVel;
 	private int jump;
 
 	private UIManager ui;
 
-	public Player(String name, int x, int y, Keyboard input) {
+	public Player(String name, int x, int y, Keyboard input, int ground) {
+		this.ground = 300;
 		this.name = name;
 		this.x = x;
 		this.y = y + 16;
 		this.input = input;
+		w = 32;
+		h = 32;
 		sprite = Sprite.player_forward;
 
 		// Player default attributes
@@ -43,9 +47,8 @@ public class Player extends Mob {
 
 		this.x = 100;
 
-		hitbox = new Rectangle(this.x - 17, this.y - 17, 34, 34);
 		yVel = 0.0;
-		jump = 0;
+		jump = 1;
 	}
 
 	public String getName() {
@@ -61,10 +64,10 @@ public class Player extends Mob {
 			fireRate--;
 		if (input.up) {
 			animSprite = up;
-			// ya -= 2;
-			if (jump < 1) {
-					yVel = -8.5;
-				jump++;
+			if (jump > 0) {
+				yVel = -8.5;
+				System.out.println(yVel);
+				jump--;
 			}
 		}
 		if (input.left) {
@@ -74,13 +77,17 @@ public class Player extends Mob {
 			animSprite = right;
 			x += 3;
 		}
-
+		gravity();
 		y += yVel;
+		if (y + h > ground) {
+			y = ground-h;
+			yVel = 0;
+			jump=1;
+		}
 	}
 
 	public void gravity() {
 		yVel += 0.5;
-		updateHitbox(17, 17);
 	}
 
 	public void render(Screen screen) {
@@ -90,9 +97,5 @@ public class Player extends Mob {
 
 	}
 
-	public void resetGravity(int yChange) {
-		y = yChange;
-		yVel = 0;
-		jump = 0;
-	}
+
 }
