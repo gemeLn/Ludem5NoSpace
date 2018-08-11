@@ -39,9 +39,9 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	final String[] sectornames = { "sector1" };
-
+	public static Game main;
 	public Game() {
-
+		main=this;
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
 
@@ -62,11 +62,11 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public static int getWindowWidth() {
-		return width * scale;
+		return width;
 	}
 
 	public static int getWindowHeight() {
-		return height * scale;
+		return height;
 	}
 
 	public static UIManager getUIManager() {
