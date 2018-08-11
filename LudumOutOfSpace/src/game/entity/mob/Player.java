@@ -30,6 +30,7 @@ public class Player extends Mob {
 	int ground;
 	private double yVel;
 	private int jump;
+	private int wallNum = 0;
 
 	private UIManager ui;
 
@@ -87,6 +88,7 @@ public class Player extends Mob {
 					y = plat.y - h;
 					yVel = 0;
 					jump = 1;
+					wallNum = 0;
 					OK = false;
 				}
 
@@ -94,6 +96,14 @@ public class Player extends Mob {
 		}
 		if (OK)
 			y += yVel;
+		System.out.println(level.entities.get(0).getWidth()*2 +1);
+		if(level.entities.get(0).getHitbox().intersects(predictedHitbox)){
+			x = level.entities.get(0).getHitbox().width-10;
+		}
+		
+		else if(level.entities.get(1).getHitbox().intersects(predictedHitbox)){
+			x = level.entities.get(1).getHitbox().x-32;
+		}
 		hitbox = predictedHitbox;
 	}
 

@@ -18,11 +18,9 @@ public class Level {
 	protected int tile_size;
 	protected int dY;
 	public int ground = 350;
-	private List<Entity> entities = new ArrayList<Entity>();
+	public List<Entity> entities = new ArrayList<Entity>();
 	public List<Platform> platforms = new ArrayList<Platform>();
 	public Player player;
-	public Wall leftWall = new Wall(false);
-	public Wall rightWall = new Wall(true);
 
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
@@ -30,9 +28,13 @@ public class Level {
 		this.width = width;
 		this.height = height;
 		tilesInt = new int[width * height];
+		platforms.add(new Platform(0,0,0, Game.getWindowHeight()));
+		platforms.add(new Platform(Game.getWindowWidth(),0,0, Game.getWindowHeight()));
 		platforms.add(new Platform(100,260,40,10));
 		platforms.add(new Platform(0,ground,Game.getWindowWidth(),200));
 		player = new Player("Matty", 100, 100, Game.main.key, this);
+		add(new Wall(false));
+		add(new Wall(true));
 		// generateLevel();
 	}
 
@@ -64,12 +66,11 @@ public class Level {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen);
 		}
+		
 		for (Platform p : platforms) {
 			p.render(screen);
 		}
 		player.render(screen);
-		leftWall.render(screen);
-		rightWall.render(screen);
 	}
 
 	public void add(Entity e) {

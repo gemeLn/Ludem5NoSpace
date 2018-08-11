@@ -29,4 +29,11 @@ public class Platform extends Rectangle {
 	public void render(Screen screen) {
 		screen.drawRect(x, y, width, height, 0xff0000, false);
 	}
+	
+	public void update(Rectangle e) {
+		x = e.x;
+		y = e.y;
+		height = e.height;
+		width = e.width;
+	}
 }

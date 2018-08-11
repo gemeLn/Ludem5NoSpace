@@ -9,7 +9,7 @@ import game.level.Level;
 
 public class Entity {
 
-	protected int x, y,w,h;
+	protected int x, y, w, h;
 	protected Sprite sprite;
 	private boolean removed = false;
 	protected Level level;
@@ -66,6 +66,22 @@ public class Entity {
 	
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public int getWidth() {
+		return w;
+	}
+	
+	public void setWidth(int width) {
+		this.w = width;
+	}
+	
+	public int getHeight() {
+		return h;
+	}
+	
+	public void setHeight(int height) {
+		this.h = height;
 	}
 	
 	public Sprite getSprite() {

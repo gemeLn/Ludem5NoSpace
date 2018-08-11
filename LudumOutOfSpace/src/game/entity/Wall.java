@@ -1,10 +1,12 @@
 package game.entity;
 
+import java.awt.Rectangle;
+
 import game.Game;
 import game.graphics.Screen;
 
-public class Wall {
-	double x = -10;
+public class Wall extends Entity{
+	double x = - 10;
 	double y;
 	double w;
 	double h;
@@ -17,6 +19,8 @@ public class Wall {
 		if (right)
 			x = Game.getWindowWidth() + 10;
 		h = Game.getWindowHeight();
+		hitbox = new Rectangle((int)x, (int)y, (int)w, (int)h);
+
 	}
 
 	public void update() {
@@ -26,7 +30,10 @@ public class Wall {
 		if(Game.main.level.player.w>windowwidth-2*w) {
 			System.out.println("DIE");
 		}
-
+		hitbox.x = (int) x;
+		hitbox.y = (int) y;
+		hitbox.width = (int) w;
+		hitbox.height = (int) h;
 	}
 
 	public void render(Screen screen) {
