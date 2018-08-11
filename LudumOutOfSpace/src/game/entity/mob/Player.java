@@ -116,10 +116,10 @@ public class Player extends Mob {
 		yVel += 0.5;
 	}
 
-	public void render(Screen screen) {
+	public void render(Screen screen, int dy) {
 		int flip = 0;
 		sprite = animSprite.getSprite();
-		screen.renderMob(x, y, sprite, flip);
+		screen.renderMob(x, y + dy, sprite, flip);
 		screen.drawRect(hitbox.x, hitbox.y, hitbox.width, hitbox.height, 0xff0000, false);
 
 	}
