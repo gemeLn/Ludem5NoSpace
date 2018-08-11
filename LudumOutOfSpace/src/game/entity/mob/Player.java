@@ -98,7 +98,7 @@ public class Player extends Mob {
 		}
 
 		gravity();
-		Rectangle predictedHitbox = new Rectangle(x + halfSpriteSize - halfwidth, (int) (y + yVel), w, h);
+		Rectangle predictedHitbox = new Rectangle(x + halfSpriteSize - halfwidth + xVel, (int) (y + yVel), w, h);
 		boolean yOK = true;
 		boolean xOK = true;
 		for (Platform plat : level.platforms) {
@@ -114,10 +114,6 @@ public class Player extends Mob {
 
 			}
 		}
-		if (yOK) {
-			y += yVel;
-			hitbox = predictedHitbox;
-		}
 
 		if (leftwall.getHitbox().intersects(predictedHitbox)) {
 			x = leftwall.getHitbox().width - 10 - halfSpriteSize + halfwidth;
@@ -130,7 +126,6 @@ public class Player extends Mob {
 
 		else if (rightwall.getHitbox().intersects(predictedHitbox)) {
 			x = rightwall.getHitbox().x - 32 + halfSpriteSize - halfwidth;
-			walljump = 1;
 			leftwall.resetJump();
 			if (rightwall.canJump()) {
 				walljump = 1;
@@ -139,14 +134,21 @@ public class Player extends Mob {
 		} else {
 			walljump = 0;
 		}
+
 		if (xOK) {
-			System.out.println(xVel);
 			x += xVel;
 			if (xVel > 0)
 				xVel--;
 			else if (xVel < 0)
 				xVel++;
+			hitbox.x = x + halfSpriteSize - halfwidth;
 		}
+
+		if (yOK) {
+			y += yVel;
+			hitbox.y = y;
+		}
+
 	}
 
 	public void gravity() {
