@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import javax.swing.UIManager;
 
+import game.entity.Wall;
 import game.entity.platform.Platform;
 import game.graphics.AnimatedSprite;
 import game.graphics.Screen;
@@ -34,9 +35,12 @@ public class Player extends Mob {
 	private int xVel;
 	private int jump;
 	private int walljump;
+	private int wallCD = 1200;
 	private int wallNum = 0;
-
+	private int speed = 2;
 	private UIManager ui;
+	private Wall leftwall;
+	private Wall rightwall;
 
 	public Player(String name, int x, int y, Keyboard input, Level level) {
 		this.level = level;
@@ -45,6 +49,8 @@ public class Player extends Mob {
 		this.x = x;
 		this.y = y + 16;
 		this.input = input;
+		this.leftwall = (Wall) level.entities.get(0);
+		this.rightwall = (Wall) level.entities.get(1);
 		w = 20;
 		halfwidth = w / 2;
 		h = 32;
@@ -56,7 +62,7 @@ public class Player extends Mob {
 		this.x = 100;
 
 		yVel = 0.0;
-		xVel=0;
+		xVel = 0;
 		jump = 1;
 		walljump = 0;
 	}
@@ -85,15 +91,16 @@ public class Player extends Mob {
 		}
 		if (input.left) {
 			animSprite = left;
-			xVel -= 3;
+			xVel = -speed;
 		} else if (input.right) {
 			animSprite = right;
-			xVel += 3;
+			xVel = speed;
 		}
-		
+
 		gravity();
 		Rectangle predictedHitbox = new Rectangle(x + halfSpriteSize - halfwidth, (int) (y + yVel), w, h);
 		boolean yOK = true;
+		boolean xOK = true;
 		for (Platform plat : level.platforms) {
 			if (plat.intersects(predictedHitbox)) {
 				if (yVel > 0 && y + h < plat.y + plat.height) {
@@ -102,6 +109,7 @@ public class Player extends Mob {
 					jump = 1;
 					wallNum = 0;
 					yOK = false;
+					resetWallJumps();
 				}
 
 			}
@@ -111,16 +119,33 @@ public class Player extends Mob {
 			hitbox = predictedHitbox;
 		}
 
-		if (level.entities.get(0).getHitbox().intersects(predictedHitbox)) {
-			x = level.entities.get(0).getHitbox().width - 10 - halfSpriteSize + halfwidth;
-			walljump = 1;
+		if (leftwall.getHitbox().intersects(predictedHitbox)) {
+			x = leftwall.getHitbox().width - 10 - halfSpriteSize + halfwidth;
+			rightwall.resetJump();
+			if (leftwall.canJump()) {
+				walljump = 1;
+				leftwall.delayJump(wallCD);
+			}
 		}
 
-		else if (level.entities.get(1).getHitbox().intersects(predictedHitbox)) {
-			x = level.entities.get(1).getHitbox().x - 32 + halfSpriteSize - halfwidth;
+		else if (rightwall.getHitbox().intersects(predictedHitbox)) {
+			x = rightwall.getHitbox().x - 32 + halfSpriteSize - halfwidth;
 			walljump = 1;
+			leftwall.resetJump();
+			if (rightwall.canJump()) {
+				walljump = 1;
+				rightwall.delayJump(wallCD);
+			}
 		} else {
 			walljump = 0;
+		}
+		if (xOK) {
+			System.out.println(xVel);
+			x += xVel;
+			if (xVel > 0)
+				xVel--;
+			else if (xVel < 0)
+				xVel++;
 		}
 	}
 
@@ -130,6 +155,11 @@ public class Player extends Mob {
 
 	public double getYVel() {
 		return yVel;
+	}
+
+	public void resetWallJumps() {
+		leftwall.resetJump();
+		rightwall.resetJump();
 	}
 
 	public void render(Screen screen, int dy) {
