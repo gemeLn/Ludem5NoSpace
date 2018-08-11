@@ -46,10 +46,10 @@ public class Level {
 		}
 
 		player.update();
-		if(player.getY()+dY <= 150) {	
-			dY += player.getY();	
-		} else if(player.getY()+dY >= 375) {	
-			dY += player.getY() - 375;
+		if(player.getY() + dY <= 150) {	
+			dY += 5;	
+		} else if(player.getY()+dY >= 320) {	
+			dY += -5;
 		}
 		
 		System.out.println(dY);
