@@ -164,8 +164,8 @@ public class Player extends Mob {
 		if (yOK) {
 			y += yVel;
 			hitbox.y = y;
-			jump = 1;
 		} else {
+			jump = 1;
 			yVel = 0;
 		}
 
