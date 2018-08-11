@@ -20,8 +20,8 @@ import game.level.Sector;
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
-	private static int width = 1080 / 4;
-	private static int height = 1500 / 4;
+	private static int width = 1080 / 3;
+	private static int height = 1500 / 3;
 	private static int scale = 2;
 	public static String title = "Rain";
 
