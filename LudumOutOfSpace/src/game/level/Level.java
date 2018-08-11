@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import game.Game;
 import game.entity.Entity;
 import game.entity.Wall;
 import game.entity.mob.Player;
@@ -17,6 +18,7 @@ public class Level {
 	protected int[] tiles;
 	protected int tile_size;
 	protected Rectangle ground;
+	protected int dY;
 
 	private List<Entity> entities = new ArrayList<Entity>();
 
@@ -49,6 +51,13 @@ public class Level {
 		}
 
 		player.update();
+		if(player.getY() <= 200) {
+			dY += player.getY();
+			player.setY(200);
+		} else if(player.getY() >= Game.getWindowHeight()) {
+			dY += player.getY();
+			player.setY(Game.getWindowHeight());
+		}
 		leftWall.update();
 		rightWall.update();
 		if (!player.getHitbox().intersects(ground)) {
