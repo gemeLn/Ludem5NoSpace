@@ -1,8 +1,6 @@
 package game.level;
 
-import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import game.Game;
@@ -10,6 +8,7 @@ import game.entity.Entity;
 import game.entity.Wall;
 import game.entity.mob.Player;
 import game.graphics.Screen;
+import game.input.Keyboard;
 
 public class Level {
 
@@ -17,15 +16,13 @@ public class Level {
 	protected int[] tilesInt;
 	protected int[] tiles;
 	protected int tile_size;
-	protected Rectangle ground;
 	protected int dY;
-
+	public int ground =640;
 	private List<Entity> entities = new ArrayList<Entity>();
 
 	public Player player;
-	public Wall leftWall = new Wall(true);
-	public Wall rightWall = new Wall(false);
-	public static Level spawn = new SpawnLevel("/levels/spawn.png");
+	public Wall leftWall = new Wall(false);
+	public Wall rightWall = new Wall(true);
 
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
@@ -33,16 +30,8 @@ public class Level {
 		this.width = width;
 		this.height = height;
 		tilesInt = new int[width * height];
+		player = new Player("Matty",100,100,Game.main.key,ground);
 		// generateLevel();
-	}
-
-	public Level(String path) {
-		loadLevel(path);
-		// generateLevel();
-		ground = new Rectangle(0, 1080 / 3 - 20, 1920 / 3, 50);
-	}
-
-	protected void loadLevel(String path) {
 	}
 
 	public void update() {
@@ -51,21 +40,6 @@ public class Level {
 		}
 
 		player.update();
-		if(player.getY() <= 200) {
-			dY += player.getY();
-			player.setY(200);
-		} else if(player.getY() >= Game.getWindowHeight()) {
-			dY += player.getY();
-			player.setY(Game.getWindowHeight());
-		}
-		leftWall.update();
-		rightWall.update();
-		if (!player.getHitbox().intersects(ground)) {
-			player.gravity();
-			if (player.getHitbox().intersects(ground)) {
-				player.resetGravity(ground.y - 16);
-			}
-		}
 		remove();
 	}
 
@@ -92,7 +66,6 @@ public class Level {
 		player.render(screen);
 		leftWall.render(screen);
 		rightWall.render(screen);
-		screen.drawRect(ground.x, ground.y, ground.width, ground.height, 0xff0000, false);
 	}
 
 	public void add(Entity e) {

@@ -11,7 +11,6 @@ import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import game.entity.mob.Player;
 import game.graphics.Screen;
 import game.input.Keyboard;
 import game.input.Mouse;
@@ -28,9 +27,8 @@ public class Game extends Canvas implements Runnable {
 
 	private Thread thread;
 	private JFrame frame;
-	private Keyboard key;
+	public Keyboard key;
 	public Level level;
-	private Player player;
 	private boolean running = false;
 
 	private static UIManager uiManager;
@@ -40,8 +38,9 @@ public class Game extends Canvas implements Runnable {
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	final String[] sectornames = { "sector1" };
 	public static Game main;
+
 	public Game() {
-		main=this;
+		main = this;
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
 
@@ -49,13 +48,8 @@ public class Game extends Canvas implements Runnable {
 		uiManager = new UIManager();
 		frame = new JFrame();
 		key = new Keyboard();
-
-		player = new Player("Cherno", 10, 10, key);
-
-		level = Level.spawn;
-		level.player = player;
+		level = new Level(getWindowWidth(),getWindowHeight());
 		addKeyListener(key);
-
 		Mouse mouse = new Mouse();
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
