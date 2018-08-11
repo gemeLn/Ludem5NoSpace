@@ -33,6 +33,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		System.out.println(e.getX()/2+" "+e.getY()/2);
 	}
 
 	public void mouseEntered(MouseEvent e) {

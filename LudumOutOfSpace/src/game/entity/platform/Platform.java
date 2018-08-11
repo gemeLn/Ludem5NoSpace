@@ -2,6 +2,8 @@ package game.entity.platform;
 
 import java.awt.Rectangle;
 
+import game.graphics.Screen;
+
 public class Platform extends Rectangle {
 	private static final long serialVersionUID = -1848741423621673428L;
 
@@ -22,5 +24,9 @@ public class Platform extends Rectangle {
 
 	public static int intr(String s) {
 		return Integer.parseInt(s);
+	}
+
+	public void render(Screen screen) {
+		screen.drawRect(x, y, width, height, 0xff0000, false);
 	}
 }

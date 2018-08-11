@@ -4,12 +4,13 @@ import java.awt.Rectangle;
 
 import javax.swing.UIManager;
 
-import game.Game;
+import game.entity.platform.Platform;
 import game.graphics.AnimatedSprite;
 import game.graphics.Screen;
 import game.graphics.Sprite;
 import game.graphics.SpriteSheet;
 import game.input.Keyboard;
+import game.level.Level;
 
 public class Player extends Mob {
 
@@ -32,8 +33,9 @@ public class Player extends Mob {
 
 	private UIManager ui;
 
-	public Player(String name, int x, int y, Keyboard input, int ground) {
-		this.ground = 300;
+	public Player(String name, int x, int y, Keyboard input, Level level) {
+		this.level = level;
+		this.ground = level.ground;
 		this.name = name;
 		this.x = x;
 		this.y = y + 16;
@@ -41,7 +43,6 @@ public class Player extends Mob {
 		w = 32;
 		h = 32;
 		sprite = Sprite.player_forward;
-
 		// Player default attributes
 		health = 100;
 
@@ -65,7 +66,7 @@ public class Player extends Mob {
 		if (input.up) {
 			animSprite = up;
 			if (jump > 0) {
-				yVel = -8.5;
+				yVel = -9;
 				System.out.println(yVel);
 				jump--;
 			}
@@ -78,12 +79,22 @@ public class Player extends Mob {
 			x += 3;
 		}
 		gravity();
-		y += yVel;
-		if (y + h > ground) {
-			y = ground-h;
-			yVel = 0;
-			jump=1;
+		Rectangle predictedHitbox = new Rectangle(x, (int) (y + yVel), w, h);
+		boolean OK = true;
+		for (Platform plat : level.platforms) {
+			if (plat.intersects(predictedHitbox)) {
+				if (yVel > 0&&y+h<plat.y+plat.height) {
+					y = plat.y - h;
+					yVel = 0;
+					jump = 1;
+					OK = false;
+				}
+
+			}
 		}
+		if (OK)
+			y += yVel;
+		hitbox = predictedHitbox;
 	}
 
 	public void gravity() {
@@ -93,9 +104,8 @@ public class Player extends Mob {
 	public void render(Screen screen) {
 		int flip = 0;
 		sprite = animSprite.getSprite();
-		screen.renderMob(x - 16, y - 16, sprite, flip);
+		screen.renderMob(x, y, sprite, flip);
 
 	}
-
 
 }
