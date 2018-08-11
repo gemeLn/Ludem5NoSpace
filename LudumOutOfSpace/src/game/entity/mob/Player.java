@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import javax.swing.UIManager;
 
+import game.entity.Block;
 import game.entity.Platform;
 import game.entity.Wall;
 import game.graphics.AnimatedSprite;
@@ -84,27 +85,50 @@ public class Player extends Mob {
 		collisions();
 	}
 
+	public int getRealX() {
+		return x + halfSpriteSize - halfwidth;
+	}
+
 	public void collisions() {
-		Rectangle predictedHitbox = new Rectangle((x + halfSpriteSize - halfwidth + xVel), (int) (y + yVel), w, h);
+		Rectangle predictedHitbox = new Rectangle((getRealX() + xVel), (int) (y + yVel), w, h);
 		boolean yOK = true;
 		boolean xOK = true;
+		for (Block b : level.blocks) {
+			if (b.intersects(predictedHitbox)) {
+				int cx1 = b.x + (int) (b.width / 2);
+				int cy1 = b.y + (int) (b.height / 2);
+				int cx2 = x + halfSpriteSize;
+				int cy2 = y + halfSpriteSize;
+				if (Math.abs(cx1 - cx2) > Math.abs(cy1 - cy2)) {
+					xOK = false;
+					if (cx2 > cx1) {
+						x = b.x + b.width - halfSpriteSize + halfwidth;
+					}
+				} else {
+					yOK = false;
+					if (cy2 > cy1) {
+						y=b.y+b.height+1;
+					}
+				}
+			}
+
+		}
 		for (Platform plat : level.platforms) {
 			if (plat.intersects(predictedHitbox)) {
 				if (yVel > 0 && y + h < plat.y + plat.height) {
 					y = plat.y - h;
-					jump = 1;
 					wallNum = 0;
 					yOK = false;
 					resetWallJumps();
 				}
-
+				break;
 			}
 		}
 
 		if (leftwall.getHitbox().intersects(predictedHitbox)) {
 			xOK = false;
 			x = leftwall.getHitbox().width - 10 - halfSpriteSize + halfwidth;
-			rightwall.resetJump();
+			// rightwall.resetJump();
 			if (leftwall.canJump()) {
 				walljump = 1;
 				leftwall.delayJump(wallCD);
@@ -115,7 +139,7 @@ public class Player extends Mob {
 		else if (rightwall.getHitbox().intersects(predictedHitbox)) {
 			xOK = false;
 			x = rightwall.getHitbox().x - 32 + halfSpriteSize - halfwidth;
-			leftwall.resetJump();
+			// leftwall.resetJump();
 			if (rightwall.canJump()) {
 				walljump = 1;
 				rightwall.delayJump(wallCD);
@@ -140,6 +164,7 @@ public class Player extends Mob {
 		if (yOK) {
 			y += yVel;
 			hitbox.y = y;
+			jump = 1;
 		} else {
 			yVel = 0;
 		}
@@ -162,9 +187,9 @@ public class Player extends Mob {
 			if (walljump > 0) {
 				if (wallDir > 0) {
 					leftcd = System.currentTimeMillis() + walljumpFreezeTime;
-					animSprite=right;
+					animSprite = right;
 				} else {
-					animSprite=left;
+					animSprite = left;
 					rightcd = System.currentTimeMillis() + walljumpFreezeTime;
 				}
 				yVel = -9;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.Game;
+import game.entity.Block;
 import game.entity.Entity;
 import game.entity.Platform;
 import game.entity.Wall;
@@ -16,10 +17,11 @@ public class Level {
 	protected int[] tilesInt;
 	protected int[] tiles;
 	protected int tile_size;
-	protected int dY = 0;
+	public int dY = 0;
 	public int ground = 350;
 	public List<Entity> entities = new ArrayList<Entity>();
 	public List<Platform> platforms = new ArrayList<Platform>();
+	public List<Block> blocks = new ArrayList<Block>();
 	public Player player;
 
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
@@ -28,20 +30,18 @@ public class Level {
 		this.width = width;
 		this.height = height;
 		tilesInt = new int[width * height];
-		platforms.add(new Platform(0,0,0, Game.getWindowHeight()));
-		platforms.add(new Platform(Game.getWindowWidth(),0,0, Game.getWindowHeight()));
-		platforms.add(new Platform(100,260,40,10));
-		platforms.add(new Platform(100,200,40,10));
-		platforms.add(new Platform(100,140,40,10));
-		platforms.add(new Platform(0,ground,Game.getWindowWidth(),200));
+		platforms.add(new Platform(0, 0, 0, Game.getWindowHeight()));
+		platforms.add(new Platform(Game.getWindowWidth(), 0, 0, Game.getWindowHeight()));
+		platforms.add(new Platform(100, 260, 40, 10));
+		platforms.add(new Platform(100, 200, 40, 10));
+		platforms.add(new Platform(100, 140, 40, 10));
+		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
+		blocks.add(new Block(100,300,30,10));
 		add(new Wall(false));
 		add(new Wall(true));
 		// generateLevel();
-		
-		
-		
-		
-		//KEEP THIS LAST
+
+		// KEEP THIS LAST
 		player = new Player("Matty", 100, 100, Game.main.key, this);
 	}
 
@@ -51,18 +51,17 @@ public class Level {
 		}
 
 		player.update();
-		if(player.getY() + dY <= 150) {	
+		if (player.getY() + dY <= 150) {
 			dY -= (int) player.getYVel();
-			if(player.getYVel() == 0)
+			if (player.getYVel() == 0)
 				dY += 5;
-		} else if(player.getY() + dY >= 320) {	
+		} else if (player.getY() + dY >= 320) {
 			dY -= (int) player.getYVel();
-			if(player.getYVel() == 0)
+			if (player.getYVel() == 0)
 				dY -= 5;
 		}
-		
-		System.out.println(dY);
-		
+
+
 		remove();
 	}
 
@@ -83,13 +82,16 @@ public class Level {
 	public void render(Screen screen) {
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
-		
+
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen, dY);
 		}
-		
+
 		for (Platform p : platforms) {
 			p.render(screen, dY);
+		}
+		for(Block b:blocks) {
+			b.render(screen, dY);
 		}
 		player.render(screen, dY);
 	}
