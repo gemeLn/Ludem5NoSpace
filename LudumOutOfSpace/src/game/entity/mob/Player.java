@@ -31,7 +31,9 @@ public class Player extends Mob {
 	private int fireRate = 0;
 	int ground;
 	private double yVel;
+	private int xVel;
 	private int jump;
+	private int walljump;
 	private int wallNum = 0;
 
 	private UIManager ui;
@@ -54,7 +56,9 @@ public class Player extends Mob {
 		this.x = 100;
 
 		yVel = 0.0;
+		xVel=0;
 		jump = 1;
+		walljump = 0;
 	}
 
 	public String getName() {
@@ -72,17 +76,21 @@ public class Player extends Mob {
 			animSprite = up;
 			if (jump > 0) {
 				yVel = -9;
-				System.out.println(yVel);
 				jump--;
+			}
+			if (walljump > 0) {
+				yVel = -7;
+				walljump--;
 			}
 		}
 		if (input.left) {
 			animSprite = left;
-			x -= 3;
+			xVel -= 3;
 		} else if (input.right) {
 			animSprite = right;
-			x += 3;
+			xVel += 3;
 		}
+		
 		gravity();
 		Rectangle predictedHitbox = new Rectangle(x + halfSpriteSize - halfwidth, (int) (y + yVel), w, h);
 		boolean yOK = true;
@@ -102,13 +110,17 @@ public class Player extends Mob {
 			y += yVel;
 			hitbox = predictedHitbox;
 		}
-		System.out.println(level.entities.get(0).getWidth() * 2 + 1);
+
 		if (level.entities.get(0).getHitbox().intersects(predictedHitbox)) {
 			x = level.entities.get(0).getHitbox().width - 10 - halfSpriteSize + halfwidth;
+			walljump = 1;
 		}
 
 		else if (level.entities.get(1).getHitbox().intersects(predictedHitbox)) {
 			x = level.entities.get(1).getHitbox().x - 32 + halfSpriteSize - halfwidth;
+			walljump = 1;
+		} else {
+			walljump = 0;
 		}
 	}
 
@@ -116,11 +128,15 @@ public class Player extends Mob {
 		yVel += 0.5;
 	}
 
+	public double getYVel() {
+		return yVel;
+	}
+
 	public void render(Screen screen, int dy) {
 		int flip = 0;
 		sprite = animSprite.getSprite();
 		screen.renderMob(x, y + dy, sprite, flip);
-		screen.drawRect(hitbox.x, hitbox.y+dy, hitbox.width, hitbox.height, 0xff0000, false);
+		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
 
 	}
 
