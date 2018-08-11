@@ -1,8 +1,11 @@
-Type:Level
-Id:1
-Speed:2
-Platforms:
+-Type
+Level
+-Id
+1
+-Speed
+2
+-Platforms
 100,100,50,10
 100,300,50,10
-Enemies:
+-Enemies
 Ouch,10,30

@@ -67,9 +67,6 @@ public class Player extends Mob {
 					yVel = -8.5;
 				jump++;
 			}
-		} else if (input.down) {
-			animSprite = down;
-			ya += 2;
 		}
 		if (input.left) {
 			animSprite = left;

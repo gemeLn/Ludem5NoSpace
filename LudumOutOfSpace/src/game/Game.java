@@ -21,8 +21,8 @@ import game.level.Sector;
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
-	private static int width = 1920 / 3;
-	private static int height = 1080 / 3;
+	private static int width = 1080 / 4;
+	private static int height = 1500 / 4;
 	private static int scale = 2;
 	public static String title = "Rain";
 
@@ -38,7 +38,8 @@ public class Game extends Canvas implements Runnable {
 	private Screen screen;
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-	final String[] sectornames= {"sector1"};
+	final String[] sectornames = { "sector1" };
+
 	public Game() {
 
 		Dimension size = new Dimension(width * scale, height * scale);
@@ -52,9 +53,7 @@ public class Game extends Canvas implements Runnable {
 		player = new Player("Cherno", 10, 10, key);
 
 		level = Level.spawn;
-
-		level.add(player);
-
+		level.player = player;
 		addKeyListener(key);
 
 		Mouse mouse = new Mouse();

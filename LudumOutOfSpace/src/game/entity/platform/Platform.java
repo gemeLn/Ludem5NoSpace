@@ -1,13 +1,26 @@
 package game.entity.platform;
 
-import game.entity.Entity;
-import game.graphics.Screen;
+import java.awt.Rectangle;
 
-public abstract class Platform extends Entity{
-	
-	public abstract void collide();
-	
-	public abstract void update();
+public class Platform extends Rectangle {
+	private static final long serialVersionUID = -1848741423621673428L;
 
-	public abstract void render(Screen screen);
+	public Platform(int x, int y, int w, int h) {
+		this.x = x;
+		this.y = y;
+		this.height = h;
+		this.width = w;
+	}
+
+	public Platform(String[] s) {
+		this(intr(s[0]), intr(s[1]), intr(s[2]), intr(s[3]));
+	}
+
+	public Platform clone() {
+		return new Platform(x, y, width, height);
+	}
+
+	public static int intr(String s) {
+		return Integer.parseInt(s);
+	}
 }

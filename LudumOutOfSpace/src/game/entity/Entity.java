@@ -9,7 +9,7 @@ import game.level.Level;
 
 public class Entity {
 
-	protected int x, y;
+	protected int x, y,w,h;
 	protected Sprite sprite;
 	private boolean removed = false;
 	protected Level level;
