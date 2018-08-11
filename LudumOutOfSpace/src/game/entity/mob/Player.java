@@ -102,17 +102,18 @@ public class Player extends Mob {
 		}
 
 		if (leftwall.getHitbox().intersects(predictedHitbox)) {
+			xOK = false;
 			x = leftwall.getHitbox().width - 10 - halfSpriteSize + halfwidth;
 			rightwall.resetJump();
-			if (leftwall.canJump() && yOK) {
+			if (leftwall.canJump()) {
 				walljump = 1;
 				leftwall.delayJump(wallCD);
 				wallDir = 1;
 			}
-			xOK = false;
 		}
 
 		else if (rightwall.getHitbox().intersects(predictedHitbox)) {
+			xOK = false;
 			x = rightwall.getHitbox().x - 32 + halfSpriteSize - halfwidth;
 			leftwall.resetJump();
 			if (rightwall.canJump()) {
@@ -120,7 +121,7 @@ public class Player extends Mob {
 				rightwall.delayJump(wallCD);
 				wallDir = -1;
 			}
-			xOK = false;
+
 		} else {
 			walljump = 0;
 		}
@@ -161,10 +162,12 @@ public class Player extends Mob {
 			if (walljump > 0) {
 				if (wallDir > 0) {
 					leftcd = System.currentTimeMillis() + walljumpFreezeTime;
+					animSprite=right;
 				} else {
+					animSprite=left;
 					rightcd = System.currentTimeMillis() + walljumpFreezeTime;
 				}
-				yVel = -7;
+				yVel = -9;
 				walljump--;
 				xVel = wallDir * 10;
 			}
