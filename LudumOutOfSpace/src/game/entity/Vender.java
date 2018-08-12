@@ -10,10 +10,10 @@ public class Vender extends Interactable {
 	int x, y;
 
 	public Vender(int x, int y) {
-		sprite = new Sprite(32, 32, 0, 0, SpriteSheet.shop);
+		sprite = new Sprite(32, 48, 0, 0, SpriteSheet.shop);
 		this.x = x;
 		this.y = y;
-		hitbox = new Rectangle(x, y, 32, 32);
+		hitbox = new Rectangle(x, y, 32, 48);
 	}
 
 	@Override

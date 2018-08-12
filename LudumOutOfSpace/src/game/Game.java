@@ -3,6 +3,7 @@ package game;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -24,7 +25,8 @@ public class Game extends Canvas implements Runnable {
 	public final static int MENUSTATE = 2;
 	public int state = GAMESTATE;
 	private static final long serialVersionUID = 1L;
-
+	public static Font bigShopFont = new Font("Sansserif", 1, 20);
+	public static Font smallShopFont = new Font("Sansserif", 1, 12);
 	private static int width = 1080 / 4;
 	private static int height = 1500 / 4;
 	private static int scale = 2;
