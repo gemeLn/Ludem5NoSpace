@@ -47,6 +47,8 @@ public class Level {
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
 	public Level(int width, int height) {
+		AnimatedAll.init();
+		
 		SoundEffect.volume = SoundEffect.Volume.LOW;
 		new SoundEffect("background.wav", true);
 		this.width = width;
@@ -111,23 +113,6 @@ public class Level {
 				dY -= 5;
 		}
 		
-		if (inter > -2) {
-			if (inter == -1) {
-				sections.get(0).update();
-
-			} else {
-				for (int i = inter; i < sections.size(); i++) {
-					sections.get(i).update();
-					if (i - 1 != -1)
-						sections.get(i - 1).update();
-				}
-			}
-		}
-		
-		for (Coin c : coins) {
-			c.update();
-		}
-
 		for (int i = inter - 2; i < sections.size(); i++) {
 			if (i >= 0 && sections.get(i).hitbox.contains(player.getX(), player.getY())) {
 				levelid = sections.get(i).id;
