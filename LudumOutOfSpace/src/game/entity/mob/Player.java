@@ -54,8 +54,7 @@ public class Player extends Mob {
 	}
 
 	private int walljump;
-	private int wallCD = 1200;
-	private int wallNum = 0;
+	private int wallCD = 800;
 	private int walljumpFreezeTime = 300;
 	private long leftcd = 0;
 	private long rightcd = 0;
@@ -146,7 +145,6 @@ public class Player extends Mob {
 			if (plat.intersects(predictedHitbox)) {
 				if (yVel > 0 && y + h < plat.y + plat.height) {
 					y = plat.y - h;
-					wallNum = 0;
 					yOK = false;
 					jump = 1;
 					resetWallJumps();
@@ -162,6 +160,7 @@ public class Player extends Mob {
 			if (leftwall.canJump()) {
 				walljump = 1;
 				leftwall.delayJump(wallCD);
+				rightwall.delayJump(wallCD);
 				wallDir = 1;
 			}
 		}
@@ -172,6 +171,7 @@ public class Player extends Mob {
 			// leftwall.resetJump();
 			if (rightwall.canJump()) {
 				walljump = 1;
+				leftwall.delayJump(wallCD);
 				rightwall.delayJump(wallCD);
 				wallDir = -1;
 			}
@@ -179,8 +179,8 @@ public class Player extends Mob {
 		} else {
 			walljump = 0;
 		}
-
 		if (xOK) {
+
 			x += xVel;
 			if (xVel > 0)
 				xVel--;
@@ -227,18 +227,15 @@ public class Player extends Mob {
 			}
 		}
 		if (input.shop) {
-			Interactable shop;
 			boolean hit = false;
 			for (Interactable i : level.getInteractables()) {
 				if (i.hitbox.intersects(hitbox)) {
 					hit = true;
-					shop = i;
 					break;
 				}
 			}
 			if (hit) {
 				// OPEN SHOP
-				System.out.println("SHOP");
 				Game.game.state = Game.SHOPSTATE;
 
 			}

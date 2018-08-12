@@ -1,5 +1,6 @@
 package game.level;
 
+import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import game.Game;
@@ -22,6 +23,7 @@ public class Shop {
 	Sprite plus;
 	Sprite x;
 	Sprite battery;
+	Sprite coin;
 	public Rectangle speedButton = new Rectangle(40, 100, 64, 64);
 	public Rectangle jumpButton = new Rectangle(40, 200, 64, 64);
 	public Rectangle exitButton = new Rectangle(10, 10, 64, 64);
@@ -31,6 +33,7 @@ public class Shop {
 		plus = new Sprite(32, 32, 0, 0, SpriteSheet.plus);
 		x = new Sprite(32, 32, 0, 0, SpriteSheet.x);
 		battery = new Sprite(200, 32, 0, 0, SpriteSheet.battery);
+		coin = new Sprite(16, 16, 0, 0, SpriteSheet.coin);
 	}
 
 	public void update() {
@@ -62,7 +65,8 @@ public class Shop {
 		screen.renderSprite(speedButton.x / 2, speedButton.y / 2, plus, false);
 		screen.renderSprite(jumpButton.x / 2, jumpButton.y / 2, plus, false);
 		screen.renderSprite(exitButton.x / 2, exitButton.y / 2, x, false);
-		
+		screen.renderSprite(0,0, coin, false);
+
 		screen.renderSprite(speedButton.x / 2 + 50, speedButton.y / 2, battery, false);
 		screen.renderSprite(jumpButton.x / 2 + 50, jumpButton.y / 2, battery, false);
 		for (int i = 0; i < speed; i++) {
@@ -72,6 +76,10 @@ public class Shop {
 			screen.fillRect(jumpButton.x / 2 + 54, jumpButton.y / 2 + 4, jumpLength, 24, 0xffff00, false);
 		}
 
+	}
+
+	public void drawStrings(Graphics g) {
+		g.drawString("OK", 100, 100);
 	}
 
 }
