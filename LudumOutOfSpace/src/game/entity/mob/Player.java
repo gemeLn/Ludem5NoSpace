@@ -149,6 +149,7 @@ public class Player extends Mob {
 					y = plat.y - h;
 					wallNum = 0;
 					yOK = false;
+					jump = 1;
 					resetWallJumps();
 				}
 				break;
@@ -195,7 +196,6 @@ public class Player extends Mob {
 			y += yVel;
 			hitbox.y = y;
 		} else {
-			jump = 1;
 			yVel = 0;
 		}
 
