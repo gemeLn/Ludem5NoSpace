@@ -13,10 +13,10 @@ public class Coin extends Entity{
 	private AnimatedSprite animatedSprite;
 	
 	public Coin(int x, int y) {
-		super(x, y, new Sprite(16, 16, 0, 0, SpriteSheet.coin));
+		super(x, y, new Sprite(16, 16, 0, 0, SpriteSheet.animatedCoin));
 		this.x = x;
 		this.y = y;
-		this.sprite = new Sprite(16, 16, 0, 0, SpriteSheet.coin);
+		this.sprite = new Sprite(16, 16, 0, 0, SpriteSheet.animatedCoin);
 		animatedSprite = new AnimatedSprite(SpriteSheet.animatedCoin, 16, 16, 5);
 		hitbox = new Rectangle(x, y, 16, 16);
 		w = 16;

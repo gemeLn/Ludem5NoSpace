@@ -24,8 +24,8 @@ public class Shop {
 	Sprite x;
 	Sprite battery;
 	Sprite coin;
-	public Rectangle speedButton = new Rectangle(40, 100, 64, 64);
-	public Rectangle jumpButton = new Rectangle(40, 200, 64, 64);
+	public Rectangle speedButton = new Rectangle(30, 150, 64, 64);
+	public Rectangle jumpButton = new Rectangle(30, 250, 64, 64);
 	public Rectangle exitButton = new Rectangle(10, 10, 64, 64);
 
 	public Shop(Player p) {
@@ -33,7 +33,7 @@ public class Shop {
 		plus = new Sprite(32, 32, 0, 0, SpriteSheet.plus);
 		x = new Sprite(32, 32, 0, 0, SpriteSheet.x);
 		battery = new Sprite(200, 32, 0, 0, SpriteSheet.battery);
-		coin = new Sprite(16, 16, 0, 0, SpriteSheet.coin);
+		coin = new Sprite(32, 32, 0, 0, SpriteSheet.bigcoin);
 	}
 
 	public void update() {
@@ -65,15 +65,15 @@ public class Shop {
 		screen.renderSprite(speedButton.x / 2, speedButton.y / 2, plus, false);
 		screen.renderSprite(jumpButton.x / 2, jumpButton.y / 2, plus, false);
 		screen.renderSprite(exitButton.x / 2, exitButton.y / 2, x, false);
-		screen.renderSprite(0,0, coin, false);
+		screen.renderSprite(80, exitButton.y/2, coin, false);
 
-		screen.renderSprite(speedButton.x / 2 + 50, speedButton.y / 2, battery, false);
-		screen.renderSprite(jumpButton.x / 2 + 50, jumpButton.y / 2, battery, false);
+		screen.renderSprite(speedButton.x / 2 + 40, speedButton.y / 2, battery, false);
+		screen.renderSprite(jumpButton.x / 2 + 40, jumpButton.y / 2, battery, false);
 		for (int i = 0; i < speed; i++) {
-			screen.fillRect(speedButton.x / 2 + 54, speedButton.y / 2 + 4, speedLength, 24, 0xffff00, false);
+			screen.fillRect(speedButton.x / 2 + 44, speedButton.y / 2 + 4, speedLength, 24, 0xffff00, false);
 		}
 		for (int i = 0; i < jump; i++) {
-			screen.fillRect(jumpButton.x / 2 + 54, jumpButton.y / 2 + 4, jumpLength, 24, 0xffff00, false);
+			screen.fillRect(jumpButton.x / 2 + 44, jumpButton.y / 2 + 4, jumpLength, 24, 0xffff00, false);
 		}
 
 	}
