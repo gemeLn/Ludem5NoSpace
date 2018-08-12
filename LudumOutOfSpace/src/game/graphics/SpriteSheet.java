@@ -39,7 +39,7 @@ public class SpriteSheet {
 	public static SpriteSheet spike = new SpriteSheet("/textures/spike.png", 16, 16);
 	public static SpriteSheet door = new SpriteSheet("/textures/door.png", 135, 375);
 	public static SpriteSheet x = new SpriteSheet("/textures/x.png", 32, 32);
-	public static SpriteSheet battery = new SpriteSheet("/textures/battery.png", 32, 200);
+	public static SpriteSheet battery = new SpriteSheet("/textures/battery.png", 200, 32);
 	private Sprite[] sprites;
 
 	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSize) {

@@ -30,6 +30,8 @@ public class Mouse implements MouseListener {
 				shop.buyJump();
 			} else if (shop.speedButton.contains(p)) {
 				shop.buySpeed();
+			} else if (shop.exitButton.contains(p)) {
+				shop.exit();
 			}
 		}
 	}
