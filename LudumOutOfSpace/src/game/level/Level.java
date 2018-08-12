@@ -12,6 +12,7 @@ import game.entity.Platform;
 import game.entity.Spike;
 import game.entity.Wall;
 import game.entity.mob.Player;
+import game.graphics.AnimatedAll;
 import game.graphics.Screen;
 import game.graphics.Sprite;
 import game.graphics.SpriteSheet;
@@ -41,6 +42,8 @@ public class Level {
 	public UILabel score, coin, section;
 	public int sectionsUntilShop = 0;
 	public int sectionNumber;
+	
+	
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
 	public Level(int width, int height) {
@@ -91,6 +94,9 @@ public class Level {
 	public int levelid;
 
 	public void update() {
+		
+		AnimatedAll.update();
+		
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
 		}
