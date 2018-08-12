@@ -88,11 +88,9 @@ public class Level {
 		player = new Player("Matty", 100, 350, Game.game.key, this);
 	}
 
-	public void update() {
+	int levelid;
 
-		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).update();
-		}
+	public void update() {
 
 		player.update();
 		if (player.getY() + dY <= 150) {
@@ -107,6 +105,7 @@ public class Level {
 
 		for (int i = inter - 2; i < sections.size(); i++) {
 			if (i >= 0 && sections.get(i).hitbox.contains(player.getX(), player.getY())) {
+				levelid = sections.get(i).id;
 				if (i != inter && i > inter) {
 					sectionNumber++;
 					inter = i;
@@ -120,6 +119,11 @@ public class Level {
 						addSection();
 					}
 				}
+			}
+		}
+		if (levelid != 100) {
+			for (int i = 0; i < entities.size(); i++) {
+				entities.get(i).update();
 			}
 		}
 		remove();
