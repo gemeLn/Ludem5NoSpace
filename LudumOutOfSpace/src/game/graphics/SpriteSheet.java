@@ -48,7 +48,7 @@ public class SpriteSheet {
 	public static SpriteSheet animatedAlien = new SpriteSheet(alien, 0, 0, 4, 1, 32);
 
 	public static SpriteSheet platform = new SpriteSheet("/textures/sheets/platforms.png", 30, 10);
-	public static Sprite fireball = new Sprite(32, 32, 0, 0, new SpriteSheet("/textures/sheets/fireball.png", 32, 32));
+	public static Sprite fireball = new Sprite(32, 32, 0, 0, new SpriteSheet("/textures/fireball.png", 32, 32));
 	private Sprite[] sprites;
 
 	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSize) {
