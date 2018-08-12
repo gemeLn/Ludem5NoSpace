@@ -1,5 +1,6 @@
 package game.level;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
@@ -8,6 +9,7 @@ import game.entity.mob.Player;
 import game.graphics.Screen;
 import game.graphics.Sprite;
 import game.graphics.SpriteSheet;
+import game.input.Keyboard;
 
 public class Shop {
 	Player player;
@@ -20,16 +22,18 @@ public class Shop {
 	int barLength = 180;
 	int speedLength = 0;
 	int jumpLength = 0;
+	Keyboard key;
 	Sprite plus;
 	Sprite x;
 	Sprite battery;
 	Sprite coin;
-	public Rectangle speedButton = new Rectangle(30, 150, 64, 64);
-	public Rectangle jumpButton = new Rectangle(30, 250, 64, 64);
+	public Rectangle speedButton = new Rectangle(30, 175, 64, 64);
+	public Rectangle jumpButton = new Rectangle(30, 300, 64, 64);
 	public Rectangle exitButton = new Rectangle(10, 10, 64, 64);
 
-	public Shop(Player p) {
+	public Shop(Player p, Keyboard key) {
 		this.player = p;
+		this.key = key;
 		plus = new Sprite(32, 32, 0, 0, SpriteSheet.plus);
 		x = new Sprite(32, 32, 0, 0, SpriteSheet.x);
 		battery = new Sprite(200, 32, 0, 0, SpriteSheet.battery);
@@ -37,11 +41,14 @@ public class Shop {
 	}
 
 	public void update() {
-
+		if (key.esc) {
+			exit();
+		}
 	}
 
 	public void buyJump() {
 		if (jump < jumpCosts.length && player.coins > jumpCosts[jump]) {
+			player.coins -= jumpCosts[jump];
 			jump++;
 			player.incJumpheight();
 			jumpLength = (int) (jump * barLength / maxJump);
@@ -51,6 +58,7 @@ public class Shop {
 
 	public void buySpeed() {
 		if (speed < speedCosts.length && player.coins > speedCosts[speed]) {
+			player.coins -= speedCosts[speed];
 			speed++;
 			player.incSpeed();
 			speedLength = (int) (speed * barLength / maxSpeed);
@@ -65,7 +73,7 @@ public class Shop {
 		screen.renderSprite(speedButton.x / 2, speedButton.y / 2, plus, false);
 		screen.renderSprite(jumpButton.x / 2, jumpButton.y / 2, plus, false);
 		screen.renderSprite(exitButton.x / 2, exitButton.y / 2, x, false);
-		screen.renderSprite(80, exitButton.y/2, coin, false);
+		screen.renderSprite(80, exitButton.y / 2, coin, false);
 
 		screen.renderSprite(speedButton.x / 2 + 40, speedButton.y / 2, battery, false);
 		screen.renderSprite(jumpButton.x / 2 + 40, jumpButton.y / 2, battery, false);
@@ -79,7 +87,9 @@ public class Shop {
 	}
 
 	public void drawStrings(Graphics g) {
-		g.drawString("OK", 100, 100);
+		g.setColor(Color.white);
+		g.setFont(Game.bigShopFont);
+		g.drawString("x " + player.coins, 230, exitButton.y + 45);
 	}
 
 }

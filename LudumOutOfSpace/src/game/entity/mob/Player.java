@@ -121,6 +121,9 @@ public class Player extends Mob {
 					}
 				} else {
 					yOK = false;
+					if (yVel > 0) {
+						jump = 1;
+					}
 					if (cy2 > cy1) {
 						y = b.y + b.height + 1;
 					}
@@ -226,7 +229,7 @@ public class Player extends Mob {
 				xVel = wallDir * 10;
 			}
 		}
-		if (input.shop) {
+		if (input.shopkey) {
 			boolean hit = false;
 			for (Interactable i : level.getInteractables()) {
 				if (i.hitbox.intersects(hitbox)) {

@@ -25,7 +25,7 @@ public class Game extends Canvas implements Runnable {
 	public final static int MENUSTATE = 2;
 	public int state = GAMESTATE;
 	private static final long serialVersionUID = 1L;
-	public static Font bigShopFont = new Font("Sansserif", 1, 20);
+	public static Font bigShopFont = new Font("Sansserif", 1, 40);
 	public static Font smallShopFont = new Font("Sansserif", 1, 12);
 	private static int width = 1080 / 4;
 	private static int height = 1500 / 4;
@@ -49,12 +49,11 @@ public class Game extends Canvas implements Runnable {
 		game = this;
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
-
+		key = new Keyboard();
 		screen = new Screen(width, height);
 		frame = new JFrame();
-		key = new Keyboard();
 		level = new Level(getWindowWidth(), getWindowHeight());
-		shop = new Shop(level.player);
+		shop = new Shop(level.player,key);
 		addKeyListener(key);
 		Mouse mouse = new Mouse(shop, level.player);
 		addMouseListener(mouse);
