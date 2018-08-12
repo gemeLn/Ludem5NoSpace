@@ -58,7 +58,7 @@ public class Level {
 		add(new Wall(false));
 		add(new Wall(true));
 
-		addSection();
+		addShop();
 		addSection();
 
 		sprite = new Sprite(270, 375, 0, 0, SpriteSheet.background);
@@ -68,7 +68,7 @@ public class Level {
 		// generateLevel();
 
 		// KEEP THIS LAST
-		player = new Player("Matty", 100, 350, Game.main.key, this);
+		player = new Player("Matty", 100, 350, Game.game.key, this);
 	}
 
 	public void update() {

@@ -40,10 +40,10 @@ public class Game extends Canvas implements Runnable {
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 	final String[] sectornames = { "sector1" };
-	public static Game main;
+	public static Game game;
 
 	public Game() {
-		main = this;
+		game = this;
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
 
@@ -53,9 +53,8 @@ public class Game extends Canvas implements Runnable {
 		level = new Level(getWindowWidth(), getWindowHeight());
 		shop = new Shop();
 		addKeyListener(key);
-		Mouse mouse = new Mouse();
+		Mouse mouse = new Mouse(shop, level.player);
 		addMouseListener(mouse);
-		addMouseMotionListener(mouse);
 	}
 
 	public static int getWindowWidth() {
@@ -90,8 +89,8 @@ public class Game extends Canvas implements Runnable {
 		int frames = 0;
 		int updates = 0;
 		SoundEffect.init();
-	    SoundEffect.volume = SoundEffect.Volume.LOW;
-	    new SoundEffect("background.wav", true);
+		SoundEffect.volume = SoundEffect.Volume.LOW;
+		new SoundEffect("background.wav", true);
 		requestFocus();
 		while (running) {
 			long now = System.nanoTime();

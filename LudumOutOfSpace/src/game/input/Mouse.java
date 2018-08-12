@@ -4,12 +4,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import game.Game;
+import game.entity.mob.Player;
 import game.level.Shop;
 
 public class Mouse implements MouseListener {
 	Shop shop;
 
-	public Mouse(Shop shop) {
+	public Mouse(Shop shop, Player p) {
 		this.shop = shop;
 	}
 
