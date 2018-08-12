@@ -51,7 +51,7 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame();
 		key = new Keyboard();
 		level = new Level(getWindowWidth(), getWindowHeight());
-		shop = new Shop();
+		shop = new Shop(level.player);
 		addKeyListener(key);
 		Mouse mouse = new Mouse(shop, level.player);
 		addMouseListener(mouse);

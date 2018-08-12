@@ -1,5 +1,6 @@
 package game.input;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -23,8 +24,13 @@ public class Mouse implements MouseListener {
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		Point p = e.getPoint();
 		if (Game.game.state == Game.SHOPSTATE) {
-			System.out.println("OKOKOKOKOK");
+			if (shop.jumpButton.contains(p)) {
+				shop.buyJump();
+			} else if (shop.speedButton.contains(p)) {
+				shop.buySpeed();
+			}
 		}
 	}
 

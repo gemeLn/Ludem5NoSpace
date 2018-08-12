@@ -88,7 +88,7 @@ public class Player extends Mob {
 		xVel = 0;
 		jump = 1;
 		walljump = 0;
-		coins = 0;
+		coins = 1000;
 	}
 
 	public String getName() {
