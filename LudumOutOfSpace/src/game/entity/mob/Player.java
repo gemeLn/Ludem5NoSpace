@@ -1,6 +1,7 @@
 package game.entity.mob;
 
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import javax.swing.UIManager;
 
@@ -11,6 +12,7 @@ import game.entity.Interactable;
 import game.entity.Platform;
 import game.entity.Spike;
 import game.entity.Wall;
+import game.entity.items.Item;
 import game.graphics.AnimatedSprite;
 import game.graphics.Screen;
 import game.graphics.Sprite;
@@ -63,6 +65,8 @@ public class Player extends Mob {
 	private Wall leftwall;
 	private Wall rightwall;
 	private int wallDir = 1;
+
+	public ArrayList<Item> inventory = new ArrayList<Item>();
 
 	public Player(String name, int x, int y, Keyboard input, Level level) {
 		this.level = level;

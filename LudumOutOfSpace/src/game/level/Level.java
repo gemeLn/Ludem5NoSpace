@@ -42,15 +42,14 @@ public class Level {
 	private Sprite sprite;
 	public int inter = -1;
 	public UILabel score, coin, section;
-	public int sectionsUntilShop = 0;
+	public int sectionsUntilShop = 8;
 	public int sectionNumber;
-	
-	
+
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
 	public Level(int width, int height) {
 		AnimatedAll.init();
-		
+
 		SoundEffect.volume = SoundEffect.Volume.LOW;
 		new SoundEffect("background.wav", true);
 		this.width = width;
@@ -65,23 +64,12 @@ public class Level {
 		blocks.add(new Block(100, 300, 30, 10));
 		spikes.add(new Spike(200, 330));
 		// spikes.add(new Spike(100, 180, 16, 16));
-		coins.add(new Coin(100, 180));	
+		coins.add(new Coin(100, 180));
 		nextLevel = Game.getWindowHeight() - 200;
 		add(new Wall(false));
 		add(new Wall(true));
 
 		addShop();
-		addSection();
-		addSection();
-		addSection();
-		addSection();
-		addSection();
-		addSection();
-		addSection();
-		addSection();
-		addSection();
-		addShop();
-		addSection();
 
 		sectionNumber = 1;
 
@@ -99,9 +87,9 @@ public class Level {
 	public int levelid;
 
 	public void update() {
-		
+
 		AnimatedAll.update();
-		
+
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
 		}
@@ -120,7 +108,7 @@ public class Level {
 			if (player.getYVel() == 0)
 				dY -= 5;
 		}
-		
+
 		for (int i = inter - 2; i < sections.size(); i++) {
 			if (i >= 0 && sections.get(i).hitbox.contains(player.getX(), player.getY())) {
 				levelid = sections.get(i).id;
@@ -132,7 +120,7 @@ public class Level {
 					sectionsUntilShop--;
 					if (sectionsUntilShop < 2) {
 						addShop();
-						sectionsUntilShop = 2;
+						sectionsUntilShop = 10;
 					} else {
 						addSection();
 					}

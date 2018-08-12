@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import game.Game;
+import game.entity.items.Item;
 import game.entity.mob.Player;
 import game.level.Shop;
 
@@ -26,7 +27,7 @@ public class Mouse implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		Point p = e.getPoint();
 		if (e.getButton() == MouseEvent.BUTTON3) {
-			System.out.println(e.getX()/2+","+e.getY()/2);
+			System.out.println(e.getX() / 2 + "," + e.getY() / 2);
 		}
 		if (Game.game.state == Game.SHOPSTATE) {
 			if (shop.jumpButton.contains(p)) {
@@ -35,6 +36,11 @@ public class Mouse implements MouseListener {
 				shop.buySpeed();
 			} else if (shop.exitButton.contains(p)) {
 				shop.exit();
+			}
+			for (Item shopitem : shop.availableShop) {
+				if (shopitem.hitbox.contains(p)) {
+					System.out.println(shopitem.name);
+				}
 			}
 		}
 	}

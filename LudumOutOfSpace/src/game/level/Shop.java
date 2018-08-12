@@ -3,8 +3,11 @@ package game.level;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.ArrayList;
 
 import game.Game;
+import game.entity.items.Fireball;
+import game.entity.items.Item;
 import game.entity.mob.Player;
 import game.graphics.Screen;
 import game.graphics.Sprite;
@@ -12,6 +15,7 @@ import game.graphics.SpriteSheet;
 import game.input.Keyboard;
 
 public class Shop {
+	public ArrayList<Item> availableShop = new ArrayList<Item>();
 	Player player;
 	int[] speedCosts = { 1, 2, 4, 8 };
 	int[] jumpCosts = { 1, 11, 13 };
@@ -31,11 +35,12 @@ public class Shop {
 	Sprite battery;
 	Sprite bigcoin;
 	Sprite coin;
-	public Rectangle speedButton = new Rectangle(30, 175, 64, 64);
-	public Rectangle jumpButton = new Rectangle(30, 300, 64, 64);
+	public Rectangle speedButton = new Rectangle(30, 125, 64, 64);
+	public Rectangle jumpButton = new Rectangle(30, 250, 64, 64);
 	public Rectangle exitButton = new Rectangle(10, 10, 64, 64);
 
 	public Shop(Player p, Keyboard key) {
+		availableShop.add(new Fireball());
 		this.player = p;
 		this.key = key;
 		plus = new Sprite(32, 32, 0, 0, SpriteSheet.plus);
@@ -49,6 +54,12 @@ public class Shop {
 		if (key.esc) {
 			exit();
 		}
+		int itemsize = availableShop.size();
+		for (int i = 0; i < itemsize; i++) {
+			availableShop.get(i).hitbox.x = 10 + i * 32;
+			availableShop.get(i).hitbox.y = 190;
+		}
+
 	}
 
 	public void buySpeed() {
@@ -96,13 +107,19 @@ public class Shop {
 		screen.renderSprite(speedButton.x / 2 + 40, speedButton.y / 2, battery, false);
 		screen.renderSprite(jumpButton.x / 2 + 40, jumpButton.y / 2, battery, false);
 
-		screen.renderSprite(smallcoinx, 70, coin, false);
-		screen.renderSprite(smallcoinx, 131, coin, false);
+		screen.renderSprite(smallcoinx, 45, coin, false);
+		screen.renderSprite(smallcoinx, 105, coin, false);
+
 		for (int i = 0; i < speed; i++) {
 			screen.fillRect(speedButton.x / 2 + 44, speedButton.y / 2 + 4, speedLength, 24, 0xffff00, false);
 		}
 		for (int i = 0; i < jump; i++) {
 			screen.fillRect(jumpButton.x / 2 + 44, jumpButton.y / 2 + 4, jumpLength, 24, 0xffff00, false);
+		}
+		int itemsize = availableShop.size();
+		for (int i = 0; i < itemsize; i++) {
+			screen.renderSprite(availableShop.get(i).hitbox.x, availableShop.get(i).hitbox.y, availableShop.get(i).icon,
+					false);
 		}
 
 	}
@@ -112,10 +129,11 @@ public class Shop {
 		g.setFont(Game.bigShopFont);
 		g.drawString("x " + player.coins, 230, exitButton.y + 45);
 		g.setFont(Game.smallShopFont);
-		g.drawString("Speed +1", 2*smallcoinx-100, 160);
-		g.drawString("Jump +1", 2*smallcoinx-100, 280);
-		g.drawString(speedCost, 2 * smallcoinx + 40, 160);
-		g.drawString(jumpCost, 2 * smallcoinx + 40, 280);
+		g.drawString("Available Items", 210, 350);
+		g.drawString("Speed +1", 2 * smallcoinx - 100, 115);
+		g.drawString("Jump +1", 2 * smallcoinx - 100, 235);
+		g.drawString(speedCost, 2 * smallcoinx + 40, 115);
+		g.drawString(jumpCost, 2 * smallcoinx + 40, 235);
 
 	}
 
