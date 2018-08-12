@@ -23,6 +23,7 @@ public class Sprite {
 	public static Sprite player_back_2 = new Sprite(32, 2, 7, SpriteSheet.tiles);
 
 	public static Sprite dummy = new Sprite(32, 0, 0, SpriteSheet.dummy_down);
+	 
 
 	protected Sprite(SpriteSheet sheet, int width, int height) {
 		SIZE = (width == height) ? width : -1;
@@ -38,6 +39,17 @@ public class Sprite {
 		pixels = new int[SIZE * SIZE];
 		this.x = x * size;
 		this.y = y * size;
+		this.sheet = sheet;
+		load();
+	}
+	
+	public Sprite(int w, int h, int x, int y, SpriteSheet sheet) {
+		SIZE = -1;
+		this.width = w;
+		this.height = h;
+		pixels = new int[w * h];
+		this.x = x;
+		this.y = y;
 		this.sheet = sheet;
 		load();
 	}

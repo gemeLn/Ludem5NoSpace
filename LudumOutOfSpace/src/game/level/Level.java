@@ -11,6 +11,10 @@ import game.entity.Spike;
 import game.entity.Wall;
 import game.entity.mob.Player;
 import game.graphics.Screen;
+import game.graphics.Sprite;
+import game.graphics.SpriteSheet;
+import game.graphics.ui.UILabel;
+import game.util.Vector2i;
 
 public class Level {
 
@@ -27,6 +31,9 @@ public class Level {
 	private List<Spike> spikes = new ArrayList<Spike>();
 	public List<Section> sections = new ArrayList<Section>();
 	public Player player;
+	private Sprite sprite;
+	public int inter = -1;
+	public UILabel score;
 
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
@@ -39,12 +46,18 @@ public class Level {
 		getPlatforms().add(new Platform(100, 260, 40, 10));
 		getPlatforms().add(new Platform(0, 200, Game.getWindowWidth(), 10));
 		getPlatforms().add(new Platform(0, ground, Game.getWindowWidth(), 200));
-		getBlocks().add(new Block(100,300,30,10));
+		getBlocks().add(new Block(100, 300, 30, 10));
 		getSpikes().add(new Spike(200, 330, 30, 10));
-		nextLevel = Game.getWindowHeight()-200;
+		nextLevel = Game.getWindowHeight() - 200;
 		add(new Wall(false));
 		add(new Wall(true));
+
 		addSection();
+		addSection();
+		
+		sprite = new Sprite(270, 375, 0, 0, SpriteSheet.background);
+		score = new UILabel(new Vector2i(120, 120), 0 + "");
+		
 		// generateLevel();
 
 		// KEEP THIS LAST
@@ -68,19 +81,26 @@ public class Level {
 				dY -= 5;
 		}
 
+		for (int i = inter-2; i < sections.size(); i++) {
+			if (i >= 0 && sections.get(i).hitbox.contains(player.getX(), player.getY())) {
+				inter = i;
+				if (sections.size() == inter + 1)
+					addSection();
+			}
+		}
 		remove();
 	}
-	
+
 	public void addSection() {
-		switch((int)(Math.random() + 1)){
-			case 0:
-				sections.add(new Section1(nextLevel));
-				nextLevel += Section1.getSectionHeight();
-				break;
-			case 1:
-				sections.add(new Section2(nextLevel));
-				nextLevel += Section2.getSectionHeight();
-				break;
+		switch ((int) (Math.random() + 1)) {
+		case 0:
+			sections.add(new Section1(nextLevel));
+			nextLevel += Section1.getSectionHeight();
+			break;
+		case 1:
+			sections.add(new Section2(nextLevel));
+			nextLevel += Section2.getSectionHeight();
+			break;
 		}
 	}
 
@@ -99,23 +119,36 @@ public class Level {
 	 */
 
 	public void render(Screen screen) {
+		screen.renderSprite(0, 0, sprite, false);
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
-		
-		for (Platform p : getPlatforms()) {
+
+		for (Platform p : platforms) {
 			p.render(screen, dY);
 		}
-		for(Block b:getBlocks()) {
+		for (Block b : blocks) {
 			b.render(screen, dY);
 		}
-		for(Spike s:getSpikes()) {
+		for (Spike s : spikes) {
 			s.render(screen, dY);
 		}
-		
+
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen, dY);
 		}
-		sections.get(0).render(screen, dY);
+		if (inter > -2) {
+			if (inter == -1) {
+				sections.get(0).render(screen, dY);
+
+			} else {
+				for (int i = inter; i < sections.size(); i++) {
+					sections.get(i).render(screen, dY);
+					if (i - 1 != -1)
+						sections.get(i - 1).render(screen, dY);
+				}
+			}
+		}
+		
 		player.render(screen, dY);
 	}
 
@@ -143,60 +176,55 @@ public class Level {
 		return result;
 	}
 
-
 	public List<Block> getBlocks() {
-		for(Section s: sections) {
-			if(s.hitbox.contains(player.getX(), player.getY())) {
-				List<Block> blocks = new ArrayList<Block>();
+		if (inter >= 0) {
+			List<Block> blocks = new ArrayList<Block>();
+			if (inter == 0)
 				blocks.addAll(this.blocks);
-				blocks.addAll(s.blocks);
-				return blocks;
-			}
+			else
+				blocks.addAll(sections.get(inter - 1).blocks);
+			blocks.addAll(sections.get(inter).blocks);
+			return blocks;
 		}
 		return blocks;
 	}
-
 
 	public void setBlocks(List<Block> blocks) {
 		this.blocks = blocks;
 	}
 
-
 	public List<Spike> getSpikes() {
-		for(Section s: sections) {
-			if(s.hitbox.contains(player.getX(), player.getY())) {
-				List<Spike> spikes = new ArrayList<Spike>();
+		if (inter >= 0) {
+			List<Spike> spikes = new ArrayList<Spike>();
+			if (inter == 0)
 				spikes.addAll(this.spikes);
-				spikes.addAll(s.spikes);
-				return spikes;
-			}
+			else
+				spikes.addAll(sections.get(inter - 1).spikes);
+			spikes.addAll(sections.get(inter).spikes);
+			return spikes;
 		}
 		return spikes;
 	}
-
 
 	public void setSpikes(List<Spike> spikes) {
 		this.spikes = spikes;
 	}
 
-
 	public List<Platform> getPlatforms() {
-		
-		for(Section s: sections) {
-			if(s.hitbox.contains(player.getX(), player.getY())) {
-				List<Platform> platforms = new ArrayList<Platform>();
+		if (inter >= 0) {
+			List<Platform> platforms = new ArrayList<Platform>();
+			if (inter == 0)
 				platforms.addAll(this.platforms);
-				platforms.addAll(s.platforms);
-				return platforms;
-			}
+			else
+				platforms.addAll(sections.get(inter - 1).platforms);
+			platforms.addAll(sections.get(inter).platforms);
+			return platforms;
 		}
 		return platforms;
 	}
 
-
 	public void setPlatforms(List<Platform> platforms) {
 		this.platforms = platforms;
 	}
-
 
 }

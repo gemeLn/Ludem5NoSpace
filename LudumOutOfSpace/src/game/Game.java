@@ -31,7 +31,6 @@ public class Game extends Canvas implements Runnable {
 	public Level level;
 	private boolean running = false;
 
-	private static UIManager uiManager;
 
 	private Screen screen;
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -45,7 +44,6 @@ public class Game extends Canvas implements Runnable {
 		setPreferredSize(size);
 
 		screen = new Screen(width, height);
-		uiManager = new UIManager();
 		frame = new JFrame();
 		key = new Keyboard();
 		level = new Level(getWindowWidth(),getWindowHeight());
@@ -63,9 +61,6 @@ public class Game extends Canvas implements Runnable {
 		return height;
 	}
 
-	public static UIManager getUIManager() {
-		return uiManager;
-	}
 
 	public synchronized void start() {
 		running = true;
@@ -128,16 +123,20 @@ public class Game extends Canvas implements Runnable {
 
 		screen.clear();
 		level.render(screen);
-
+		
+		
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.pixels[i];
 		}
 		Graphics g = bs.getDrawGraphics();
+		
 		g.setColor(new Color(0xff00ff));
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image, 0, 0, width * scale, height * scale, null);
+		level.score.render(g, ((level.player.getY() - 375) * -1) - 57 + "");
 		g.dispose();
 		bs.show();
+		
 	}
 
 	public static void main(String[] args) {

@@ -28,6 +28,8 @@ public class SpriteSheet {
 	public static SpriteSheet dummy_up = new SpriteSheet(dummy, 1, 0, 1, 3, 32);
 	public static SpriteSheet dummy_left = new SpriteSheet(dummy, 2, 0, 1, 3, 32);
 	public static SpriteSheet dummy_right = new SpriteSheet(dummy, 3, 0, 1, 3, 32);
+	
+	public static SpriteSheet background = new SpriteSheet("/textures/background.png", 270, 375);
 
 	private Sprite[] sprites;
 

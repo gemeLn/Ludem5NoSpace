@@ -20,7 +20,7 @@ public class Section2 extends Section {
 		platforms.add(new Platform(0, 200 - start, Game.getWindowWidth(), 10));
 		blocks.add(new Block(100,300 - start,30,10));
 		spikes.add(new Spike(200, 330 - start, 30, 10));
-		height = 260;
+		height = 175;
 		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start, Game.getWindowWidth(), height);
 	}
 	

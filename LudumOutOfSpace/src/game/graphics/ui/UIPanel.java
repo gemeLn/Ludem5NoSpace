@@ -16,7 +16,7 @@ public class UIPanel extends UIComponent {
 		super(position);
 		this.position = position;
 		this.size = size;
-		color = new Color(0xcacaca);
+		color = new Color(0xFFFFF);
 	}
 	
 	public void addComponent(UIComponent component) {

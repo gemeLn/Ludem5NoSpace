@@ -13,6 +13,7 @@ public class Screen {
 	private Random random = new Random();
 
 	private final int ALPHA_COL = 0xffff00ff;
+	
 
 	public Screen(int width, int height) {
 		this.width = width;
