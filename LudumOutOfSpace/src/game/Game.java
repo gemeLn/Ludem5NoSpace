@@ -21,7 +21,7 @@ import game.music.SoundEffect;
 public class Game extends Canvas implements Runnable {
 	public final static int GAMESTATE = 0;
 	public final static int SHOPSTATE = 1;
-	public static int state = GAMESTATE;
+	public int state = GAMESTATE;
 	private static final long serialVersionUID = 1L;
 
 	private static int width = 1080 / 4;
