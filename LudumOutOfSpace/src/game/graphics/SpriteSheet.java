@@ -28,11 +28,11 @@ public class SpriteSheet {
 	public static SpriteSheet dummy_up = new SpriteSheet(dummy, 1, 0, 1, 3, 32);
 	public static SpriteSheet dummy_left = new SpriteSheet(dummy, 2, 0, 1, 3, 32);
 	public static SpriteSheet dummy_right = new SpriteSheet(dummy, 3, 0, 1, 3, 32);
-	
-	public static SpriteSheet background = new SpriteSheet("/textures/background.png", 270, 375);
-	
-	public static SpriteSheet coin = new SpriteSheet("/textures/EarthCoin.png", 16, 16);
 
+	public static SpriteSheet background = new SpriteSheet("/textures/background.png", 270, 375);
+
+	public static SpriteSheet coin = new SpriteSheet("/textures/EarthCoin.png", 16, 16);
+	public static SpriteSheet shop = new SpriteSheet("/textures/shop.png", 32, 32);
 
 	private Sprite[] sprites;
 
@@ -41,8 +41,10 @@ public class SpriteSheet {
 		int yy = y * spriteSize;
 		int w = width * spriteSize;
 		int h = height * spriteSize;
-		if (width == height) SIZE = width;
-		else SIZE = -1;
+		if (width == height)
+			SIZE = width;
+		else
+			SIZE = -1;
 		SPRITE_WIDTH = w;
 		SPRITE_HEIGHT = h;
 		pixels = new int[w * h];
@@ -60,7 +62,8 @@ public class SpriteSheet {
 				int[] spritePixels = new int[spriteSize * spriteSize];
 				for (int y0 = 0; y0 < spriteSize; y0++) {
 					for (int x0 = 0; x0 < spriteSize; x0++) {
-						spritePixels[x0 + y0 * spriteSize] = pixels[(x0 + xa * spriteSize) + (y0 + ya * spriteSize) * SPRITE_WIDTH];
+						spritePixels[x0 + y0 * spriteSize] = pixels[(x0 + xa * spriteSize)
+								+ (y0 + ya * spriteSize) * SPRITE_WIDTH];
 					}
 				}
 				Sprite sprite = new Sprite(spritePixels, spriteSize, spriteSize);

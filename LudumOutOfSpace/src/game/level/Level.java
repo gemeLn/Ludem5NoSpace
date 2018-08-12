@@ -7,6 +7,7 @@ import game.Game;
 import game.entity.Block;
 import game.entity.Coin;
 import game.entity.Entity;
+import game.entity.Interactable;
 import game.entity.Platform;
 import game.entity.Spike;
 import game.entity.Wall;
@@ -32,11 +33,12 @@ public class Level {
 	private List<Spike> spikes = new ArrayList<Spike>();
 	private List<Coin> coins = new ArrayList<Coin>();
 	public List<Section> sections = new ArrayList<Section>();
+	public List<Interactable> interactables = new ArrayList<Interactable>();
 	public Player player;
 	private Sprite sprite;
 	public int inter = -1;
 	public UILabel score, coin;
-
+	public int sectionsUntilShop = 0;
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
 	public Level(int width, int height) {
@@ -50,7 +52,7 @@ public class Level {
 		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
 		blocks.add(new Block(100, 300, 30, 10));
 		spikes.add(new Spike(200, 330, 30, 10));
-		//spikes.add(new Spike(100, 180, 16, 16));
+		// spikes.add(new Spike(100, 180, 16, 16));
 		coins.add(new Coin(100, 180));
 		nextLevel = Game.getWindowHeight() - 200;
 		add(new Wall(false));
@@ -58,11 +60,11 @@ public class Level {
 
 		addSection();
 		addSection();
-		
+
 		sprite = new Sprite(270, 375, 0, 0, SpriteSheet.background);
 		score = new UILabel(new Vector2i(120, 120), 0 + "");
 		coin = new UILabel(new Vector2i(200, 120), 0 + "");
-		
+
 		// generateLevel();
 
 		// KEEP THIS LAST
@@ -86,14 +88,26 @@ public class Level {
 				dY -= 5;
 		}
 
-		for (int i = inter-2; i < sections.size(); i++) {
+		for (int i = inter - 2; i < sections.size(); i++) {
 			if (i >= 0 && sections.get(i).hitbox.contains(player.getX(), player.getY())) {
 				inter = i;
-				if (sections.size() == inter + 1)
-					addSection();
+				if (sections.size() == inter + 1) {
+					sectionsUntilShop--;
+					if (sectionsUntilShop <2) {
+						addShop();
+						sectionsUntilShop = 2;
+					} else {
+						addSection();
+					}
+				}
 			}
 		}
 		remove();
+	}
+
+	public void addShop() {
+		sections.add(new SectionShop(nextLevel));
+		nextLevel += SectionShop.getSectionHeight();
 	}
 
 	public void addSection() {
@@ -137,7 +151,7 @@ public class Level {
 		for (Spike s : spikes) {
 			s.render(screen, dY);
 		}
-		
+
 		for (Coin c : coins) {
 			c.render(screen, dY);
 		}
@@ -157,7 +171,7 @@ public class Level {
 				}
 			}
 		}
-		
+
 		player.render(screen, dY);
 	}
 
@@ -219,6 +233,23 @@ public class Level {
 		this.spikes = spikes;
 	}
 
+	public List<Interactable> getInteractables() {
+		if (inter >= 0) {
+			List<Interactable> interactables = new ArrayList<Interactable>();
+			if (inter == 0)
+				interactables.addAll(this.interactables);
+			else
+				interactables.addAll(sections.get(inter - 1).interactables);
+			interactables.addAll(sections.get(inter).interactables);
+			return interactables;
+		}
+		return interactables;
+	}
+
+	public void setInteractables(List<Interactable> interactables) {
+		this.interactables = interactables;
+	}
+
 	public List<Platform> getPlatforms() {
 		if (inter >= 0) {
 			List<Platform> platforms = new ArrayList<Platform>();
@@ -231,7 +262,7 @@ public class Level {
 		}
 		return platforms;
 	}
-	
+
 	public List<Coin> getCoins() {
 		if (inter >= 0) {
 			List<Coin> coins = new ArrayList<Coin>();

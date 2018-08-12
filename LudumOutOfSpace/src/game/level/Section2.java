@@ -14,14 +14,12 @@ public class Section2 extends Section {
 		super(start);
 		id = 2;
 		System.out.println(start);
-		platforms.add(new Platform(0, 0 - start, 0, Game.getWindowHeight()));
-		platforms.add(new Platform(Game.getWindowWidth(), 0 - start, 0, Game.getWindowHeight()));
 		platforms.add(new Platform(100, 260 - start, 40, 10));
 		platforms.add(new Platform(0, 200 - start, Game.getWindowWidth(), 10));
 		blocks.add(new Block(100,300 - start,30,10));
 		spikes.add(new Spike(200, 330 - start, 30, 10));
 		height = 175;
-		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start, Game.getWindowWidth(), height);
+		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start, Game.getWindowWidth(), height-32);
 	}
 
 	public void update() {
