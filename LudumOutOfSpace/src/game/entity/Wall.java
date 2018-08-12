@@ -45,7 +45,7 @@ public class Wall extends Entity {
 
 	public void update() {
 
-		if (tick >= 1) {
+		if (tick >= 1200) {
 			close();
 		}
 
@@ -54,9 +54,10 @@ public class Wall extends Entity {
 			System.out.println(-level.player.y - 375);
 		}
 		hitbox.x = (int) x;
-		hitbox.y = (int) y - dy;
+		hitbox.y = (int) -dy;
 		hitbox.width = (int) w;
 		hitbox.height = (int) h;
+		System.out.println(-dy);
 		tick++;
 	}
 	
