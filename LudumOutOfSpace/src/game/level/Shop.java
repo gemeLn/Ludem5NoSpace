@@ -27,7 +27,7 @@ public class Shop {
 	}
 
 	public void buyJump() {
-		if (jump < jumpCosts.length && p.coins > jumpCosts[jump]) {
+		if (jump < jumpCosts.length && player.coins > jumpCosts[jump]) {
 			jump++;
 			player.incJumpheight();
 
@@ -35,7 +35,7 @@ public class Shop {
 	}
 
 	public void buySpeed() {
-		if (speed < speedCosts.length && p.coins > speedCosts[speed]) {
+		if (speed < speedCosts.length && player.coins > speedCosts[speed]) {
 			speed++;
 			player.incSpeed();
 		}
