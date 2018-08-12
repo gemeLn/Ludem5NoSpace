@@ -62,6 +62,7 @@ public class Level {
 		add(new Wall(false));
 		add(new Wall(true));
 
+		addShop();
 		addSection();
 		addSection();
 		addSection();
@@ -73,9 +74,9 @@ public class Level {
 		addSection();
 		addShop();
 		addSection();
-		
+
 		sectionNumber = 1;
-		
+
 		sprite = new Sprite(270, 375, 0, 0, SpriteSheet.background);
 		score = new UILabel(new Vector2i(120, 120), 0 + "");
 		coin = new UILabel(new Vector2i(200, 120), 0 + "");
@@ -106,7 +107,7 @@ public class Level {
 
 		for (int i = inter - 2; i < sections.size(); i++) {
 			if (i >= 0 && sections.get(i).hitbox.contains(player.getX(), player.getY())) {
-				if(i != inter && i > inter) {
+				if (i != inter && i > inter) {
 					sectionNumber++;
 					inter = i;
 				}
@@ -161,7 +162,6 @@ public class Level {
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
 
-		
 		for (Platform p : platforms) {
 			p.render(screen, dY);
 		}
