@@ -52,13 +52,11 @@ public class Wall extends Entity {
 
 		if (Game.game.level.player.w > windowwidth - 2 * w) {
 			System.out.println("DIE");
-			System.out.println(-level.player.y - 375);
 		}
 		hitbox.x = (int) x;
 		hitbox.y = (int) -dy;
 		hitbox.width = (int) w;
 		hitbox.height = (int) h;
-		System.out.println(-dy);
 		if (level.levelid != 100) {
 			tick++;
 		}

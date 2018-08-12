@@ -40,6 +40,10 @@ public class SpriteSheet {
 	public static SpriteSheet door = new SpriteSheet("/textures/door.png", 135, 375);
 	public static SpriteSheet x = new SpriteSheet("/textures/x.png", 32, 32);
 	public static SpriteSheet battery = new SpriteSheet("/textures/battery.png", 200, 32);
+	
+	public static SpriteSheet anC = new SpriteSheet("/textures/sheets/coinAnimation.png", 96, 16);
+	public static SpriteSheet animatedCoin = new SpriteSheet(anC, 0, 0, 6, 1, 16);
+	
 	private Sprite[] sprites;
 
 	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSize) {
@@ -89,6 +93,15 @@ public class SpriteSheet {
 	public SpriteSheet(String path, int width, int height) {
 		this.path = path;
 		SIZE = -1;
+		SPRITE_WIDTH = width;
+		SPRITE_HEIGHT = height;
+		pixels = new int[SPRITE_WIDTH * SPRITE_HEIGHT];
+		load();
+	}
+	
+	public SpriteSheet(String path, int width, int height, int size) {
+		this.path = path;
+		SIZE = size;
 		SPRITE_WIDTH = width;
 		SPRITE_HEIGHT = height;
 		pixels = new int[SPRITE_WIDTH * SPRITE_HEIGHT];

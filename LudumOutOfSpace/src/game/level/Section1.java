@@ -26,8 +26,4 @@ public class Section1 extends Section {
 		hitbox(start);
 
 	}
-
-	public void update() {
-
-	}
 }

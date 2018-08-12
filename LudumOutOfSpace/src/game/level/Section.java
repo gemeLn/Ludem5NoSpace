@@ -51,7 +51,9 @@ public class Section {
 	}
 
 	public void update() {
-
+		for (Coin c : coins) {
+			c.update();
+		}
 	}
 	
 	public void hitbox(int start) {

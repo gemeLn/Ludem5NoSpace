@@ -132,7 +132,6 @@ public class Player extends Mob {
 		for (Spike spike : level.getSpikes()) {
 			if (spike.intersects(hitbox)) {
 				System.out.println("dead");
-				System.out.println(-y - 375);
 			}
 		}
 
