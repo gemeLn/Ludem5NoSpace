@@ -14,7 +14,7 @@ public class SectionShop extends Section {
 		height = 175;
 		hitbox(start);
 		platforms.add(new Platform(0, 200 - start, Game.getWindowWidth(), 10));
-		interactables.add(new Vender(100, 320 - start));
+		interactables.add(new Vender(110, 320 - start));
 
 	}
 
