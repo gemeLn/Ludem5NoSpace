@@ -21,6 +21,7 @@ import game.music.SoundEffect;
 public class Game extends Canvas implements Runnable {
 	public final static int GAMESTATE = 0;
 	public final static int SHOPSTATE = 1;
+	public final static int MENUSTATE = 2;
 	public int state = GAMESTATE;
 	private static final long serialVersionUID = 1L;
 
@@ -87,7 +88,7 @@ public class Game extends Canvas implements Runnable {
 		final double ns = 1000000000.0 / 60.0;
 		double delta = 0;
 		int frames = 0;
-		int updates = 0;		
+		int updates = 0;
 		SoundEffect.init();
 		requestFocus();
 		while (running) {
@@ -155,6 +156,7 @@ public class Game extends Canvas implements Runnable {
 			g.setColor(new Color(0xff00ff));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			g.drawImage(image, 0, 0, width * scale, height * scale, null);
+			shop.drawStrings(g);
 			g.dispose();
 			bs.show();
 
