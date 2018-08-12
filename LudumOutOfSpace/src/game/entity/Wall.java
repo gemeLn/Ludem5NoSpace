@@ -21,15 +21,16 @@ public class Wall extends Entity {
 	Sprite sprite;
 
 	public boolean canJump() {
-		return System.currentTimeMillis()>nextJump;
+		return System.currentTimeMillis() > nextJump;
 	}
+
 	public void resetJump() {
-		nextJump=0;
+		nextJump = 0;
 	}
+
 	public void delayJump(long cd) {
-		nextJump = System.currentTimeMillis()+cd;
+		nextJump = System.currentTimeMillis() + cd;
 	}
-	
 
 	public Wall(boolean right) {
 		this.right = right;
@@ -58,15 +59,17 @@ public class Wall extends Entity {
 		hitbox.width = (int) w;
 		hitbox.height = (int) h;
 		System.out.println(-dy);
-		tick++;
+		if (level.levelid != 100) {
+			tick++;
+		}
 	}
-	
+
 	public void reset() {
-		
+
 	}
 
 	public void close() {
-		if(w < 145)
+		if (w < 145)
 			w += speed;
 		if (x > 136)
 			x -= speed;
@@ -76,11 +79,11 @@ public class Wall extends Entity {
 	}
 
 	public void render(Screen screen, int dy) {
-		if(!right)
-			screen.renderSprite((int)(x+w-135), 0, sprite, false);
+		if (!right)
+			screen.renderSprite((int) (x + w - 135), 0, sprite, false);
 		else
-			screen.renderSprite((int)(x), 0, sprite, false);
-		
+			screen.renderSprite((int) (x), 0, sprite, false);
+
 		screen.drawRect((int) x, 0, (int) w, (int) h, 0xff00ff, false);
 		this.dy = dy;
 	}

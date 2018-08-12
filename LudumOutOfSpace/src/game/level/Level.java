@@ -88,10 +88,12 @@ public class Level {
 		player = new Player("Matty", 100, 350, Game.game.key, this);
 	}
 
-	int levelid;
+	public int levelid;
 
 	public void update() {
-
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).update();
+		}
 		player.update();
 		if (player.getY() + dY <= 150) {
 			dY -= (int) player.getYVel();
@@ -121,11 +123,7 @@ public class Level {
 				}
 			}
 		}
-		if (levelid != 100) {
-			for (int i = 0; i < entities.size(); i++) {
-				entities.get(i).update();
-			}
-		}
+
 		remove();
 	}
 
