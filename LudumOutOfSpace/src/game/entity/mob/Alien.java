@@ -12,7 +12,7 @@ public class Alien extends Enemy{
 	Rectangle connected;
 	
 	public Alien(int x, int y, Rectangle hitbox) {
-		super(-200, y, 32, 32);
+		super((int)Math.random()*(hitbox.width-hitbox.x) + hitbox.x, hitbox.y-32, 32, 32);
 		xVel = 1;
 		dir = 1;
 	}
