@@ -4,8 +4,10 @@ import java.awt.Rectangle;
 
 import javax.swing.UIManager;
 
+import game.Game;
 import game.entity.Block;
 import game.entity.Coin;
+import game.entity.Interactable;
 import game.entity.Platform;
 import game.entity.Spike;
 import game.entity.Wall;
@@ -33,7 +35,7 @@ public class Player extends Mob {
 	private AnimatedSprite animSprite = down;
 
 	public int coins;
-	
+
 	private int fireRate = 0;
 	int ground;
 	private double yVel;
@@ -112,26 +114,26 @@ public class Player extends Mob {
 				} else {
 					yOK = false;
 					if (cy2 > cy1) {
-						y=b.y+b.height+1;
+						y = b.y + b.height + 1;
 					}
 				}
 			}
 		}
-		
+
 		for (Spike spike : level.getSpikes()) {
-			if(spike.intersects(hitbox)) {
+			if (spike.intersects(hitbox)) {
 				System.out.println("dead");
 				System.out.println(-y - 375);
 			}
 		}
-		
+
 		for (Coin coin : level.getCoins()) {
-			if(coin.hitbox.intersects(hitbox) && !coin.isCollected()) {
+			if (coin.hitbox.intersects(hitbox) && !coin.isCollected()) {
 				coins++;
 				coin.collected();
 			}
 		}
-		
+
 		for (Platform plat : level.getPlatforms()) {
 			if (plat.intersects(predictedHitbox)) {
 				if (yVel > 0 && y + h < plat.y + plat.height) {
@@ -214,6 +216,23 @@ public class Player extends Mob {
 				yVel = -9;
 				walljump--;
 				xVel = wallDir * 10;
+			}
+		}
+		if (input.shop) {
+			Interactable shop;
+			boolean hit = false;
+			for (Interactable i : level.getInteractables()) {
+				if (i.hitbox.intersects(hitbox)) {
+					hit = true;
+					shop = i;
+					break;
+				}
+			}
+			if (hit) {
+				// OPEN SHOP
+				System.out.println("SHOP");
+				Game.main.state = Game.SHOPSTATE;
+
 			}
 		}
 		if (input.left) {

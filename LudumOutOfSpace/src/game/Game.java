@@ -16,8 +16,12 @@ import game.input.Keyboard;
 import game.input.Mouse;
 import game.level.Level;
 import game.level.Sector;
+import game.level.Shop;
 
 public class Game extends Canvas implements Runnable {
+	public final static int GAMESTATE = 0;
+	public final static int SHOPSTATE = 1;
+	public static int state = GAMESTATE;
 	private static final long serialVersionUID = 1L;
 
 	private static int width = 1080 / 4;
@@ -29,8 +33,8 @@ public class Game extends Canvas implements Runnable {
 	private JFrame frame;
 	public Keyboard key;
 	public Level level;
+	public Shop shop;
 	private boolean running = false;
-
 
 	private Screen screen;
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -46,7 +50,8 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		frame = new JFrame();
 		key = new Keyboard();
-		level = new Level(getWindowWidth(),getWindowHeight());
+		level = new Level(getWindowWidth(), getWindowHeight());
+		shop = new Shop();
 		addKeyListener(key);
 		Mouse mouse = new Mouse();
 		addMouseListener(mouse);
@@ -60,7 +65,6 @@ public class Game extends Canvas implements Runnable {
 	public static int getWindowHeight() {
 		return height;
 	}
-
 
 	public synchronized void start() {
 		running = true;
@@ -111,7 +115,10 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		key.update();
-		level.update();
+		if (state == GAMESTATE)
+			level.update();
+		else if (state == SHOPSTATE)
+			shop.update();
 	}
 
 	public void render() {
@@ -122,22 +129,35 @@ public class Game extends Canvas implements Runnable {
 		}
 
 		screen.clear();
-		level.render(screen);
-		
-		
-		for (int i = 0; i < pixels.length; i++) {
-			pixels[i] = screen.pixels[i];
+
+		if (state == GAMESTATE) {
+			level.render(screen);
+
+			for (int i = 0; i < pixels.length; i++) {
+				pixels[i] = screen.pixels[i];
+			}
+			Graphics g = bs.getDrawGraphics();
+
+			g.setColor(new Color(0xff00ff));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			g.drawImage(image, 0, 0, width * scale, height * scale, null);
+			level.score.render(g, ((level.player.getY() - 375) * -1) - 57 + "");
+			level.coin.render(g, (level.player.coins + ""));
+			g.dispose();
+			bs.show();
+		} else if (state == SHOPSTATE) {
+			shop.render(screen);
+			for (int i = 0; i < pixels.length; i++) {
+				pixels[i] = screen.pixels[i];
+			}
+			Graphics g = bs.getDrawGraphics();
+			g.setColor(new Color(0xff00ff));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			g.drawImage(image, 0, 0, width * scale, height * scale, null);
+			g.dispose();
+			bs.show();
+
 		}
-		Graphics g = bs.getDrawGraphics();
-		
-		g.setColor(new Color(0xff00ff));
-		g.fillRect(0, 0, getWidth(), getHeight());
-		g.drawImage(image, 0, 0, width * scale, height * scale, null);
-		level.score.render(g, ((level.player.getY() - 375) * -1) - 57 + "");
-		level.coin.render(g, (level.player.coins + ""));
-		g.dispose();
-		bs.show();
-		
 	}
 
 	public static void main(String[] args) {
