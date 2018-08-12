@@ -1,5 +1,7 @@
 package game.entity.mob;
 
+import game.graphics.AnimatedAll;
+import game.graphics.Screen;
 import game.graphics.Sprite;
 
 public class Alien extends Enemy{
@@ -12,8 +14,8 @@ public class Alien extends Enemy{
 		
 	}
 	
-	public void render() {
-		
+	public void render(Screen screen, int dy) {
+		screen.renderSprite(x, y+dy, AnimatedAll.get("Alien"), false);
 	}
 	
 	public void update() {

@@ -43,6 +43,9 @@ public class SpriteSheet {
 
 	public static SpriteSheet anC = new SpriteSheet("/textures/sheets/coinAnimation.png", 96, 16);
 	public static SpriteSheet animatedCoin = new SpriteSheet(anC, 0, 0, 6, 1, 16);
+	
+	public static SpriteSheet alien = new SpriteSheet("/textures/sheets/alien.png", 32 * 4, 32);
+	public static SpriteSheet animatedAlien = new SpriteSheet(alien, 0, 0, 4, 1, 32);
 
 	private Sprite[] sprites;
 

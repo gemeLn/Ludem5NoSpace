@@ -9,7 +9,8 @@ public class AnimatedAll {
 	
 	public static void init() {
 		animations = new HashMap<>();
-		animations.put("coin", new AnimatedSprite(SpriteSheet.animatedCoin, 16, 16, 5));
+		animations.put("coin", new AnimatedSprite(SpriteSheet.animatedCoin, 16, 16, 6));
+		animations.put("alien", new AnimatedSprite(SpriteSheet.animatedAlien, 32, 32, 4));
 	}
 	
 	public static void update() {
