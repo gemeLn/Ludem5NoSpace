@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
-import javax.swing.UIManager;
 
 import game.graphics.Screen;
 import game.input.Keyboard;
@@ -17,6 +16,7 @@ import game.input.Mouse;
 import game.level.Level;
 import game.level.Sector;
 import game.level.Shop;
+import game.music.SoundEffect;
 
 public class Game extends Canvas implements Runnable {
 	public final static int GAMESTATE = 0;
@@ -89,6 +89,9 @@ public class Game extends Canvas implements Runnable {
 		double delta = 0;
 		int frames = 0;
 		int updates = 0;
+		SoundEffect.init();
+	    SoundEffect.volume = SoundEffect.Volume.LOW;
+	    new SoundEffect("background.wav", true);
 		requestFocus();
 		while (running) {
 			long now = System.nanoTime();
