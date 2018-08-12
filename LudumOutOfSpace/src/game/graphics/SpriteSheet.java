@@ -31,7 +31,7 @@ public class SpriteSheet {
 
 	public static SpriteSheet background = new SpriteSheet("/textures/background.png", 270, 375);
 
-	public static SpriteSheet bigcoin = new SpriteSheet("/textures/bigcoin.png", 32,32);
+	public static SpriteSheet bigcoin = new SpriteSheet("/textures/bigcoin.png", 32, 32);
 	public static SpriteSheet shop = new SpriteSheet("/textures/shop.png", 32, 32);
 	public static SpriteSheet plus = new SpriteSheet("/textures/plus.png", 32, 32);
 
@@ -43,9 +43,11 @@ public class SpriteSheet {
 
 	public static SpriteSheet anC = new SpriteSheet("/textures/sheets/coinAnimation.png", 96, 16);
 	public static SpriteSheet animatedCoin = new SpriteSheet(anC, 0, 0, 6, 1, 16);
-	
+
 	public static SpriteSheet alien = new SpriteSheet("/textures/sheets/alien.png", 32 * 4, 32);
 	public static SpriteSheet animatedAlien = new SpriteSheet(alien, 0, 0, 4, 1, 32);
+
+	public static SpriteSheet platform = new SpriteSheet("/textures/sheets/platforms.png", 30, 10);
 
 	private Sprite[] sprites;
 

@@ -24,7 +24,7 @@ public class Shop {
 	int barLength = 180;
 	int speedLength = 0;
 	int jumpLength = 0;
-	int smallcoinx = 90;
+	int smallcoinx = 160;
 	Keyboard key;
 	Sprite plus;
 	Sprite x;
@@ -112,6 +112,8 @@ public class Shop {
 		g.setFont(Game.bigShopFont);
 		g.drawString("x " + player.coins, 230, exitButton.y + 45);
 		g.setFont(Game.smallShopFont);
+		g.drawString("Speed +1", 2*smallcoinx-100, 160);
+		g.drawString("Jump +1", 2*smallcoinx-100, 280);
 		g.drawString(speedCost, 2 * smallcoinx + 40, 160);
 		g.drawString(jumpCost, 2 * smallcoinx + 40, 280);
 
