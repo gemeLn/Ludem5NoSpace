@@ -11,6 +11,7 @@ import game.entity.Interactable;
 import game.entity.Platform;
 import game.entity.Spike;
 import game.entity.Wall;
+import game.entity.mob.Alien;
 import game.entity.mob.Player;
 import game.graphics.AnimatedAll;
 import game.graphics.Screen;
@@ -62,7 +63,7 @@ public class Level {
 		blocks.add(new Block(100, 300, 30, 10));
 		spikes.add(new Spike(200, 330));
 		// spikes.add(new Spike(100, 180, 16, 16));
-		coins.add(new Coin(100, 180));
+		coins.add(new Coin(100, 180));	
 		nextLevel = Game.getWindowHeight() - 200;
 		add(new Wall(false));
 		add(new Wall(true));

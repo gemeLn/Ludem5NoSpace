@@ -8,7 +8,7 @@ import game.graphics.Sprite;
 
 public class Enemy extends Entity {
 	
-	int xVel, yVel;
+	double xVel, yVel;
 	
 	public Enemy(int x, int y, int w, int h, Sprite s) {
 		this.x = x;
@@ -16,6 +16,13 @@ public class Enemy extends Entity {
 		this.w = w;
 		this.h = h;
 		this.sprite = s;
+		hitbox = new Rectangle(x, y, w, h);
+	}
+	public Enemy(int x, int y, int w, int h) {
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
 		hitbox = new Rectangle(x, y, w, h);
 	}
 	

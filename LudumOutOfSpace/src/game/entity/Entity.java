@@ -24,6 +24,11 @@ public class Entity {
 		this.y = y;
 		this.sprite = sprite;
 	}
+	public Entity(int x, int y) {
+		this.x = x;
+		this.y = y;
+		this.sprite = null;
+	}
 
 	public void update() {
 		updateHitbox();
