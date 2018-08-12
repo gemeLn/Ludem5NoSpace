@@ -93,7 +93,7 @@ public class Level {
 				inter = i;
 				if (sections.size() == inter + 1) {
 					sectionsUntilShop--;
-					if (sectionsUntilShop <2) {
+					if (sectionsUntilShop < 2) {
 						addShop();
 						sectionsUntilShop = 2;
 					} else {
