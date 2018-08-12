@@ -87,10 +87,8 @@ public class Game extends Canvas implements Runnable {
 		final double ns = 1000000000.0 / 60.0;
 		double delta = 0;
 		int frames = 0;
-		int updates = 0;
+		int updates = 0;		
 		SoundEffect.init();
-		SoundEffect.volume = SoundEffect.Volume.LOW;
-		new SoundEffect("background.wav", true);
 		requestFocus();
 		while (running) {
 			long now = System.nanoTime();
@@ -145,6 +143,7 @@ public class Game extends Canvas implements Runnable {
 			g.drawImage(image, 0, 0, width * scale, height * scale, null);
 			level.score.render(g, ((level.player.getY() - 375) * -1) - 57 + "");
 			level.coin.render(g, (level.player.coins + ""));
+			level.section.render(g, level.sectionNumber + "");
 			g.dispose();
 			bs.show();
 		} else if (state == SHOPSTATE) {

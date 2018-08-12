@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.Game;
 import game.entity.Block;
 import game.entity.Coin;
 import game.entity.Entity;
@@ -51,6 +52,10 @@ public class Section {
 
 	public void update() {
 
+	}
+	
+	public void hitbox(int start) {
+		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start - 20, Game.getWindowWidth(), height);
 	}
 
 	public static int getSectionHeight() {

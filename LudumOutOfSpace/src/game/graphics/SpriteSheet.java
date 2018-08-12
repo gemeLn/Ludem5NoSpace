@@ -34,6 +34,11 @@ public class SpriteSheet {
 	public static SpriteSheet coin = new SpriteSheet("/textures/EarthCoin.png", 16, 16);
 	public static SpriteSheet shop = new SpriteSheet("/textures/shop.png", 32, 32);
 	public static SpriteSheet plus = new SpriteSheet("/textures/plus.png", 32, 32);
+	
+	public static SpriteSheet plat = new SpriteSheet("/textures/Platform1.png", 80, 10);
+	public static SpriteSheet spike = new SpriteSheet("/textures/spike.png", 16, 16);
+	public static SpriteSheet door = new SpriteSheet("/textures/door.png", 135, 375);
+	
 	private Sprite[] sprites;
 
 	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSize) {

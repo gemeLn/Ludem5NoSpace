@@ -4,6 +4,8 @@ import java.awt.Rectangle;
 
 import game.Game;
 import game.graphics.Screen;
+import game.graphics.Sprite;
+import game.graphics.SpriteSheet;
 
 public class Wall extends Entity {
 	long nextJump = 0;
@@ -11,11 +13,12 @@ public class Wall extends Entity {
 	double y;
 	double w;
 	double h;
-	boolean right;
+	boolean right, reset;
 	double speed = 0.125;
 	int windowwidth = Game.getWindowWidth();
 	int tick;
 	int dy;
+	Sprite sprite;
 
 	public boolean canJump() {
 		return System.currentTimeMillis()>nextJump;
@@ -36,12 +39,13 @@ public class Wall extends Entity {
 		w = 10;
 		hitbox = new Rectangle((int) x, (int) y, (int) w, (int) h);
 		tick = 0;
+		sprite = new Sprite(135, 375, 0, 0, SpriteSheet.door);
 
 	}
 
 	public void update() {
 
-		if (tick >= 1200) {
+		if (tick >= 1) {
 			close();
 		}
 
@@ -55,10 +59,15 @@ public class Wall extends Entity {
 		hitbox.height = (int) h;
 		tick++;
 	}
+	
+	public void reset() {
+		
+	}
 
 	public void close() {
-		w += speed;
-		if (right)
+		if(w < 145)
+			w += speed;
+		if (x > 136)
 			x -= speed;
 		if ((w - 10) % 38 == 0) {
 			tick = 0;
@@ -66,7 +75,12 @@ public class Wall extends Entity {
 	}
 
 	public void render(Screen screen, int dy) {
-		screen.drawRect((int) x, 0, (int) w, (int) h, 0xffffff, false);
+		if(!right)
+			screen.renderSprite((int)(x+w-135), 0, sprite, false);
+		else
+			screen.renderSprite((int)(x), 0, sprite, false);
+		
+		screen.drawRect((int) x, 0, (int) w, (int) h, 0xff00ff, false);
 		this.dy = dy;
 	}
 }

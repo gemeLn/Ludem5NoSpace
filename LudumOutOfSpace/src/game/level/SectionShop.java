@@ -11,7 +11,7 @@ public class SectionShop extends Section {
 		super(start);
 		id = 100;
 		height = 175;
-		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start, Game.getWindowWidth(), height - 32);
+		hitbox(start);
 		interactables.add(new Vender(100, 320 - start));
 
 	}

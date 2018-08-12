@@ -17,10 +17,11 @@ public class Section2 extends Section {
 		platforms.add(new Platform(100, 260 - start, 40, 10));
 		platforms.add(new Platform(0, 200 - start, Game.getWindowWidth(), 10));
 		blocks.add(new Block(100,300 - start,30,10));
-		spikes.add(new Spike(200, 330 - start, 30, 10));
+		spikes.add(new Spike(200, 330 - start));
 		height = 175;
-		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start, Game.getWindowWidth(), height-32);
+		hitbox(start);
 	}
+	
 
 	public void update() {
 

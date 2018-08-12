@@ -3,9 +3,12 @@ package game.entity;
 import java.awt.Rectangle;
 
 import game.graphics.Screen;
+import game.graphics.Sprite;
+import game.graphics.SpriteSheet;
 
 public class Platform extends Rectangle {
 	private static final long serialVersionUID = -1848741423621673428L;
+	Sprite sprite;
 
 	public Platform(int x, int y, int w, int h) {
 		this.x = x;

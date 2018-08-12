@@ -54,6 +54,7 @@ public class SoundEffect {
 		   public SoundEffect(String soundFileName, boolean bool) {
 			      try {
 			         // Use URL (instead of File) to read from disk and JAR.
+			    	  System.out.print("Trying to load: " + "/res/music/" + soundFileName  + "...");
 			         InputStream url = this.getClass().getResourceAsStream("/res/music/" + soundFileName);
 			         // Set up an audio input stream piped from the sound file.
 			         InputStream bufferedIn = new BufferedInputStream(url);
@@ -62,12 +63,9 @@ public class SoundEffect {
 			         clip = AudioSystem.getClip();
 			         // Open audio clip and load samples from the audio input stream.
 			         clip.open(audioInputStream);
-			      } catch (UnsupportedAudioFileException e) {
-			         e.printStackTrace();
-			      } catch (IOException e) {
-			         e.printStackTrace();
-			      } catch (LineUnavailableException e) {
-			         e.printStackTrace();
+			         System.out.println(" succeeded!");
+			      } catch (Exception e) {
+			    	  System.err.println(" failed!");
 			      }
 			    		Thread thread = new Thread(new Runnable() {
 

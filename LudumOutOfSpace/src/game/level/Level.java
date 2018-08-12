@@ -16,6 +16,7 @@ import game.graphics.Screen;
 import game.graphics.Sprite;
 import game.graphics.SpriteSheet;
 import game.graphics.ui.UILabel;
+import game.music.SoundEffect;
 import game.util.Vector2i;
 
 public class Level {
@@ -37,11 +38,14 @@ public class Level {
 	public Player player;
 	private Sprite sprite;
 	public int inter = -1;
-	public UILabel score, coin;
+	public UILabel score, coin, section;
 	public int sectionsUntilShop = 0;
+	public int sectionNumber;
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
 	public Level(int width, int height) {
+		SoundEffect.volume = SoundEffect.Volume.LOW;
+		new SoundEffect("background.wav", true);
 		this.width = width;
 		this.height = height;
 		tilesInt = new int[width * height];
@@ -51,19 +55,31 @@ public class Level {
 		platforms.add(new Platform(0, 200, Game.getWindowWidth(), 10));
 		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
 		blocks.add(new Block(100, 300, 30, 10));
-		spikes.add(new Spike(200, 330, 30, 10));
+		spikes.add(new Spike(200, 330));
 		// spikes.add(new Spike(100, 180, 16, 16));
 		coins.add(new Coin(100, 180));
 		nextLevel = Game.getWindowHeight() - 200;
 		add(new Wall(false));
 		add(new Wall(true));
 
+		addSection();
+		addSection();
+		addSection();
+		addSection();
+		addSection();
+		addSection();
+		addSection();
+		addSection();
+		addSection();
 		addShop();
 		addSection();
-
+		
+		sectionNumber = 1;
+		
 		sprite = new Sprite(270, 375, 0, 0, SpriteSheet.background);
 		score = new UILabel(new Vector2i(120, 120), 0 + "");
 		coin = new UILabel(new Vector2i(200, 120), 0 + "");
+		section = new UILabel(new Vector2i(300, 120), 0 + "");
 
 		// generateLevel();
 
@@ -90,7 +106,10 @@ public class Level {
 
 		for (int i = inter - 2; i < sections.size(); i++) {
 			if (i >= 0 && sections.get(i).hitbox.contains(player.getX(), player.getY())) {
-				inter = i;
+				if(i != inter && i > inter) {
+					sectionNumber++;
+					inter = i;
+				}
 				if (sections.size() == inter + 1) {
 					sectionsUntilShop--;
 					if (sectionsUntilShop < 2) {
@@ -142,6 +161,7 @@ public class Level {
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
 
+		
 		for (Platform p : platforms) {
 			p.render(screen, dY);
 		}

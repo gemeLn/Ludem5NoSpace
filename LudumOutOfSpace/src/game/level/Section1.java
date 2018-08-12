@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import game.Game;
 import game.entity.Block;
 import game.entity.Coin;
+import game.entity.Interactable;
 import game.entity.Platform;
 import game.entity.Spike;
 import game.graphics.Screen;
@@ -22,7 +23,7 @@ public class Section1 extends Section {
 		platforms.add(new Platform(0, 200 - start, Game.getWindowWidth(), 10));
 		blocks.add(new Block(100, 300 - start, 30, 10));
 		height = 175;
-		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start, Game.getWindowWidth(), height - 32);
+		hitbox(start);
 
 	}
 
