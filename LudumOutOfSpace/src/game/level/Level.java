@@ -5,6 +5,7 @@ import java.util.List;
 
 import game.Game;
 import game.entity.Block;
+import game.entity.Coin;
 import game.entity.Entity;
 import game.entity.Platform;
 import game.entity.Spike;
@@ -29,11 +30,12 @@ public class Level {
 	private List<Platform> platforms = new ArrayList<Platform>();
 	private List<Block> blocks = new ArrayList<Block>();
 	private List<Spike> spikes = new ArrayList<Spike>();
+	private List<Coin> coins = new ArrayList<Coin>();
 	public List<Section> sections = new ArrayList<Section>();
 	public Player player;
 	private Sprite sprite;
 	public int inter = -1;
-	public UILabel score;
+	public UILabel score, coin;
 
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
@@ -41,13 +43,15 @@ public class Level {
 		this.width = width;
 		this.height = height;
 		tilesInt = new int[width * height];
-		getPlatforms().add(new Platform(0, 0, 0, Game.getWindowHeight()));
-		getPlatforms().add(new Platform(Game.getWindowWidth(), 0, 0, Game.getWindowHeight()));
-		getPlatforms().add(new Platform(100, 260, 40, 10));
-		getPlatforms().add(new Platform(0, 200, Game.getWindowWidth(), 10));
-		getPlatforms().add(new Platform(0, ground, Game.getWindowWidth(), 200));
-		getBlocks().add(new Block(100, 300, 30, 10));
-		getSpikes().add(new Spike(200, 330, 30, 10));
+		platforms.add(new Platform(0, 0, 0, Game.getWindowHeight()));
+		platforms.add(new Platform(Game.getWindowWidth(), 0, 0, Game.getWindowHeight()));
+		platforms.add(new Platform(100, 260, 40, 10));
+		platforms.add(new Platform(0, 200, Game.getWindowWidth(), 10));
+		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
+		blocks.add(new Block(100, 300, 30, 10));
+		spikes.add(new Spike(200, 330, 30, 10));
+		//spikes.add(new Spike(100, 180, 16, 16));
+		coins.add(new Coin(100, 180));
 		nextLevel = Game.getWindowHeight() - 200;
 		add(new Wall(false));
 		add(new Wall(true));
@@ -57,6 +61,7 @@ public class Level {
 		
 		sprite = new Sprite(270, 375, 0, 0, SpriteSheet.background);
 		score = new UILabel(new Vector2i(120, 120), 0 + "");
+		coin = new UILabel(new Vector2i(200, 120), 0 + "");
 		
 		// generateLevel();
 
@@ -131,6 +136,10 @@ public class Level {
 		}
 		for (Spike s : spikes) {
 			s.render(screen, dY);
+		}
+		
+		for (Coin c : coins) {
+			c.render(screen, dY);
 		}
 
 		for (int i = 0; i < entities.size(); i++) {
@@ -221,6 +230,19 @@ public class Level {
 			return platforms;
 		}
 		return platforms;
+	}
+	
+	public List<Coin> getCoins() {
+		if (inter >= 0) {
+			List<Coin> coins = new ArrayList<Coin>();
+			if (inter == 0)
+				coins.addAll(this.coins);
+			else
+				coins.addAll(sections.get(inter - 1).coins);
+			coins.addAll(sections.get(inter).coins);
+			return coins;
+		}
+		return coins;
 	}
 
 	public void setPlatforms(List<Platform> platforms) {

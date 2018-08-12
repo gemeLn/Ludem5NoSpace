@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import javax.swing.UIManager;
 
 import game.entity.Block;
+import game.entity.Coin;
 import game.entity.Platform;
 import game.entity.Spike;
 import game.entity.Wall;
@@ -31,6 +32,8 @@ public class Player extends Mob {
 
 	private AnimatedSprite animSprite = down;
 
+	public int coins;
+	
 	private int fireRate = 0;
 	int ground;
 	private double yVel;
@@ -74,6 +77,7 @@ public class Player extends Mob {
 		xVel = 0;
 		jump = 1;
 		walljump = 0;
+		coins = 0;
 	}
 
 	public String getName() {
@@ -120,6 +124,14 @@ public class Player extends Mob {
 				System.out.println(-y - 375);
 			}
 		}
+		
+		for (Coin coin : level.getCoins()) {
+			if(coin.hitbox.intersects(hitbox) && !coin.isCollected()) {
+				coins++;
+				coin.collected();
+			}
+		}
+		
 		for (Platform plat : level.getPlatforms()) {
 			if (plat.intersects(predictedHitbox)) {
 				if (yVel > 0 && y + h < plat.y + plat.height) {

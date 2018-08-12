@@ -134,6 +134,7 @@ public class Game extends Canvas implements Runnable {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		g.drawImage(image, 0, 0, width * scale, height * scale, null);
 		level.score.render(g, ((level.player.getY() - 375) * -1) - 57 + "");
+		level.coin.render(g, (level.player.coins + ""));
 		g.dispose();
 		bs.show();
 		

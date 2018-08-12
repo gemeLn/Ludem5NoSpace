@@ -14,7 +14,7 @@ public class Entity {
 	private boolean removed = false;
 	protected Level level;
 	protected final Random random = new Random();
-	protected Rectangle hitbox;
+	public Rectangle hitbox;
 
 	public Entity() {
 	}

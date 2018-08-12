@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import game.entity.Block;
+import game.entity.Coin;
 import game.entity.Platform;
 import game.entity.Spike;
 import game.graphics.Screen;
@@ -18,13 +19,27 @@ public class Section {
 	public List<Platform> platforms = new ArrayList<Platform>();
 	public List<Block> blocks = new ArrayList<Block>();
 	public List<Spike> spikes = new ArrayList<Spike>();
+	public List<Coin> coins = new ArrayList<Coin>();
 	
 	public Section(int start) {
 		
 	}
 	
 	public void render(Screen screen, int dy) {
+		for (Platform p : platforms) {
+			p.render(screen, dy);
+		}
+		for(Block b:blocks) {
+			b.render(screen, dy);
+		}
+		for(Spike s:spikes) {
+			s.render(screen, dy);
+		}
+		for(Coin c: coins) {
+			c.render(screen, dy);
+		}
 		
+		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
 	}
 	
 	public void update() {

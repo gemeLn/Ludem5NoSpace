@@ -23,20 +23,6 @@ public class Section2 extends Section {
 		height = 175;
 		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start, Game.getWindowWidth(), height);
 	}
-	
-	public void render(Screen screen, int dy) {
-		for (Platform p : platforms) {
-			p.render(screen, dy);
-		}
-		for(Block b:blocks) {
-			b.render(screen, dy);
-		}
-		for(Spike s:spikes) {
-			s.render(screen, dy);
-		}
-		
-		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
-	}
 
 	public void update() {
 

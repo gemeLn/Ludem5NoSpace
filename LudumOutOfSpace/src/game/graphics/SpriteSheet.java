@@ -30,6 +30,9 @@ public class SpriteSheet {
 	public static SpriteSheet dummy_right = new SpriteSheet(dummy, 3, 0, 1, 3, 32);
 	
 	public static SpriteSheet background = new SpriteSheet("/textures/background.png", 270, 375);
+	
+	public static SpriteSheet coin = new SpriteSheet("/textures/EarthCoin.png", 16, 16);
+
 
 	private Sprite[] sprites;
 
