@@ -92,7 +92,7 @@ public class Level {
 	}
 
 	public void addSection() {
-		switch ((int) (Math.random() + 1)) {
+		switch ((int) (Math.random() * 2)) {
 		case 0:
 			sections.add(new Section1(nextLevel));
 			nextLevel += Section1.getSectionHeight();

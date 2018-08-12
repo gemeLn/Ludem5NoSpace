@@ -13,6 +13,7 @@ public class Section {
 	
 	static int height;
 	protected int id;
+	protected boolean reset;	
 	public Rectangle hitbox;
 	public List<Platform> platforms = new ArrayList<Platform>();
 	public List<Block> blocks = new ArrayList<Block>();
