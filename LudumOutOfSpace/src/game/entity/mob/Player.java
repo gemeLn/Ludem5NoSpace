@@ -43,6 +43,15 @@ public class Player extends Mob {
 
 	private int jump;
 	private int speed = 3;
+	private int jumpheight = 10;
+
+	public void incSpeed() {
+		speed++;
+	}
+
+	public void incJumpheight() {
+		jumpheight++;
+	}
 
 	private int walljump;
 	private int wallCD = 1200;
@@ -202,7 +211,7 @@ public class Player extends Mob {
 		if (input.up) {
 			animSprite = up;
 			if (jump > 0) {
-				yVel = -9;
+				yVel = -jumpheight;
 				jump--;
 			}
 			if (walljump > 0) {
@@ -213,7 +222,7 @@ public class Player extends Mob {
 					animSprite = left;
 					rightcd = System.currentTimeMillis() + walljumpFreezeTime;
 				}
-				yVel = -9;
+				yVel = -jumpheight;
 				walljump--;
 				xVel = wallDir * 10;
 			}
@@ -231,7 +240,7 @@ public class Player extends Mob {
 			if (hit) {
 				// OPEN SHOP
 				System.out.println("SHOP");
-				Game.main.state = Game.SHOPSTATE;
+				Game.game.state = Game.SHOPSTATE;
 
 			}
 		}

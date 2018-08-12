@@ -3,9 +3,12 @@ package game.level;
 import game.graphics.Screen;
 
 public class Shop {
+	int[] speedCosts = { 1, 2, 4, 8 };
+	int[] jumpCosts = { 1, 11, 13 };
+	int speed = 0;
+	int jump = 0;
 
 	public void update() {
-		// TODO Auto-generated method stub
 
 	}
 

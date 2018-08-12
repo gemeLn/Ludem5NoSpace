@@ -2,38 +2,29 @@ package game.input;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
-public class Mouse implements MouseListener, MouseMotionListener {
+import game.Game;
+import game.level.Shop;
 
-	private static int mouseX = -1;
-	private static int mouseY = -1;
-	private static int mouseB = -1;
+public class Mouse implements MouseListener {
+	Shop shop;
 
-	public static int getX() {
-		return mouseX;
-	}
-
-	public static int getY() {
-		return mouseY;
-	}
-
-	public static int getButton() {
-		return mouseB;
+	public Mouse(Shop shop) {
+		this.shop = shop;
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		mouseX = e.getX();
-		mouseY = e.getY();
+
 	}
 
 	public void mouseMoved(MouseEvent e) {
-		mouseX = e.getX();
-		mouseY = e.getY();
+
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		System.out.println(e.getX()/2+" "+e.getY()/2);
+		if (Game.game.state == Game.SHOPSTATE) {
+			System.out.println("OKOKOKOKOK");
+		}
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -43,11 +34,10 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	}
 
 	public void mousePressed(MouseEvent e) {
-		mouseB = e.getButton();
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		mouseB = MouseEvent.NOBUTTON;
+
 	}
 
 }

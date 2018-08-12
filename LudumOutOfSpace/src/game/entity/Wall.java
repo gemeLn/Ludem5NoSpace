@@ -45,7 +45,7 @@ public class Wall extends Entity {
 			close();
 		}
 
-		if (Game.main.level.player.w > windowwidth - 2 * w) {
+		if (Game.game.level.player.w > windowwidth - 2 * w) {
 			System.out.println("DIE");
 			System.out.println(-level.player.y - 375);
 		}
