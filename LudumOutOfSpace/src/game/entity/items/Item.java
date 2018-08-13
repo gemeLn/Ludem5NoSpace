@@ -11,5 +11,6 @@ public class Item {
 	public String name;
 	public String description;
 	public Sprite icon;
+	public int id;
 
 }

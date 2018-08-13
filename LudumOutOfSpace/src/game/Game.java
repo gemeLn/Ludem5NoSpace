@@ -58,7 +58,7 @@ public class Game extends Canvas implements Runnable {
 		level = new Level(getWindowWidth(), getWindowHeight());
 		shop = new Shop(level.player, key);
 		addKeyListener(key);
-		Mouse mouse = new Mouse(shop, menu);
+		Mouse mouse = new Mouse(shop, menu,level.player);
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
 	}

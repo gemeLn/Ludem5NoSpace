@@ -4,8 +4,9 @@ import game.graphics.SpriteSheet;
 
 public class Fireball extends Item {
 	public Fireball() {
+		id=1;
 		name = "Fireball";
-		cost = 1000;
+		cost = 15;
 		cd = 10;
 		description = "Shoots fireball";
 		icon = SpriteSheet.fireball;

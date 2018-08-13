@@ -7,16 +7,19 @@ import java.awt.event.MouseMotionListener;
 
 import game.Game;
 import game.entity.items.Item;
+import game.entity.mob.Player;
 import game.level.Menu;
 import game.level.Shop;
 
 public class Mouse implements MouseListener, MouseMotionListener {
 	Shop shop;
 	Menu menu;
+	Player player;
 
-	public Mouse(Shop shop, Menu menu) {
+	public Mouse(Shop shop, Menu menu, Player p) {
 		this.shop = shop;
 		this.menu = menu;
+		this.player = p;
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -32,6 +35,16 @@ public class Mouse implements MouseListener, MouseMotionListener {
 					removeToolTip = false;
 					shop.tooltipOn = true;
 					shop.tooltipItem = shopitem;
+					shop.tooltipCost = true;
+				}
+			}
+			for (int i = 0; i < player.inventory.size(); i++) {
+				Item item = player.inventory.get(i);
+				if (item.hitbox.contains(p)) {
+					removeToolTip = false;
+					shop.tooltipOn = true;
+					shop.tooltipItem = item;
+					shop.tooltipCost = false;
 				}
 			}
 			if (removeToolTip) {
@@ -63,6 +76,14 @@ public class Mouse implements MouseListener, MouseMotionListener {
 				Item shopitem = shop.availableShop.get(i);
 				if (shopitem.hitbox.contains(p)) {
 					shop.buy(shopitem);
+				}
+			}
+			for (int i = 0; i < player.inventory.size(); i++) {
+				Item item = player.inventory.get(i);
+				if (item.hitbox.contains(p)) {
+					Item temp = player.inventory.get(0);
+					player.inventory.set(0, item);
+					player.inventory.set(i, temp);
 				}
 			}
 		}
