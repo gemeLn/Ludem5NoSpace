@@ -20,5 +20,7 @@ public class Item {
 	public boolean checkAvail(){
 	return System.currentTimeMillis()>nextAvail;
 	}
+	
+	public void use(){}
 
 }
