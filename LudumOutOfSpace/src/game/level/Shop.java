@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import game.Game;
 import game.entity.items.Fireball;
 import game.entity.items.Item;
+import game.entity.items.Tele;
 import game.entity.mob.Player;
 import game.graphics.Screen;
 import game.graphics.Sprite;
@@ -16,11 +17,12 @@ import game.input.Keyboard;
 
 public class Shop {
 	public ArrayList<Item> availableShop = new ArrayList<Item>();
-	public boolean tooltipOn = false;;
+	public boolean tooltipOn = false;
+	public boolean tooltipCost = true;
 	public Item tooltipItem;
-	Player player;
+	public Player player;
 	int[] speedCosts = { 1, 2, 4, 8 };
-	int[] jumpCosts = { 1, 11, 13 };
+	int[] jumpCosts = { 5, 10, 30, 50 };
 	String speedCost = "x " + speedCosts[0];
 	String jumpCost = "x " + jumpCosts[0];
 	int speed = 0;
@@ -44,6 +46,7 @@ public class Shop {
 
 	public Shop(Player p, Keyboard key) {
 		availableShop.add(new Fireball());
+		availableShop.add(new Tele());
 		this.player = p;
 		this.key = key;
 		plus = new Sprite(32, 32, 0, 0, SpriteSheet.plus);
@@ -62,6 +65,11 @@ public class Shop {
 		for (int i = 0; i < itemsize; i++) {
 			availableShop.get(i).hitbox.x = 2 * (10 + i * 32);
 			availableShop.get(i).hitbox.y = 2 * (180);
+		}
+		int inventorysize = player.inventory.size();
+		for (int i = 0; i < inventorysize; i++) {
+			player.inventory.get(i).hitbox.x = 2 * (10 + i * 32);
+			player.inventory.get(i).hitbox.y = 2 * (230);
 		}
 
 	}
@@ -117,7 +125,7 @@ public class Shop {
 
 		screen.drawRect(2, 226, 50, 1, 0x00ff00, false);
 		screen.drawRect(54, 226, 210, 1, 0xff0000, false);
-		
+
 		for (int i = 0; i < speed; i++) {
 			screen.fillRect(speedButton.x / 2 + 34, speedButton.y / 2 + 4, speedLength, 24, 0xffff00, false);
 		}
@@ -152,7 +160,15 @@ public class Shop {
 		g.setColor(Color.BLUE);
 		if (tooltipOn) {
 			g.drawString(tooltipItem.description, tooltipItem.hitbox.x, tooltipItem.hitbox.y - 20);
-			g.drawString("Cost: " + tooltipItem.cost, tooltipItem.hitbox.x, tooltipItem.hitbox.y);
+			if (tooltipCost)
+				g.drawString("Cost: " + tooltipItem.cost, tooltipItem.hitbox.x, tooltipItem.hitbox.y);
+			else {
+				if (tooltipItem.id == player.inventory.get(0).id)
+
+					g.drawString("EQUIPPED", tooltipItem.hitbox.x, tooltipItem.hitbox.y);
+				else
+					g.drawString("CLICK TO EQUIP", tooltipItem.hitbox.x, tooltipItem.hitbox.y);
+			}
 		}
 
 	}
