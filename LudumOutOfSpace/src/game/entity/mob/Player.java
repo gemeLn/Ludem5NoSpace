@@ -284,8 +284,10 @@ public class Player extends Mob {
 	public void render(Screen screen, int dy) {
 		int flip = 0;
 		sprite = animSprite.getSprite();
-		if(jump = 1)
-		screen.renderSprite(x, y + dy, sprite, false);
+		if(jump == 1)
+			screen.renderSprite(x, y + dy, Sprite.player_jump, false);
+		else
+			screen.renderSprite(x, y + dy, sprite, false);
 		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
 
 	}
