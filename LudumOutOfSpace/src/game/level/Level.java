@@ -30,6 +30,8 @@ public class Level {
 	protected int nextLevel;
 	public int dY = 0;
 	public int ground = 350;
+	public static Wall wall1;
+	public static Wall wall2;
 	public List<Entity> entities = new ArrayList<Entity>();
 	public List<Alien> aliens = new ArrayList<Alien>();
 	private List<Platform> platforms = new ArrayList<Platform>();
@@ -65,8 +67,8 @@ public class Level {
 		// spikes.add(new Spike(100, 180, 16, 16));
 		coins.add(new Coin(100, 180));
 		nextLevel = Game.getWindowHeight() - 200;
-		add(new Wall(false));
-		add(new Wall(true));
+		wall1 = new Wall(false);
+		wall2 = new Wall(true);
 
 		addShop();
 
@@ -93,8 +95,11 @@ public class Level {
 			entities.get(i).update();
 		}
 		
+		wall1.update();
+		wall2.update();
+		
 		for (int i = 0; i < aliens.size(); i++) {
-			aliens.get(i).update(entities.get(0).getHitbox(), entities.get(1).getHitbox(), dY);
+			aliens.get(i).update(dY);
 		}
 		
 		player.update();
@@ -127,11 +132,11 @@ public class Level {
 			}
 		}
 		if(inter > -2 && inter != -1)
-			sections.get(inter+1).update(entities.get(0).getHitbox(), entities.get(1).getHitbox(), dY);
+			sections.get(inter+1).update(dY);
 		if(inter > -1)
-			sections.get(inter).update(entities.get(0).getHitbox(), entities.get(1).getHitbox(), dY);
+			sections.get(inter).update(dY);
 		if(inter > 0)
-			sections.get(inter-1).update(entities.get(0).getHitbox(), entities.get(1).getHitbox(), dY);
+			sections.get(inter-1).update(dY);
 
 		remove();
 	}
@@ -207,6 +212,8 @@ public class Level {
 		for (Alien a : aliens) {
 			a.render(screen, dY);
 		}
+		wall1.render(screen, dY);
+		wall2.render(screen, dY);
 		player.render(screen, dY);
 	}
 

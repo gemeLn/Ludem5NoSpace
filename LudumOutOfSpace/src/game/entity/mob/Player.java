@@ -75,8 +75,8 @@ public class Player extends Mob {
 		this.x = x;
 		this.y = y + 16;
 		this.input = input;
-		this.leftwall = (Wall) level.entities.get(0);
-		this.rightwall = (Wall) level.entities.get(1);
+		this.leftwall = (Wall) level.wall1;
+		this.rightwall = (Wall) level.wall2;
 		w = 20;
 		halfwidth = w / 2;
 		h = 32;

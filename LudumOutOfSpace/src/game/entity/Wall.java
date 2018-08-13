@@ -57,7 +57,7 @@ public class Wall extends Entity {
 		hitbox.y = (int) -dy;
 		hitbox.width = (int) w;
 		hitbox.height = (int) h;
-		if (level.levelid != 100) {
+		if (Game.game.level.levelid != 100) {
 			tick++;
 		}
 	}

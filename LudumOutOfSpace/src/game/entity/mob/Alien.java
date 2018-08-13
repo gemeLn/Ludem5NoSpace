@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import game.graphics.AnimatedAll;
 import game.graphics.Screen;
+import game.level.Level;
 ;
 
 public class Alien extends Enemy{
@@ -22,11 +23,12 @@ public class Alien extends Enemy{
 		screen.renderSprite(x, y+dy, AnimatedAll.get("alien"), false, dir != 1);
 	}
 	
-	public void update(Rectangle wall1, Rectangle wall2, int dy) {
+	public void update(int dy) {
 		x += xVel * dir;
 		hitbox.x = x;
 		hitbox.y = y;
-		if((!(connected.contains((int)x,(int)y+33)))||(!(connected.contains((int)x+32,(int)y+33))) || (wall1.contains((int)x-1,(int)y+dy)) || (wall2.contains((int)x+33,(int)y+dy))) {
+		System.out.println(dy);
+		if((!(connected.contains((int)x,(int)y+33)))||(!(connected.contains((int)x+32,(int)y+33))) || (Level.wall1.getHitbox().contains((int)x-1,(int)(int)Level.wall1.getY()-20)) || (Level.wall2.getHitbox().contains((int)x+33,(int)Level.wall2.getY()+20))) {
 			dir *= -1;
 			x += xVel * dir;
 		}

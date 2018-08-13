@@ -55,9 +55,9 @@ public class Section {
 		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xffff00, false);
 	}
 
-	public void update(Rectangle wall1, Rectangle wall2, int dy) {
+	public void update(int dy) {
 		for(Alien a: aliens) {
-			a.update(wall1, wall2, dy);
+			a.update(dy);
 		}
 	}
 	
