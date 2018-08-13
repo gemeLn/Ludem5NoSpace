@@ -126,6 +126,12 @@ public class Level {
 				}
 			}
 		}
+		if(inter > -2 && inter != -1)
+			sections.get(inter+1).update(entities.get(0).getHitbox(), entities.get(1).getHitbox(), dY);
+		if(inter > -1)
+			sections.get(inter).update(entities.get(0).getHitbox(), entities.get(1).getHitbox(), dY);
+		if(inter > 0)
+			sections.get(inter-1).update(entities.get(0).getHitbox(), entities.get(1).getHitbox(), dY);
 
 		remove();
 	}
@@ -303,6 +309,19 @@ public class Level {
 			return coins;
 		}
 		return coins;
+	}
+	
+	public List<Alien> getAlien() {
+		if (inter >= 0) {
+			List<Alien> aliens = new ArrayList<Alien>();
+			if (inter == 0)
+				aliens.addAll(this.aliens);
+			else
+				aliens.addAll(sections.get(inter - 1).aliens);
+			coins.addAll(sections.get(inter).coins);
+			return aliens;
+		}
+		return aliens;
 	}
 
 	public void setPlatforms(List<Platform> platforms) {

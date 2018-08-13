@@ -30,7 +30,6 @@ public class Coin extends Entity{
 	}
 	
 	public void update() {
-		animatedSprite.update(10);
 	}
 	
 	public void collected() {

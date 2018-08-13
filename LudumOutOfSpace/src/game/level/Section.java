@@ -11,6 +11,7 @@ import game.entity.Entity;
 import game.entity.Interactable;
 import game.entity.Platform;
 import game.entity.Spike;
+import game.entity.mob.Alien;
 import game.graphics.Screen;
 
 public class Section {
@@ -23,6 +24,7 @@ public class Section {
 	public List<Block> blocks = new ArrayList<Block>();
 	public List<Spike> spikes = new ArrayList<Spike>();
 	public List<Coin> coins = new ArrayList<Coin>();
+	public List<Alien> aliens = new ArrayList<Alien>();
 	public List<Entity> entities = new ArrayList<Entity>();
 	public List<Interactable> interactables = new ArrayList<Interactable>();
 
@@ -43,6 +45,9 @@ public class Section {
 		for (Coin c : coins) {
 			c.render(screen, dy);
 		}
+		for (Alien a : aliens) {
+			a.render(screen, dy);
+		}
 		for (Interactable i : interactables) {
 			i.render(screen, dy);
 		}
@@ -50,9 +55,9 @@ public class Section {
 		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xffff00, false);
 	}
 
-	public void update() {
-		for (Coin c : coins) {
-			c.update();
+	public void update(Rectangle wall1, Rectangle wall2, int dy) {
+		for(Alien a: aliens) {
+			a.update(wall1, wall2, dy);
 		}
 	}
 	
