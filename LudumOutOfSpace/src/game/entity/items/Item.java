@@ -2,8 +2,8 @@ package game.entity.items;
 
 import java.awt.Rectangle;
 
+import game.entity.mob.Player;
 import game.graphics.Sprite;
-import game.entity.mobs.Player;
 public class Item {
 	long nextAvail = 0;
 	public int cost;
