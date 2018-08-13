@@ -238,6 +238,7 @@ public class Game extends Canvas implements Runnable {
 		state = GAMESTATE;
 		System.out.println(state + "dasdsdsad");
 		level = new Level(getWindowWidth(), getWindowHeight());
+		shop = new Shop(level.player, key);
 	}
 
 	public void credit() {
