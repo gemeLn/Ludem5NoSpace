@@ -1,5 +1,6 @@
 package game.entity.items;
 
+import game.entity.mob.Player;
 import game.graphics.SpriteSheet;
 
 public class Fireball extends Item {
