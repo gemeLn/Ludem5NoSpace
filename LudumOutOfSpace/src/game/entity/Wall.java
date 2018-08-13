@@ -85,4 +85,12 @@ public class Wall extends Entity {
 		screen.drawRect((int) x, 0, (int) w, (int) h, 0xff00ff, false);
 		this.dy = dy;
 	}
+	
+	public double getXD() {
+		return x;
+	}
+	
+	public double getWD() {
+		return w;
+	}
 }
