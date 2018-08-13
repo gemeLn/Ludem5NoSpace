@@ -15,6 +15,6 @@ public class Item {
 	public int id;
 	
 	public void cooldown(){
-	nextAvail+=cd;}
+	nextAvail+=1000*cd;}
 
 }
