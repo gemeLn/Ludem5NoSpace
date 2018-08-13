@@ -16,6 +16,8 @@ import game.input.Keyboard;
 
 public class Shop {
 	public ArrayList<Item> availableShop = new ArrayList<Item>();
+	public boolean tooltipOn = false;;
+	public Item tooltipItem;
 	Player player;
 	int[] speedCosts = { 1, 2, 4, 8 };
 	int[] jumpCosts = { 1, 11, 13 };
@@ -56,8 +58,8 @@ public class Shop {
 		}
 		int itemsize = availableShop.size();
 		for (int i = 0; i < itemsize; i++) {
-			availableShop.get(i).hitbox.x = 10 + i * 32;
-			availableShop.get(i).hitbox.y = 190;
+			availableShop.get(i).hitbox.x = 2 * (10 + i * 32);
+			availableShop.get(i).hitbox.y = 2 * (190);
 		}
 
 	}
@@ -118,8 +120,7 @@ public class Shop {
 		}
 		int itemsize = availableShop.size();
 		for (int i = 0; i < itemsize; i++) {
-			screen.renderSprite(availableShop.get(i).hitbox.x, availableShop.get(i).hitbox.y, availableShop.get(i).icon,
-					false);
+			screen.renderSprite(10 + i * 32, 190, availableShop.get(i).icon, false);
 		}
 
 	}
@@ -134,7 +135,15 @@ public class Shop {
 		g.drawString("Jump +1", 2 * smallcoinx - 100, 235);
 		g.drawString(speedCost, 2 * smallcoinx + 40, 115);
 		g.drawString(jumpCost, 2 * smallcoinx + 40, 235);
+		if (tooltipOn) {
+			g.drawString(tooltipItem.description, tooltipItem.hitbox.x, tooltipItem.hitbox.y);
+			g.drawString("Cost: " + tooltipItem.cost, tooltipItem.hitbox.x, tooltipItem.hitbox.y + 20);
+		}
 
+	}
+
+	public void buy(Item shopitem) {
+		
 	}
 
 }

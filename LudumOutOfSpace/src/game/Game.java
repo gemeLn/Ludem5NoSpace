@@ -53,10 +53,11 @@ public class Game extends Canvas implements Runnable {
 		screen = new Screen(width, height);
 		frame = new JFrame();
 		level = new Level(getWindowWidth(), getWindowHeight());
-		shop = new Shop(level.player,key);
+		shop = new Shop(level.player, key);
 		addKeyListener(key);
 		Mouse mouse = new Mouse(shop, level.player);
 		addMouseListener(mouse);
+		addMouseMotionListener(mouse);
 	}
 
 	public static int getWindowWidth() {

@@ -3,13 +3,14 @@ package game.input;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import game.Game;
 import game.entity.items.Item;
 import game.entity.mob.Player;
 import game.level.Shop;
 
-public class Mouse implements MouseListener {
+public class Mouse implements MouseListener, MouseMotionListener {
 	Shop shop;
 
 	public Mouse(Shop shop, Player p) {
@@ -21,7 +22,18 @@ public class Mouse implements MouseListener {
 	}
 
 	public void mouseMoved(MouseEvent e) {
-
+		Point p = e.getPoint();
+		boolean removeToolTip = true;
+		for (Item shopitem : shop.availableShop) {
+			if (shopitem.hitbox.contains(p)) {
+				removeToolTip = false;
+				shop.tooltipOn = true;
+				shop.tooltipItem = shopitem;
+			}
+		}
+		if (removeToolTip) {
+			shop.tooltipOn = false;
+		}
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -39,7 +51,7 @@ public class Mouse implements MouseListener {
 			}
 			for (Item shopitem : shop.availableShop) {
 				if (shopitem.hitbox.contains(p)) {
-					System.out.println(shopitem.name);
+					shop.buy(shopitem);
 				}
 			}
 		}
