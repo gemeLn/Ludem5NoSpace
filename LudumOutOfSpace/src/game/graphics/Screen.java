@@ -86,22 +86,25 @@ public class Screen {
 		}
 	}
 	
-	public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed) {
-		boolean flip = false;
-		if (fixed) {
-			xp -= xOffset;
-			yp -= yOffset;
-		}
-		for (int y = 0; y < sprite.getHeight(); y++) {
-			int ya = y + yp;
-			for (int x = 0; x < sprite.getWidth(); x++) {
-				int xa = x + xp;
-				int xf = x;
-				if (flip)
-					xf = sprite.getWidth() - x - 1;
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
-				int col = sprite.pixels[xf + y * sprite.getWidth()];
-				if (col != ALPHA_COL && col != 0xff7f007f) pixels[xa + ya * width] = col;
+	public void renderSprite(int x, int y, Sprite texture, boolean fixed) {
+		boolean flipX = false;
+		for (int yy = 0; yy < texture.getHeight(); yy++) {
+			int yo = y + yy;
+			for (int xx = 0; xx < texture.getWidth(); xx++) {
+				int xo = x + xx;
+				// Bound checking goes here!
+				if (yo >= height || xo >= width || xo < 0 || yo < 0)
+					continue;
+
+				// Flip x if needed
+				int xf = xx;
+				if (flipX)
+					xf = texture.getWidth() - xx - 1;
+
+				int color = texture.pixels[xf + yy * texture.getWidth()];
+				if (color == 0xffff00ff)
+					continue;
+				pixels[xo + yo * this.width] = color;
 			}
 		}
 	}
