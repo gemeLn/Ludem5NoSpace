@@ -121,8 +121,8 @@ public class Player extends Mob {
 		boolean xOK = true;
 		for (Block b : level.getBlocks()) {
 			if (b.intersects(predictedHitbox)) {
-				int cx1 = b.x + (int) (b.width / 2);
-				int cy1 = b.y + (int) (b.height / 2);
+				int cx1 = b.x + (int) (b.width / 2.0);
+				int cy1 = b.y + (int) (b.height / 2.0);
 				int cx2 = x + halfSpriteSize;
 				int cy2 = y + halfSpriteSize;
 				if (Math.abs(cx1 - cx2) > Math.abs(cy1 - cy2)) {
@@ -130,10 +130,13 @@ public class Player extends Mob {
 					if (cx2 > cx1) {
 						x = b.x + b.width - halfSpriteSize + halfwidth;
 					}
+					System.out.println("XCOL");
 				} else {
+					System.out.println("YCOL");
 					yOK = false;
 					if (yVel > 0) {
 						jump = 1;
+						y = b.y - h;
 					}
 					if (cy2 > cy1) {
 						y = b.y + b.height + 1;
