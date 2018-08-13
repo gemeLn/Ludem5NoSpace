@@ -36,7 +36,7 @@ public class Player extends Mob {
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 6);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 6);
 	private AnimatedSprite jumpAni = new AnimatedSprite(SpriteSheet.player_jump, 32, 32, 1);
-
+	private long fireballLimit=0;
 	private AnimatedSprite animSprite = right;
 
 	Sprite player_jump;
@@ -116,7 +116,10 @@ public class Player extends Mob {
 	public int getRealX() {
 		return x + halfSpriteSize - halfwidth;
 	}
-
+	public void fireball(){
+	fireballLimit=System.currentTimeMillis()+400;
+	System.out.println("FIRE BALL");
+	}
 	public void collisions() {
 		Rectangle predictedHitbox = new Rectangle((getRealX() + xVel), (int) (y + yVel), w, h);
 		boolean yOK = true;
@@ -133,10 +136,7 @@ public class Player extends Mob {
 					if (cx2 > cx1) {
 						x = b.x + b.width - halfSpriteSize + halfwidth;
 					}
-					System.out.println("XCOL");
 				} else {
-					System.out.println("YCOL");
-
 					yOK = false;
 					if (yVel > 0) {
 						jump = 1;
@@ -157,8 +157,13 @@ public class Player extends Mob {
 
 		for (Alien alien : level.getAlien()) {
 			if (alien.getHitbox().intersects(hitbox)) {
+				if(System.currentTimeMillis()>fireballLimit){
 				Game.game.gameOver();
-				System.out.println("dead");
+				System.out.println("dead");}
+				else{
+				//GEOFFERY KILL ALIEN HERE
+				
+				}
 			}
 		}
 
