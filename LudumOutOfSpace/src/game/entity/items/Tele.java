@@ -16,7 +16,7 @@ public class Tele extends Item {
 	}
 	
 	public void use(Player p){
-	p.y-=50;
+		p.setY(p.getY() - 50);
 	}
 
 }

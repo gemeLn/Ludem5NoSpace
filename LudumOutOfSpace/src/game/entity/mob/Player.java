@@ -265,10 +265,10 @@ public class Player extends Mob {
 				// OPEN SHOP
 				Game.game.state = Game.SHOPSTATE;
 
-			}else{
+			}else{ 
 			if(inventory.size()>0){
 			if(inventory.get(0).checkAvail()){
-			inventory.get(0).use();
+			inventory.get(0).use(this);
 			inventory.get(0).cooldown();
 			}
 			}

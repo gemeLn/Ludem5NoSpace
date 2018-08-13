@@ -189,6 +189,10 @@ public class Level {
 			sections.add(new Section5(nextLevel));
 			nextLevel += Section5.getSectionHeight();
 			break;
+		case 5:
+			sections.add(new Section6(nextLevel));
+			nextLevel += Section6.getSectionHeight();
+			break;
 		}
 		
 	}
