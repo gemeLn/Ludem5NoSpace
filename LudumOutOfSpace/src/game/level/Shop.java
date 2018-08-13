@@ -143,7 +143,10 @@ public class Shop {
 	}
 
 	public void buy(Item shopitem) {
-		
+		if (player.coins > shopitem.cost) {
+			availableShop.remove(shopitem);
+			player.inventory.add(shopitem);
+		}
 	}
 
 }

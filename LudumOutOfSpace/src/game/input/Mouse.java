@@ -49,7 +49,8 @@ public class Mouse implements MouseListener, MouseMotionListener {
 			} else if (shop.exitButton.contains(p)) {
 				shop.exit();
 			}
-			for (Item shopitem : shop.availableShop) {
+			for (int i=0;i<shop.availableShop.size();i++) {
+				Item shopitem = shop.availableShop.get(i);
 				if (shopitem.hitbox.contains(p)) {
 					shop.buy(shopitem);
 				}
