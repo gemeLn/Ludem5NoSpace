@@ -13,5 +13,11 @@ public class Fireball extends Item {
 		hitbox.width = 64;
 		hitbox.height = 64;
 	}
+	
+	
+	public void use(Player p){
+	p.fireball();
+	
+	}
 
 }
