@@ -21,7 +21,9 @@ public class Menu {
 	}
 
 	public void startGame() {
+		Game.menuTheme.stop();
 		Game.game.state = Game.GAMESTATE;
+		Game.game.level.soundStart();
 	}
 
 	public Rectangle start = new Rectangle(205, 430, 130, 65);

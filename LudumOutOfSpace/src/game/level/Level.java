@@ -46,7 +46,7 @@ public class Level {
 	public UILabel score, coin, section;
 	public int sectionsUntilShop = 8;
 	public int sectionNumber;
-	public SoundEffect background;
+	public static SoundEffect background;
 	public int tick;
 	private int spriteY;
 
@@ -55,10 +55,6 @@ public class Level {
 	public Level(int width, int height) {
 		AnimatedAll.init();
 		spriteY = -1000+375;
-		
-		SoundEffect.volume = SoundEffect.Volume.LOW;
-		background = new SoundEffect("background.wav", true);
-		
 		inter = -1;
 		entities = new ArrayList<Entity>();
 		aliens = new ArrayList<Alien>();
@@ -73,12 +69,9 @@ public class Level {
 		this.height = height;
 		wall1 = new Wall(false);
 		wall2 = new Wall(true);
-		platforms.add(new Platform(100, 260, 40, 10));
 		platforms.add(new Platform(0, 200, Game.getWindowWidth(), 10));
 		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
-		aliens.add(new Alien(platforms.get(1)));
-		blocks.add(new Block(100, 300, 30, 10));
-		spikes.add(new Spike(200, 330));
+		aliens.add(new Alien(platforms.get(0)));
 		// spikes.add(new Spike(100, 180, 16, 16));
 		coins.add(new Coin(100, 180));
 		nextLevel = Game.getWindowHeight() - 200;
@@ -89,9 +82,9 @@ public class Level {
 
 		sprite = new Sprite(270, 1000, 0, 0, SpriteSheet.background);
 		sprite2 = new Sprite(270, 1000, 0, 0, SpriteSheet.background);
-		score = new UILabel(new Vector2i(120, 120), 0 + "");
-		coin = new UILabel(new Vector2i(200, 120), 0 + "");
-		section = new UILabel(new Vector2i(300, 120), 0 + "");
+		score = new UILabel(new Vector2i(128, 40), 0 + "");
+		coin = new UILabel(new Vector2i(435, 41), 0 + "");
+		//section = new UILabel(new Vector2i(300, 120), 0 + "");
 
 		// generateLevel();
 
@@ -114,8 +107,8 @@ public class Level {
 			entities.get(i).update();
 		}
 		
-		wall1.update();
-		wall2.update();
+		wall1.update(levelid, player);
+		wall2.update(levelid, player);
 		
 		for (int i = 0; i < aliens.size(); i++) {
 			aliens.get(i).update(dY);
@@ -168,7 +161,7 @@ public class Level {
 	}
 
 	public void addSection() {
-		switch ((int) (Math.random()) + 4) {
+		switch ((int) (Math.random() * 4)) {
 		case 0:
 			sections.add(new Section1(nextLevel));
 			nextLevel += Section1.getSectionHeight();
@@ -189,10 +182,6 @@ public class Level {
 			sections.add(new Section5(nextLevel));
 			nextLevel += Section5.getSectionHeight();
 			break;
-		case 5:
-			sections.add(new Section6(nextLevel));
-			nextLevel += Section6.getSectionHeight();
-			break;
 		}
 		
 	}
@@ -212,7 +201,7 @@ public class Level {
 	 */
 
 	public void render(Screen screen) {
-		screen.renderSprite(0, spriteY, sprite, false);
+		screen.renderSprite(0, -280, sprite, false);
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
 
@@ -260,6 +249,11 @@ public class Level {
 	public void add(Entity e) {
 		e.init(this);
 		entities.add(e);
+	}
+	
+	public void soundStart() {
+		SoundEffect.volume = SoundEffect.Volume.LOW;
+		background = new SoundEffect("background.wav", true);
 	}
 
 	public List<Entity> getEntities(Entity e, int radius) {

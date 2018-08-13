@@ -23,6 +23,13 @@ public class Section5 extends Section {
 		platforms.add(new Platform(90, 85 - start, 10, 10));
 		platforms.add(new Platform(40, 65 - start, 10, 10));
 		
+		coins.add(new Coin(220, 175-20 - start));
+		coins.add(new Coin(100, 295-20 - start));
+		coins.add(new Coin(120, 295-20 - start));
+		coins.add(new Coin(140, 280-20 - start));
+		coins.add(new Coin(160, 280-20 - start));
+
+		
 		blocks.add(new Block(60, 295-start, 210, 10));
 		
 		spikes.add(new Spike(100-16,295-start-16));

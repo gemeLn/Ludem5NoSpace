@@ -30,7 +30,7 @@ public class Block extends Rectangle {
 	}
 
 	public void render(Screen screen, int dy) {
-		screen.drawRect(x, y + dy, width, height, 0x00ff00, true);
+		//screen.drawRect(x, y + dy, width, height, 0x00ff00, true);
 		for (int i = 0; i < segments; i++) {
 			screen.renderSprite(x + 10 * i, y + dy, block, false);
 		}

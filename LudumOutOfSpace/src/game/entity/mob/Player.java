@@ -97,7 +97,7 @@ public class Player extends Mob {
 		xVel = 0;
 		jump = 1;
 		walljump = 0;
-		coins = 1000;
+		coins = 0;
 	}
 
 	public String getName() {
@@ -151,18 +151,17 @@ public class Player extends Mob {
 
 		for (Spike spike : level.getSpikes()) {
 			if (spike.intersects(hitbox)) {
-				Game.game.gameOver();
+				Game.game.gameOver(y);
 			}
 		}
 
 		for (Alien alien : level.getAlien()) {
 			if (alien.getHitbox().intersects(hitbox)) {
 				if(System.currentTimeMillis()>fireballLimit){
-				Game.game.gameOver();
+				Game.game.gameOver(y);
 				System.out.println("dead");}
 				else{
-				//GEOFFERY KILL ALIEN HERE
-				
+					alien.die();
 				}
 			}
 		}
@@ -312,7 +311,6 @@ public class Player extends Mob {
 	}
 
 	public void render(Screen screen, int dy) {
-		int flip = 0;
 		sprite = animSprite.getSprite();
 		if (!walking && jump >= 1)
 			screen.renderSprite(x, y + dy, Sprite.player_forward, false, animSprite.equals(left));
@@ -320,7 +318,7 @@ public class Player extends Mob {
 			screen.renderSprite(x, y + dy, sprite, false);
 		} else
 			screen.renderSprite(x, y + dy, jumpAni.getSprite(), false, animSprite.equals(left));
-		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
+		//screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
 
 	}
 

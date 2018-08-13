@@ -24,6 +24,6 @@ public class Spike extends Rectangle {
 
 	public void render(Screen screen, int dy) {
 		screen.renderSprite(x, y + dy, sprite, false);
-		screen.drawRect(x, y + dy, width, height, 0x00ff00, true);
+		//screen.drawRect(x, y + dy, width, height, 0x00ff00, true);
 	}
 }

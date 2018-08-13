@@ -22,6 +22,10 @@ public class Section4 extends Section {
 		blocks.add(new Block(60, 255-start, 10, 10));
 		blocks.add(new Block(30, 205-start, 10, 10));
 		
+		coins.add(new Coin(100, 145 - start));
+		coins.add(new Coin(120, 145 - start));
+		coins.add(new Coin(140, 145 - start));
+		
 		blocks.add(new Block(70, 165-start, 200, 10));
 		blocks.add(new Block(70, 115-start, 120, 10));
 		

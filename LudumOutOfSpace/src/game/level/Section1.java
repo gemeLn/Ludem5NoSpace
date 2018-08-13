@@ -16,7 +16,7 @@ public class Section1 extends Section {
 		coins.add(new Coin(120, 280 - start));
 		coins.add(new Coin(140, 280 - start));
 		platforms.add(new Platform(50, 200 - start, Game.getWindowWidth()-100, 10));
-		platforms.add(new Platform(0, 0 - start, Game.getWindowWidth(), 10));
+		platforms.add(new Platform(0, 35 - start, Game.getWindowWidth(), 10));
 		spikes.add(new Spike(255, 230-start));
 		spikes.add(new Spike(0, 230-start));
 		spikes.add(new Spike((Game.getWindowWidth()/2), 210-start));
@@ -26,7 +26,7 @@ public class Section1 extends Section {
 		spikes.add(new Spike((Game.getWindowWidth()/2)+16, 210-start));
 		spikes.add(new Spike((Game.getWindowWidth()/2)+32, 210-start));
 		aliens.add(new Alien(platforms.get(0)));
-		height = 375;
+		height = 340;
 		hitbox(start);
 
 	}

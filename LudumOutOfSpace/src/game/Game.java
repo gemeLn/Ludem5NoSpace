@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -36,8 +37,8 @@ public class Game extends Canvas implements Runnable {
 	private static int width = 1080 / 4;
 	private static int height = 1500 / 4;
 	private static int scale = 2;
-	public static String title = "Rain";
-
+	public static String title = "Cosmic Collapse";
+	int score;
 	private Thread thread;
 	private JFrame frame;
 	public Keyboard key;
@@ -47,7 +48,8 @@ public class Game extends Canvas implements Runnable {
 	public OverMenu overmenu;
 	public CreditMenu credmenu;
 	private boolean running = false;
-	private BufferedImage background, window;
+	private Image background, window, border, bigCoin, hs;
+	public static SoundEffect menuTheme;
 
 	private Screen screen;
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -56,6 +58,9 @@ public class Game extends Canvas implements Runnable {
 	public static Game game;
 
 	public Game() {
+		SoundEffect.volume = SoundEffect.Volume.LOW;
+		menuTheme = new SoundEffect("CCMainTheme.wav", true);
+		
 		menu = new Menu();
 		game = this;
 		Dimension size = new Dimension(width * scale, height * scale);
@@ -72,10 +77,15 @@ public class Game extends Canvas implements Runnable {
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
 		try {
-			background = ImageIO.read(getClass().getResourceAsStream("/res/textures/background.png"));
+			background = ImageIO.read(getClass().getResourceAsStream("/res/textures/icon.png"));
+			window = ImageIO.read(getClass().getResourceAsStream("/res/textures/hs.png"));
+			border = ImageIO.read(getClass().getResourceAsStream("/res/textures/border.png"));
+			bigCoin = ImageIO.read(getClass().getResourceAsStream("/res/textures/bigcointrans.png"));
+			hs = ImageIO.read(getClass().getResourceAsStream("/res/textures/hsreal.png"));
 		} catch(Exception e) {
 			System.err.println("CODERED");
 		}
+		frame.setIconImage(background);
 	}
 
 	public static int getWindowWidth() {
@@ -102,8 +112,12 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 
-	public void gameOver() {
-		level.background.stop();
+	public void gameOver(int score) {
+		menuTheme.start();
+		Level.background.stop();
+		this.score = score;
+		level = null;
+		System.out.println(state);
 		state = OVERSTATE;
 	}
 
@@ -164,7 +178,6 @@ public class Game extends Canvas implements Runnable {
 		screen.clear();
 
 		if (state == GAMESTATE) {
-			
 			level.render(screen);
 
 			for (int i = 0; i < pixels.length; i++) {
@@ -176,9 +189,13 @@ public class Game extends Canvas implements Runnable {
 			g.fillRect(0, 0, getWidth(), getHeight());
 			g.drawImage(image, 0, 0, width * scale, height * scale, null);
 			//g.drawRect(0, 0, 30, 30);
+			g.setColor(new Color(0xffffff));
+			g.drawImage(border, 0, 0, 270*2, 58, null);
+			g.drawImage(window, 3, 5, 120, 48, null);
+			g.drawImage(bigCoin, 380, 5, 48, 48, null);
 			level.score.render(g, ((level.player.getY() - 375) * -1) - 57 + "");
 			level.coin.render(g, (level.player.coins + ""));
-			level.section.render(g, level.sectionNumber + "");
+			//level.section.render(g, level.sectionNumber + "");
 			g.dispose();
 			bs.show();
 		} else if (state == SHOPSTATE) {
@@ -214,6 +231,10 @@ public class Game extends Canvas implements Runnable {
 			g.setColor(new Color(0xff00ff));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			g.drawImage(image, 0, 0, width * scale, height * scale, null);
+			g.drawImage(window, 86, 50, 130, 48, null);
+			g.setColor(new Color(0xffffff));
+			g.setFont(bigShopFont);
+			g.drawString((score- 375) * -1 + "", 230, 90);
 			g.dispose();
 			bs.show();
 		} else if (state == CREDSTATE) {
@@ -245,10 +266,18 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void restart() {
-		state = GAMESTATE;
-		System.out.println(state + "dasdsdsad");
-		level = new Level(getWindowWidth(), getWindowHeight());
+		level = new Level(getWindowWidth(), getWindowHeight());		
 		shop = new Shop(level.player, key);
+		overmenu = new OverMenu();
+		credmenu = new CreditMenu();
+		menuTheme.stop();
+		level.background.start();
+		addKeyListener(key);
+		Mouse mouse = new Mouse(shop, menu, level.player, overmenu,credmenu);
+		addMouseListener(mouse);
+		addMouseMotionListener(mouse);
+		state = GAMESTATE;
+		
 	}
 
 	public void credit() {

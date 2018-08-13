@@ -3,6 +3,7 @@ package game.entity;
 import java.awt.Rectangle;
 
 import game.Game;
+import game.entity.mob.Player;
 import game.graphics.Screen;
 import game.graphics.Sprite;
 import game.graphics.SpriteSheet;
@@ -44,7 +45,7 @@ public class Wall extends Entity {
 
 	}
 
-	public void update() {
+	public void update(int i, Player player) {
 		if (tick >= 1200) {
 			close();
 		} 
@@ -63,14 +64,14 @@ public class Wall extends Entity {
 			}
 		}
 
-		if (Game.game.level.player.w > windowwidth - 2 * w) {
-			Game.game.gameOver();
+		if (player.w - 16 > windowwidth - 2 * w) {
+			Game.game.gameOver(player.y);
 		}
 		hitbox.x = (int) x;
 		hitbox.y = (int) -dy;
 		hitbox.width = (int) w;
 		hitbox.height = (int) h;
-		if (Game.game.level.levelid != 100) {
+		if (i != 100) {
 			tick++;
 		}
 	}
@@ -96,7 +97,7 @@ public class Wall extends Entity {
 		else
 			screen.renderSprite((int) (x), 0, sprite, false);
 
-		screen.drawRect((int) x, 0, (int) w, (int) h, 0xff00ff, false);
+		//screen.drawRect((int) x, 0, (int) w, (int) h, 0xff00ff, false);
 		this.dy = dy;
 	}
 

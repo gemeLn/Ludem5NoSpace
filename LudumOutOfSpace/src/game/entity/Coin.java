@@ -24,7 +24,7 @@ public class Coin extends Entity{
 	
 	public void render(Screen screen, int dy) {
 		if(!collected) {
-			screen.drawRect(x, y + dy, w, h, 0xff00ff, false);
+			//screen.drawRect(x, y + dy, w, h, 0xff00ff, false);
 			screen.renderSprite(x, y + dy, AnimatedAll.get("coin"), false);
 		}
 	}

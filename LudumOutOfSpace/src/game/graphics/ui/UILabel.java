@@ -19,7 +19,7 @@ public class UILabel extends UIComponent {
 		super(position);
 		font = new Font("Helvetica", Font.PLAIN, 32);
 		this.text = text;
-		color = new Color(0xff00ff);
+		color = new Color(0x000000);
 	}
 
 	public UILabel setFont(Font font) {

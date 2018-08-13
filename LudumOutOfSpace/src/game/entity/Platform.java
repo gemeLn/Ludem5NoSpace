@@ -40,7 +40,7 @@ public class Platform extends Rectangle {
 	}
 
 	public void render(Screen screen, int dy) {
-		screen.drawRect(x, y + dy, width, height, 0xff0000, false);
+		//screen.drawRect(x, y + dy, width, height, 0xff0000, false);
 		screen.renderSprite(x, y + dy, left, false);
 		for (int i = 1; i <= middleSegments; i++) {
 			screen.renderSprite(x + i * 10, y + dy, middle, false);
