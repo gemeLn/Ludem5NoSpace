@@ -31,8 +31,8 @@ public class Player extends Mob {
 	int halfSpriteSize = spriteSize / 2;
 	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3);
 	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3);
-	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 3);
-	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 3);
+	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 6);
+	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 6);
 
 	private AnimatedSprite animSprite = down;
 
@@ -102,7 +102,6 @@ public class Player extends Mob {
 		keys();
 		gravity();
 		collisions();
-		animSprite.update(60);
 	}
 
 	public int getRealX() {
@@ -285,7 +284,8 @@ public class Player extends Mob {
 	public void render(Screen screen, int dy) {
 		int flip = 0;
 		sprite = animSprite.getSprite();
-		screen.renderMob(x, y + dy, sprite, flip);
+		if(jump = 1)
+		screen.renderSprite(x, y + dy, sprite, false);
 		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
 
 	}

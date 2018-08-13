@@ -15,6 +15,7 @@ public class Sprite {
 
 	public static Sprite player_forward_1 = new Sprite(32, 0, 6, SpriteSheet.tiles);
 	public static Sprite player_forward_2 = new Sprite(32, 0, 7, SpriteSheet.tiles);
+	public static Sprite player_jump = new Sprite(32, 0, 2, SpriteSheet.player);
 
 	public static Sprite player_side_1 = new Sprite(32, 1, 6, SpriteSheet.tiles);
 	public static Sprite player_side_2 = new Sprite(32, 1, 7, SpriteSheet.tiles);

@@ -17,11 +17,11 @@ public class SpriteSheet {
 	public static SpriteSheet spawn_level = new SpriteSheet("/textures/sheets/spawn_lvl.png", 48);
 	public static SpriteSheet projectile_wizard = new SpriteSheet("/textures/sheets/projectiles/wizard.png", 48);
 
-	public static SpriteSheet player = new SpriteSheet("/textures/sheets/player_sheet.png", 128, 96);
-	public static SpriteSheet player_down = new SpriteSheet(player, 0, 0, 1, 3, 32);
-	public static SpriteSheet player_up = new SpriteSheet(player, 1, 0, 1, 3, 32);
-	public static SpriteSheet player_left = new SpriteSheet(player, 2, 0, 1, 3, 32);
-	public static SpriteSheet player_right = new SpriteSheet(player, 3, 0, 1, 3, 32);
+	public static SpriteSheet player = new SpriteSheet("/textures/sheets/player_sheet.png", 256, 128);
+	public static SpriteSheet player_down = new SpriteSheet(player, 1, 0, 1, 3, 32);
+	public static SpriteSheet player_up = new SpriteSheet(player, 2, 0, 1, 1, 32);
+	public static SpriteSheet player_left = new SpriteSheet(player, 1, 0, 6, 1, 32);
+	public static SpriteSheet player_right = new SpriteSheet(player, 0, 0, 6, 1, 32);;
 
 	public static SpriteSheet dummy = new SpriteSheet("/textures/sheets/king_cherno.png", 128, 96);
 	public static SpriteSheet dummy_down = new SpriteSheet(dummy, 0, 0, 1, 3, 32);
@@ -47,6 +47,7 @@ public class SpriteSheet {
 
 	public static SpriteSheet alien = new SpriteSheet("/textures/sheets/alien.png", 32 * 4, 32);
 	public static SpriteSheet animatedAlien = new SpriteSheet(alien, 0, 0, 4, 1, 32);
+	
 
 	public static SpriteSheet platform = new SpriteSheet("/textures/sheets/platforms.png", 30, 10);
 	public static Sprite fireball = new Sprite(32, 32, 0, 0, new SpriteSheet("/textures/fireball.png", 32, 32));

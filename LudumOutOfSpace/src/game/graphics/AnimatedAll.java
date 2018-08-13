@@ -11,6 +11,7 @@ public class AnimatedAll {
 		animations = new HashMap<>();
 		animations.put("coin", new AnimatedSprite(SpriteSheet.animatedCoin, 16, 16, 6));
 		animations.put("alien", new AnimatedSprite(SpriteSheet.animatedAlien, 32, 32, 4));
+		
 	}
 	
 	public static void update() {
