@@ -37,6 +37,7 @@ public class SpriteSheet {
 
 	public static SpriteSheet plat = new SpriteSheet("/textures/Platform1.png", 80, 10);
 	public static SpriteSheet spike = new SpriteSheet("/textures/spike.png", 16, 16);
+	public static SpriteSheet block = new SpriteSheet("/textures/block.png", 16, 16);
 	public static SpriteSheet door = new SpriteSheet("/textures/door.png", 135, 375);
 	public static SpriteSheet x = new SpriteSheet("/textures/x.png", 32, 32);
 	public static SpriteSheet battery = new SpriteSheet("/textures/battery.png", 200, 32);
@@ -47,10 +48,10 @@ public class SpriteSheet {
 
 	public static SpriteSheet alien = new SpriteSheet("/textures/sheets/alien.png", 32 * 4, 32);
 	public static SpriteSheet animatedAlien = new SpriteSheet(alien, 0, 0, 4, 1, 32);
-	
 
 	public static SpriteSheet platform = new SpriteSheet("/textures/sheets/platforms.png", 30, 10);
 	public static Sprite fireball = new Sprite(32, 32, 0, 0, new SpriteSheet("/textures/fireball.png", 32, 32));
+	public static Sprite teleporter = new Sprite(32, 32, 0, 0, new SpriteSheet("/textures/tele.png", 32, 32));
 
 	public static SpriteSheet menu = new SpriteSheet("/textures/menu.png", 270, 375);
 	public static SpriteSheet menu2 = new SpriteSheet("/textures/menu2.png", 270, 375);
