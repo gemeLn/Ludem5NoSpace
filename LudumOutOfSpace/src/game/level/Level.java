@@ -102,7 +102,7 @@ public class Level {
 
 	public void update() {
 		tick++;
-		if(tick % 30 == 0) {
+		if(tick % 1 == 0) {
 			spriteY++;
 			if(spriteY > 0)
 				spriteY = -1000+375;

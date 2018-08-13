@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import game.graphics.Screen;
@@ -46,6 +47,7 @@ public class Game extends Canvas implements Runnable {
 	public OverMenu overmenu;
 	public CreditMenu credmenu;
 	private boolean running = false;
+	private BufferedImage background, window;
 
 	private Screen screen;
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -69,6 +71,11 @@ public class Game extends Canvas implements Runnable {
 		Mouse mouse = new Mouse(shop, menu, level.player, overmenu,credmenu);
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
+		try {
+			background = ImageIO.read(getClass().getResourceAsStream("/res/textures/background.png"));
+		} catch(Exception e) {
+			System.err.println("CODERED");
+		}
 	}
 
 	public static int getWindowWidth() {
@@ -157,17 +164,18 @@ public class Game extends Canvas implements Runnable {
 		screen.clear();
 
 		if (state == GAMESTATE) {
-			Graphics g = bs.getDrawGraphics();
-			//g.drawImage(, null);
+			
 			level.render(screen);
 
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = screen.pixels[i];
 			}
+			Graphics g = bs.getDrawGraphics();
 			
 			g.setColor(new Color(0xff00ff));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			g.drawImage(image, 0, 0, width * scale, height * scale, null);
+			//g.drawRect(0, 0, 30, 30);
 			level.score.render(g, ((level.player.getY() - 375) * -1) - 57 + "");
 			level.coin.render(g, (level.player.coins + ""));
 			level.section.render(g, level.sectionNumber + "");
