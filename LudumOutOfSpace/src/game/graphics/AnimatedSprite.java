@@ -25,7 +25,6 @@ public class AnimatedSprite extends Sprite {
 	}
 
 	public void update() {
-		System.out.println(frame);
 		time++;
 		if (time % rate == 0) {
 			if (frame >= length - 1) frame = 0;
@@ -35,7 +34,6 @@ public class AnimatedSprite extends Sprite {
 	}
 	
 	public void update(int rate) {
-		System.out.println(frame);
 		time++;
 		if (time % rate == 0) {
 			if (frame >= length - 1) frame = 0;

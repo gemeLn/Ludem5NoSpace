@@ -31,6 +31,7 @@ public class Level {
 	public int dY = 0;
 	public int ground = 350;
 	public List<Entity> entities = new ArrayList<Entity>();
+	public List<Alien> aliens = new ArrayList<Alien>();
 	private List<Platform> platforms = new ArrayList<Platform>();
 	private List<Block> blocks = new ArrayList<Block>();
 	private List<Spike> spikes = new ArrayList<Spike>();
@@ -59,6 +60,7 @@ public class Level {
 		platforms.add(new Platform(100, 260, 40, 10));
 		platforms.add(new Platform(0, 200, Game.getWindowWidth(), 10));
 		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
+		aliens.add(new Alien(platforms.get(3)));
 		blocks.add(new Block(100, 300, 30, 10));
 		spikes.add(new Spike(200, 330));
 		// spikes.add(new Spike(100, 180, 16, 16));
@@ -91,6 +93,11 @@ public class Level {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
 		}
+		
+		for (int i = 0; i < aliens.size(); i++) {
+			aliens.get(i).update();
+		}
+		
 		player.update();
 		if (player.getY() + dY <= 150) {
 			dY -= (int) player.getYVel();
@@ -173,6 +180,10 @@ public class Level {
 
 		for (Coin c : coins) {
 			c.render(screen, dY);
+		}
+		
+		for (Alien a : aliens) {
+			a.render(screen, dY);
 		}
 
 		for (int i = 0; i < entities.size(); i++) {
