@@ -52,9 +52,20 @@ public class Level {
 
 	public Level(int width, int height) {
 		AnimatedAll.init();
-
+		
 		SoundEffect.volume = SoundEffect.Volume.LOW;
 		background = new SoundEffect("background.wav", true);
+		
+		inter = -1;
+		entities = new ArrayList<Entity>();
+		aliens = new ArrayList<Alien>();
+		platforms = new ArrayList<Platform>();
+		blocks = new ArrayList<Block>();
+		spikes = new ArrayList<Spike>();
+		coins = new ArrayList<Coin>();
+		sections = new ArrayList<Section>();
+		interactables = new ArrayList<Interactable>();
+		
 		this.width = width;
 		this.height = height;
 		wall1 = new Wall(false);
@@ -341,7 +352,7 @@ public class Level {
 				aliens.addAll(this.aliens);
 			else
 				aliens.addAll(sections.get(inter - 1).aliens);
-			coins.addAll(sections.get(inter).coins);
+			aliens.addAll(sections.get(inter).aliens);
 			return aliens;
 		}
 		return aliens;

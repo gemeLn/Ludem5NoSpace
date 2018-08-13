@@ -30,7 +30,7 @@ public class SpriteSheet {
 	public static SpriteSheet dummy_left = new SpriteSheet(dummy, 2, 0, 1, 3, 32);
 	public static SpriteSheet dummy_right = new SpriteSheet(dummy, 3, 0, 1, 3, 32);
 
-	public static SpriteSheet background = new SpriteSheet("/textures/background.png", 270, 375);
+	public static SpriteSheet background = new SpriteSheet("/textures/background.png", 270, 1000);
 
 	public static SpriteSheet bigcoin = new SpriteSheet("/textures/bigcoin.png", 32, 32);
 	public static SpriteSheet shop = new SpriteSheet("/textures/shop.png", 32, 32);

@@ -24,7 +24,9 @@ public class Alien extends Enemy{
 	}
 	
 	public void render(Screen screen, int dy) {
+		
 		screen.renderSprite(x, y+dy, AnimatedAll.get("alien"), false, dir != 1);
+		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff00ff, false);
 	}
 	
 	public void update(int dy) {
