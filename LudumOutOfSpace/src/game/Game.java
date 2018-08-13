@@ -14,8 +14,10 @@ import javax.swing.JFrame;
 import game.graphics.Screen;
 import game.input.Keyboard;
 import game.input.Mouse;
+import game.level.CreditMenu;
 import game.level.Level;
 import game.level.Menu;
+import game.level.OverMenu;
 import game.level.Sector;
 import game.level.Shop;
 import game.music.SoundEffect;
@@ -24,7 +26,9 @@ public class Game extends Canvas implements Runnable {
 	public final static int GAMESTATE = 0;
 	public final static int SHOPSTATE = 1;
 	public final static int MENUSTATE = 2;
-	public int state = GAMESTATE;
+	public final static int OVERSTATE = 3;
+	public final static int CREDSTATE = 4;
+	public int state = OVERSTATE;
 	private static final long serialVersionUID = 1L;
 	public static Font bigShopFont = new Font("Sansserif", 1, 40);
 	public static Font smallShopFont = new Font("Sansserif", 1, 20);
@@ -39,6 +43,8 @@ public class Game extends Canvas implements Runnable {
 	public Level level;
 	public Shop shop;
 	public Menu menu;
+	public OverMenu overmenu;
+	public CreditMenu credmenu;
 	private boolean running = false;
 
 	private Screen screen;
@@ -57,8 +63,10 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame();
 		level = new Level(getWindowWidth(), getWindowHeight());
 		shop = new Shop(level.player, key);
+		overmenu = new OverMenu();
+		credmenu = new CreditMenu();
 		addKeyListener(key);
-		Mouse mouse = new Mouse(shop, menu,level.player);
+		Mouse mouse = new Mouse(shop, menu, level.player, overmenu,credmenu);
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
 	}
@@ -85,6 +93,10 @@ public class Game extends Canvas implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void gameOver() {
+		state = OVERSTATE;
 	}
 
 	public void run() {
@@ -127,6 +139,10 @@ public class Game extends Canvas implements Runnable {
 			shop.update();
 		else if (state == MENUSTATE) {
 			menu.update();
+		} else if (state == OVERSTATE) {
+			overmenu.update();
+		} else if (state == CREDSTATE) {
+			credmenu.update();
 		}
 	}
 
@@ -178,6 +194,28 @@ public class Game extends Canvas implements Runnable {
 			g.drawImage(image, 0, 0, width * scale, height * scale, null);
 			g.dispose();
 			bs.show();
+		} else if (state == OVERSTATE) {
+			overmenu.render(screen);
+			for (int i = 0; i < pixels.length; i++) {
+				pixels[i] = screen.pixels[i];
+			}
+			Graphics g = bs.getDrawGraphics();
+			g.setColor(new Color(0xff00ff));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			g.drawImage(image, 0, 0, width * scale, height * scale, null);
+			g.dispose();
+			bs.show();
+		} else if (state == CREDSTATE) {
+			credmenu.render(screen);
+			for (int i = 0; i < pixels.length; i++) {
+				pixels[i] = screen.pixels[i];
+			}
+			Graphics g = bs.getDrawGraphics();
+			g.setColor(new Color(0xff00ff));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			g.drawImage(image, 0, 0, width * scale, height * scale, null);
+			g.dispose();
+			bs.show();
 		}
 	}
 
@@ -193,6 +231,14 @@ public class Game extends Canvas implements Runnable {
 
 		game.start();
 
+	}
+
+	public void restart() {
+		System.out.println("restart");
+	}
+
+	public void credit() {
+		state = CREDSTATE;
 	}
 
 }

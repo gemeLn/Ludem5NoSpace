@@ -137,7 +137,7 @@ public class Player extends Mob {
 
 		for (Spike spike : level.getSpikes()) {
 			if (spike.intersects(hitbox)) {
-				System.out.println("dead");
+				Game.game.gameOver();
 			}
 		}
 
@@ -284,7 +284,7 @@ public class Player extends Mob {
 	public void render(Screen screen, int dy) {
 		int flip = 0;
 		sprite = animSprite.getSprite();
-		if(jump == 1)
+		if (jump == 1)
 			screen.renderSprite(x, y + dy, Sprite.player_jump, false);
 		else
 			screen.renderSprite(x, y + dy, sprite, false);

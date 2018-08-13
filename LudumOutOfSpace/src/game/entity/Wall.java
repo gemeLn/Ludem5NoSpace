@@ -51,7 +51,7 @@ public class Wall extends Entity {
 		}
 
 		if (Game.game.level.player.w > windowwidth - 2 * w) {
-			System.out.println("DIE");
+			Game.game.gameOver();
 		}
 		hitbox.x = (int) x;
 		hitbox.y = (int) -dy;
@@ -85,11 +85,11 @@ public class Wall extends Entity {
 		screen.drawRect((int) x, 0, (int) w, (int) h, 0xff00ff, false);
 		this.dy = dy;
 	}
-	
+
 	public double getXD() {
 		return x;
 	}
-	
+
 	public double getWD() {
 		return w;
 	}

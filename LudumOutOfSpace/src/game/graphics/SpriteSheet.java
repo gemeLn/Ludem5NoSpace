@@ -37,7 +37,7 @@ public class SpriteSheet {
 
 	public static SpriteSheet plat = new SpriteSheet("/textures/Platform1.png", 80, 10);
 	public static SpriteSheet spike = new SpriteSheet("/textures/spike.png", 16, 16);
-	public static SpriteSheet block = new SpriteSheet("/textures/block.png", 16, 16);
+	public static SpriteSheet block = new SpriteSheet("/textures/block.png", 10, 10);
 	public static SpriteSheet door = new SpriteSheet("/textures/door.png", 135, 375);
 	public static SpriteSheet x = new SpriteSheet("/textures/x.png", 32, 32);
 	public static SpriteSheet battery = new SpriteSheet("/textures/battery.png", 200, 32);
@@ -55,6 +55,13 @@ public class SpriteSheet {
 
 	public static SpriteSheet menu = new SpriteSheet("/textures/menu.png", 270, 375);
 	public static SpriteSheet menu2 = new SpriteSheet("/textures/menu2.png", 270, 375);
+
+	public static SpriteSheet overmenu1 = new SpriteSheet("/textures/over1.png", 270, 375);
+	public static SpriteSheet overmenu2 = new SpriteSheet("/textures/over2.png", 270, 375);
+	public static SpriteSheet overmenu3 = new SpriteSheet("/textures/over3.png", 270, 375);
+
+	public static SpriteSheet credmenu1 = new SpriteSheet("/textures/credits1.png", 270, 375);
+	public static SpriteSheet credmenu2 = new SpriteSheet("/textures/credits2.png", 270, 375);
 
 	private Sprite[] sprites;
 

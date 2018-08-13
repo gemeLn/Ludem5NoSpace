@@ -8,18 +8,24 @@ import java.awt.event.MouseMotionListener;
 import game.Game;
 import game.entity.items.Item;
 import game.entity.mob.Player;
+import game.level.CreditMenu;
 import game.level.Menu;
+import game.level.OverMenu;
 import game.level.Shop;
 
 public class Mouse implements MouseListener, MouseMotionListener {
 	Shop shop;
 	Menu menu;
 	Player player;
+	OverMenu overmenu;
+	CreditMenu credmenu;
 
-	public Mouse(Shop shop, Menu menu, Player p) {
+	public Mouse(Shop shop, Menu menu, Player p, OverMenu m, CreditMenu cm) {
 		this.shop = shop;
 		this.menu = menu;
 		this.player = p;
+		this.overmenu = m;
+		this.credmenu = cm;
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -56,6 +62,20 @@ public class Mouse implements MouseListener, MouseMotionListener {
 			} else {
 				menu.sprite1();
 			}
+		} else if (Game.game.state == Game.OVERSTATE) {
+			if (overmenu.restartHitbox.contains(p)) {
+				overmenu.sprite = overmenu.menu2;
+			} else if (overmenu.creditHitbox.contains(p)) {
+				overmenu.sprite = overmenu.menu3;
+			} else {
+				overmenu.sprite = overmenu.menu1;
+			}
+		} else if (Game.game.state == Game.CREDSTATE) {
+			if (credmenu.restartHitbox.contains(p)) {
+				credmenu.sprite = credmenu.menu2;
+			} else {
+				credmenu.sprite = credmenu.menu1;
+			}
 		}
 	}
 
@@ -86,10 +106,19 @@ public class Mouse implements MouseListener, MouseMotionListener {
 					player.inventory.set(i, temp);
 				}
 			}
-		}
-		if (Game.game.state == Game.MENUSTATE) {
+		} else if (Game.game.state == Game.MENUSTATE) {
 			if (menu.start.contains(p)) {
 				menu.startGame();
+			}
+		} else if (Game.game.state == Game.OVERSTATE) {
+			if (overmenu.restartHitbox.contains(p)) {
+				Game.game.restart();
+			} else if (overmenu.creditHitbox.contains(p)) {
+				Game.game.credit();
+			}
+		} else if (Game.game.state == Game.CREDSTATE) {
+			if (credmenu.restartHitbox.contains(p)) {
+				Game.game.restart();
 			}
 		}
 	}
