@@ -61,6 +61,7 @@ public class Level {
 		platforms.add(new Platform(0, 200, Game.getWindowWidth(), 10));
 		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
 		aliens.add(new Alien(platforms.get(3)));
+		aliens.add(new Alien(platforms.get(2)));
 		blocks.add(new Block(100, 300, 30, 10));
 		spikes.add(new Spike(200, 330));
 		// spikes.add(new Spike(100, 180, 16, 16));
@@ -95,7 +96,7 @@ public class Level {
 		}
 		
 		for (int i = 0; i < aliens.size(); i++) {
-			aliens.get(i).update();
+			aliens.get(i).update(entities.get(0).getHitbox(), entities.get(1).getHitbox(), dY);
 		}
 		
 		player.update();
@@ -181,14 +182,8 @@ public class Level {
 		for (Coin c : coins) {
 			c.render(screen, dY);
 		}
-		
-		for (Alien a : aliens) {
-			a.render(screen, dY);
-		}
 
-		for (int i = 0; i < entities.size(); i++) {
-			entities.get(i).render(screen, dY);
-		}
+
 		if (inter > -2) {
 			if (inter == -1) {
 				sections.get(0).render(screen, dY);
@@ -201,7 +196,13 @@ public class Level {
 				}
 			}
 		}
-
+		
+		for (int i = 0; i < entities.size(); i++) {
+			entities.get(i).render(screen, dY);
+		}
+		for (Alien a : aliens) {
+			a.render(screen, dY);
+		}
 		player.render(screen, dY);
 	}
 

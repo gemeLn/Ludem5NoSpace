@@ -24,10 +24,9 @@ public class Alien extends Enemy{
 		screen.renderSprite(x, y+dy, AnimatedAll.get("alien"), false, dir != 1);
 	}
 	
-	public void update() {
-		System.out.println(x);
+	public void update(Rectangle wall1, Rectangle wall2, int dy) {
 		x += xVel * dir;
-		if((!(connected.contains((int)x,(int)y+33)))|| x < 0 || x > Game.getWindowWidth()) {
+		if((!(connected.contains((int)x,(int)y+33)))||(!(connected.contains((int)x+32,(int)y+33))) || (wall1.contains((int)x-1,(int)y+dy)) || (wall2.contains((int)x+33,(int)y+dy))) {
 			dir *= -1;
 			x += xVel * dir;
 		}
