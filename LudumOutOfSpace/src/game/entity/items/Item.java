@@ -3,7 +3,7 @@ package game.entity.items;
 import java.awt.Rectangle;
 
 import game.graphics.Sprite;
-
+import game.entity.mobs.Player;
 public class Item {
 	long nextAvail = 0;
 	public int cost;
@@ -21,6 +21,6 @@ public class Item {
 	return System.currentTimeMillis()>nextAvail;
 	}
 	
-	public void use(){}
+	public void use(Player p){}
 
 }
