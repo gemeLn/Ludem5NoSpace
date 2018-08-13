@@ -62,7 +62,7 @@ public class Section {
 	}
 	
 	public void hitbox(int start) {
-		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start - 32, Game.getWindowWidth(), height);
+		hitbox = new Rectangle(0, Game.getWindowHeight() - height - start - 31, Game.getWindowWidth(), height);
 	}
 
 	public static int getSectionHeight() {

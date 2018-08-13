@@ -46,6 +46,7 @@ public class Level {
 	public UILabel score, coin, section;
 	public int sectionsUntilShop = 8;
 	public int sectionNumber;
+	public SoundEffect background;
 
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
@@ -53,22 +54,20 @@ public class Level {
 		AnimatedAll.init();
 
 		SoundEffect.volume = SoundEffect.Volume.LOW;
-		new SoundEffect("background.wav", true);
+		background = new SoundEffect("background.wav", true);
 		this.width = width;
 		this.height = height;
-		tilesInt = new int[width * height];
+		wall1 = new Wall(false);
+		wall2 = new Wall(true);
 		platforms.add(new Platform(100, 260, 40, 10));
 		platforms.add(new Platform(0, 200, Game.getWindowWidth(), 10));
 		platforms.add(new Platform(0, ground, Game.getWindowWidth(), 200));
 		aliens.add(new Alien(platforms.get(1)));
-		aliens.add(new Alien(platforms.get(2)));
 		blocks.add(new Block(100, 300, 30, 10));
 		spikes.add(new Spike(200, 330));
 		// spikes.add(new Spike(100, 180, 16, 16));
 		coins.add(new Coin(100, 180));
 		nextLevel = Game.getWindowHeight() - 200;
-		wall1 = new Wall(false);
-		wall2 = new Wall(true);
 
 		addShop();
 
@@ -118,6 +117,8 @@ public class Level {
 				levelid = sections.get(i).id;
 				if (i != inter && i > inter) {
 					sectionNumber++;
+					wall1.reset();
+					wall2.reset();
 					inter = i;
 				}
 				if (sections.size() == inter + 1) {
@@ -147,7 +148,7 @@ public class Level {
 	}
 
 	public void addSection() {
-		switch ((int) (Math.random() * 2)) {
+		switch ((int) (Math.random()) + 4) {
 		case 0:
 			sections.add(new Section1(nextLevel));
 			nextLevel += Section1.getSectionHeight();
@@ -156,7 +157,20 @@ public class Level {
 			sections.add(new Section2(nextLevel));
 			nextLevel += Section2.getSectionHeight();
 			break;
+		case 2:
+			sections.add(new Section3(nextLevel));
+			nextLevel += Section3.getSectionHeight();
+			break;
+		case 3:
+			sections.add(new Section4(nextLevel));
+			nextLevel += Section4.getSectionHeight();
+			break;
+		case 4:
+			sections.add(new Section5(nextLevel));
+			nextLevel += Section5.getSectionHeight();
+			break;
 		}
+		
 	}
 
 	private void remove() {
@@ -202,6 +216,8 @@ public class Level {
 					sections.get(i).render(screen, dY);
 					if (i - 1 != -1)
 						sections.get(i - 1).render(screen, dY);
+					if (i - 2 >= 0)
+						sections.get(i - 2).render(screen, dY);
 				}
 			}
 		}

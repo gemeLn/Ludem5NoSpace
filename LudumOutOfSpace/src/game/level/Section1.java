@@ -16,13 +16,14 @@ public class Section1 extends Section {
 		super(start);
 		id = 1;
 		System.out.println(start);
-		platforms.add(new Platform(100, 260 - start, 40, 10));
 		coins.add(new Coin(100, 280 - start));
 		coins.add(new Coin(120, 280 - start));
 		coins.add(new Coin(140, 280 - start));
-		platforms.add(new Platform(0, 200 - start, Game.getWindowWidth(), 10));
-		blocks.add(new Block(100, 300 - start, 30, 10));
-		height = 175;
+		platforms.add(new Platform(50, 200 - start, Game.getWindowWidth()-100, 10));
+		platforms.add(new Platform(0, 0 - start, Game.getWindowWidth(), 10));
+		spikes.add(new Spike(255, 230-start));
+		spikes.add(new Spike(0, 230-start));
+		height = 375;
 		hitbox(start);
 
 	}

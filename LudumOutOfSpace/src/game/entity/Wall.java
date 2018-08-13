@@ -45,9 +45,23 @@ public class Wall extends Entity {
 	}
 
 	public void update() {
-
+		System.out.println(w);
 		if (tick >= 1200) {
 			close();
+		} 
+		if(reset){
+			if (w < 145)
+				w -= 4*speed;
+			if (x > 136)
+				x += 4*speed;
+			if ((w - 10) <= 0) {
+				tick = 0;
+				reset = false;
+				if (w < 145)
+					w = 10;
+				if (x > 136)
+					x = Game.getWindowWidth();
+			}
 		}
 
 		if (Game.game.level.player.w > windowwidth - 2 * w) {
@@ -63,7 +77,8 @@ public class Wall extends Entity {
 	}
 
 	public void reset() {
-
+		tick = 0;
+		reset = true;
 	}
 
 	public void close() {

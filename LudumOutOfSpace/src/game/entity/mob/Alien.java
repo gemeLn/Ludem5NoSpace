@@ -13,7 +13,11 @@ public class Alien extends Enemy{
 	Rectangle connected;
 	
 	public Alien(Rectangle hitbox) {
-		super((int)Math.random()*(hitbox.width-hitbox.x) + hitbox.x, hitbox.y-32, 32, 32);
+		super((int)(Math.random()*(hitbox.width-hitbox.x)) + hitbox.x, hitbox.y-32, 32, 32);
+		while((((int)Level.wall1.getXD()) + Level.wall1.getWD() > x - 1) || ((Level.wall2.getXD() < x + 33))) {
+			x =(int)(Math.random()*(hitbox.width-hitbox.x));
+		}
+		
 		xVel = 1;
 		dir = 1;
 		connected = hitbox;
@@ -26,8 +30,7 @@ public class Alien extends Enemy{
 	public void update(int dy) {
 		x += xVel * dir;
 		hitbox.x = x;
-		hitbox.y = y;
-		System.out.println(Level.wall2.getXD());	
+		hitbox.y = y;	
 		if((!(connected.contains((int)x,(int)y+33)))||(!(connected.contains((int)x+32,(int)y+33))) || (((int)Level.wall1.getXD()) + Level.wall1.getWD() > x - 1) || ((Level.wall2.getXD() < x + 33))) {
 			dir *= -1;
 			x += xVel * dir;

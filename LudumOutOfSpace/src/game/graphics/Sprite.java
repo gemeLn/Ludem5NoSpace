@@ -9,21 +9,21 @@ public class Sprite {
 	protected SpriteSheet sheet;
 
 	//Player Sprites here:
-	public static Sprite player_forward = new Sprite(32, 0, 5, SpriteSheet.tiles);
-	public static Sprite player_back = new Sprite(32, 2, 5, SpriteSheet.tiles);
-	public static Sprite player_side = new Sprite(32, 1, 5, SpriteSheet.tiles);
+	//public static Sprite player_forward = new Sprite(32, 0, 5, SpriteSheet.tiles);
+	//public static Sprite player_back = new Sprite(32, 2, 5, SpriteSheet.tiles);
+	//public static Sprite player_side = new Sprite(32, 1, 5, SpriteSheet.tiles);
 
-	public static Sprite player_forward_1 = new Sprite(32, 0, 6, SpriteSheet.tiles);
-	public static Sprite player_forward_2 = new Sprite(32, 0, 7, SpriteSheet.tiles);
-	public static Sprite player_jump = new Sprite(32, 0, 2, SpriteSheet.player);
+	public static Sprite player_forward = new Sprite(32, 0, 0, SpriteSheet.player);
+	//public static Sprite player_forward_2 = new Sprite(32, 0, 7, SpriteSheet.tiles);
+	//public static Sprite player_jump = new Sprite(32, 0, 2, SpriteSheet.player);
 
-	public static Sprite player_side_1 = new Sprite(32, 1, 6, SpriteSheet.tiles);
-	public static Sprite player_side_2 = new Sprite(32, 1, 7, SpriteSheet.tiles);
+	//public static Sprite player_side_1 = new Sprite(32, 1, 6, SpriteSheet.tiles);
+	//public static Sprite player_side_2 = new Sprite(32, 1, 7, SpriteSheet.tiles);
 
-	public static Sprite player_back_1 = new Sprite(32, 2, 6, SpriteSheet.tiles);
-	public static Sprite player_back_2 = new Sprite(32, 2, 7, SpriteSheet.tiles);
+	//public static Sprite player_back_1 = new Sprite(32, 2, 6, SpriteSheet.tiles);
+	//public static Sprite player_back_2 = new Sprite(32, 2, 7, SpriteSheet.tiles);
 
-	public static Sprite dummy = new Sprite(32, 0, 0, SpriteSheet.dummy_down);
+	//public static Sprite dummy = new Sprite(32, 0, 0, SpriteSheet.dummy_down);
 	 
 
 	protected Sprite(SpriteSheet sheet, int width, int height) {

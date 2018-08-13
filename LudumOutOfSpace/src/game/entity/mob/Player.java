@@ -29,12 +29,15 @@ public class Player extends Mob {
 	int halfwidth;
 	int spriteSize = 32;
 	int halfSpriteSize = spriteSize / 2;
-	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3);
-	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3);
+	//private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 1);
+	//private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3);
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 6);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 6);
+	private AnimatedSprite jumpAni = new AnimatedSprite(SpriteSheet.player_jump, 32, 32, 1);
 
-	private AnimatedSprite animSprite = down;
+	private AnimatedSprite animSprite = right;
+	
+	Sprite player_jump;
 
 	public int coins;
 
@@ -81,7 +84,8 @@ public class Player extends Mob {
 		halfwidth = w / 2;
 		h = 32;
 		hitbox = new Rectangle(x, y, w, h);
-		sprite = Sprite.player_forward;
+		sprite = animSprite.getSprite();
+				
 		// Player default attributes
 		health = 100;
 
@@ -102,6 +106,9 @@ public class Player extends Mob {
 		keys();
 		gravity();
 		collisions();
+		hitbox.x = x + halfSpriteSize - halfwidth;
+		hitbox.y = y;
+		
 	}
 
 	public int getRealX() {
@@ -143,6 +150,7 @@ public class Player extends Mob {
 
 		for (Alien alien : level.getAlien()) {
 			if (alien.getHitbox().intersects(hitbox)) {
+				Game.game.gameOver();
 				System.out.println("dead");
 			}
 		}
@@ -221,7 +229,6 @@ public class Player extends Mob {
 		if (fireRate > 0)
 			fireRate--;
 		if (input.up) {
-			animSprite = up;
 			if (jump > 0) {
 				yVel = -jumpheight;
 				jump--;
@@ -254,17 +261,22 @@ public class Player extends Mob {
 			}
 		}
 		if (input.left) {
+			walking = true;
 			if (System.currentTimeMillis() > leftcd) {
 				animSprite = left;
 				if (xVel > -speed)
 					xVel -= 2;
 			}
 		} else if (input.right) {
+			walking = true;
 			if (System.currentTimeMillis() > rightcd) {
 				animSprite = right;
 				if (xVel < speed)
 					xVel += 2;
 			}
+		}
+		else {
+			walking = false;
 		}
 	}
 
@@ -284,10 +296,12 @@ public class Player extends Mob {
 	public void render(Screen screen, int dy) {
 		int flip = 0;
 		sprite = animSprite.getSprite();
-		if (jump == 1)
-			screen.renderSprite(x, y + dy, Sprite.player_jump, false);
-		else
-			screen.renderSprite(x, y + dy, sprite, false);
+		if(!walking && jump >= 1)
+			screen.renderSprite(x, y + dy, Sprite.player_forward, false, animSprite.equals(left));
+		else if(jump >= 1) {
+			screen.renderSprite(x, y + dy, sprite, false);	
+		} else
+			screen.renderSprite(x, y + dy, jumpAni.getSprite(), false, animSprite.equals(left));
 		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
 
 	}

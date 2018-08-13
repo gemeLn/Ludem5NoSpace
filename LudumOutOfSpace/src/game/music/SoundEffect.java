@@ -93,6 +93,10 @@ public class SoundEffect {
 		      }
 		   }
 		   
+		   public void stop() {
+			   clip.stop();
+		   }
+		   
 		   // Optional static method to pre-load all the sound files.
 		   public static void init() {
 		   }

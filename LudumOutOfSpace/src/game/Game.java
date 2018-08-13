@@ -28,7 +28,7 @@ public class Game extends Canvas implements Runnable {
 	public final static int MENUSTATE = 2;
 	public final static int OVERSTATE = 3;
 	public final static int CREDSTATE = 4;
-	public int state = OVERSTATE;
+	public int state = MENUSTATE;
 	private static final long serialVersionUID = 1L;
 	public static Font bigShopFont = new Font("Sansserif", 1, 40);
 	public static Font smallShopFont = new Font("Sansserif", 1, 20);
@@ -96,6 +96,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void gameOver() {
+		level.background.stop();
 		state = OVERSTATE;
 	}
 
@@ -234,7 +235,8 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void restart() {
-		System.out.println("restart");
+		state = GAMESTATE;
+		level = new Level(getWindowWidth(), getWindowHeight());
 	}
 
 	public void credit() {
