@@ -16,5 +16,9 @@ public class Item {
 	
 	public void cooldown(){
 	nextAvail+=1000*cd;}
+	
+	public boolean checkAvail(){
+	return System.currentTimeMillis()>nextAvail;
+	}
 
 }
