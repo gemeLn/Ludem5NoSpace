@@ -41,7 +41,7 @@ public class Level {
 	public List<Section> sections = new ArrayList<Section>();
 	public List<Interactable> interactables = new ArrayList<Interactable>();
 	public Player player;
-	private Sprite sprite;
+	private Sprite sprite, sprite2;
 	public int inter = -1;
 	public UILabel score, coin, section;
 	public int sectionsUntilShop = 8;
@@ -88,6 +88,7 @@ public class Level {
 		sectionNumber = 1;
 
 		sprite = new Sprite(270, 1000, 0, 0, SpriteSheet.background);
+		sprite2 = new Sprite(270, 1000, 0, 0, SpriteSheet.background);
 		score = new UILabel(new Vector2i(120, 120), 0 + "");
 		coin = new UILabel(new Vector2i(200, 120), 0 + "");
 		section = new UILabel(new Vector2i(300, 120), 0 + "");
@@ -103,8 +104,8 @@ public class Level {
 	public void update() {
 		tick++;
 		if(tick % 1 == 0) {
-			spriteY++;
-			if(spriteY > 0)
+			spriteY+= 5;
+			if(spriteY > 375)
 				spriteY = -1000+375;
 		}
 		AnimatedAll.update();
@@ -207,7 +208,8 @@ public class Level {
 	 */
 
 	public void render(Screen screen) {
-		screen.renderSprite(0, spriteY, sprite, false);
+		screen.renderSprite(0, spriteY, SpriteSheet.backgrounds.getSprites()[0], false);
+		screen.renderSprite(0, spriteY, SpriteSheet.backgrounds.getSprites()[1], false);
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
 

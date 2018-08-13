@@ -31,6 +31,7 @@ public class SpriteSheet {
 	public static SpriteSheet dummy_right = new SpriteSheet(dummy, 3, 0, 1, 3, 32);
 
 	public static SpriteSheet background = new SpriteSheet("/textures/background.png", 270, 1000);
+	public static SpriteSheet backgrounds = new SpriteSheet(background, 0, 0, 1, 2, 270, 500);
 
 	public static SpriteSheet bigcoin = new SpriteSheet("/textures/bigcoin.png", 32, 32);
 	public static SpriteSheet shop = new SpriteSheet("/textures/shop.png", 32, 32);
@@ -99,6 +100,45 @@ public class SpriteSheet {
 					}
 				}
 				Sprite sprite = new Sprite(spritePixels, spriteSize, spriteSize);
+				sprites[frame++] = sprite;
+			}
+		}
+		
+	}
+	
+	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSizeX, int spriteSizeY) {
+		int xx = x * spriteSizeX;
+		int yy = y * spriteSizeY;
+		int w = width * spriteSizeX;
+		int h = height * spriteSizeY;
+		
+		
+		if (width == height)
+			SIZE = width;
+		else
+			SIZE = -1;
+		SPRITE_WIDTH = w;
+		SPRITE_HEIGHT = h;
+		pixels = new int[w * h];
+		for (int y0 = 0; y0 < h; y0++) {
+			int yp = yy + y0;
+			for (int x0 = 0; x0 < w; x0++) {
+				int xp = xx + x0;
+				pixels[x0 + y0 * w] = sheet.pixels[xp + yp * sheet.SPRITE_WIDTH];
+			}
+		}
+		int frame = 0;
+		sprites = new Sprite[width * height];
+		for (int ya = 0; ya < height; ya++) {
+			for (int xa = 0; xa < width; xa++) {
+				int[] spritePixels = new int[spriteSizeX * spriteSizeY];
+				for (int y0 = 0; y0 < spriteSizeY; y0++) {
+					for (int x0 = 0; x0 < spriteSizeX; x0++) {
+						spritePixels[x0 + y0 * spriteSizeX] = pixels[(x0 + xa * spriteSizeX)
+								+ (y0 + ya * spriteSizeX) * SPRITE_WIDTH];
+					}
+				}
+				Sprite sprite = new Sprite(spritePixels, spriteSizeX, spriteSizeY);
 				sprites[frame++] = sprite;
 			}
 		}
