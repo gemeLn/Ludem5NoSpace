@@ -15,6 +15,7 @@ import game.graphics.Screen;
 import game.input.Keyboard;
 import game.input.Mouse;
 import game.level.Level;
+import game.level.Menu;
 import game.level.Sector;
 import game.level.Shop;
 import game.music.SoundEffect;
@@ -37,6 +38,7 @@ public class Game extends Canvas implements Runnable {
 	public Keyboard key;
 	public Level level;
 	public Shop shop;
+	public Menu menu;
 	private boolean running = false;
 
 	private Screen screen;
@@ -46,6 +48,7 @@ public class Game extends Canvas implements Runnable {
 	public static Game game;
 
 	public Game() {
+		menu = new Menu();
 		game = this;
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
@@ -55,7 +58,7 @@ public class Game extends Canvas implements Runnable {
 		level = new Level(getWindowWidth(), getWindowHeight());
 		shop = new Shop(level.player, key);
 		addKeyListener(key);
-		Mouse mouse = new Mouse(shop, level.player);
+		Mouse mouse = new Mouse(shop, menu);
 		addMouseListener(mouse);
 		addMouseMotionListener(mouse);
 	}
@@ -122,6 +125,9 @@ public class Game extends Canvas implements Runnable {
 			level.update();
 		else if (state == SHOPSTATE)
 			shop.update();
+		else if (state == MENUSTATE) {
+			menu.update();
+		}
 	}
 
 	public void render() {
@@ -140,7 +146,6 @@ public class Game extends Canvas implements Runnable {
 				pixels[i] = screen.pixels[i];
 			}
 			Graphics g = bs.getDrawGraphics();
-
 			g.setColor(new Color(0xff00ff));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			g.drawImage(image, 0, 0, width * scale, height * scale, null);
@@ -162,6 +167,17 @@ public class Game extends Canvas implements Runnable {
 			g.dispose();
 			bs.show();
 
+		} else if (state == MENUSTATE) {
+			menu.render(screen);
+			for (int i = 0; i < pixels.length; i++) {
+				pixels[i] = screen.pixels[i];
+			}
+			Graphics g = bs.getDrawGraphics();
+			g.setColor(new Color(0xff00ff));
+			g.fillRect(0, 0, getWidth(), getHeight());
+			g.drawImage(image, 0, 0, width * scale, height * scale, null);
+			g.dispose();
+			bs.show();
 		}
 	}
 

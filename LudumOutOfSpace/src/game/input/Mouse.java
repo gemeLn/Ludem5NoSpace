@@ -7,14 +7,16 @@ import java.awt.event.MouseMotionListener;
 
 import game.Game;
 import game.entity.items.Item;
-import game.entity.mob.Player;
+import game.level.Menu;
 import game.level.Shop;
 
 public class Mouse implements MouseListener, MouseMotionListener {
 	Shop shop;
+	Menu menu;
 
-	public Mouse(Shop shop, Player p) {
+	public Mouse(Shop shop, Menu menu) {
 		this.shop = shop;
+		this.menu = menu;
 	}
 
 	public void mouseDragged(MouseEvent e) {
@@ -23,16 +25,24 @@ public class Mouse implements MouseListener, MouseMotionListener {
 
 	public void mouseMoved(MouseEvent e) {
 		Point p = e.getPoint();
-		boolean removeToolTip = true;
-		for (Item shopitem : shop.availableShop) {
-			if (shopitem.hitbox.contains(p)) {
-				removeToolTip = false;
-				shop.tooltipOn = true;
-				shop.tooltipItem = shopitem;
+		if (Game.game.state == Game.SHOPSTATE) {
+			boolean removeToolTip = true;
+			for (Item shopitem : shop.availableShop) {
+				if (shopitem.hitbox.contains(p)) {
+					removeToolTip = false;
+					shop.tooltipOn = true;
+					shop.tooltipItem = shopitem;
+				}
 			}
-		}
-		if (removeToolTip) {
-			shop.tooltipOn = false;
+			if (removeToolTip) {
+				shop.tooltipOn = false;
+			}
+		} else if (Game.game.state == Game.MENUSTATE) {
+			if (menu.start.contains(p)) {
+				menu.sprite2();
+			} else {
+				menu.sprite1();
+			}
 		}
 	}
 
@@ -49,11 +59,16 @@ public class Mouse implements MouseListener, MouseMotionListener {
 			} else if (shop.exitButton.contains(p)) {
 				shop.exit();
 			}
-			for (int i=0;i<shop.availableShop.size();i++) {
+			for (int i = 0; i < shop.availableShop.size(); i++) {
 				Item shopitem = shop.availableShop.get(i);
 				if (shopitem.hitbox.contains(p)) {
 					shop.buy(shopitem);
 				}
+			}
+		}
+		if (Game.game.state == Game.MENUSTATE) {
+			if (menu.start.contains(p)) {
+				menu.startGame();
 			}
 		}
 	}

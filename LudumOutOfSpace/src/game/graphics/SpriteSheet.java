@@ -49,6 +49,9 @@ public class SpriteSheet {
 
 	public static SpriteSheet platform = new SpriteSheet("/textures/sheets/platforms.png", 30, 10);
 	public static Sprite fireball = new Sprite(32, 32, 0, 0, new SpriteSheet("/textures/fireball.png", 32, 32));
+
+	public static SpriteSheet menu = new SpriteSheet("/textures/menu.png", 270, 375);
+	public static SpriteSheet menu2 = new SpriteSheet("/textures/menu2.png", 270, 375);
 	private Sprite[] sprites;
 
 	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSize) {
