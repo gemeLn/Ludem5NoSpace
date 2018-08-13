@@ -45,7 +45,6 @@ public class Wall extends Entity {
 	}
 
 	public void update() {
-		System.out.println(w);
 		if (tick >= 1200) {
 			close();
 		} 

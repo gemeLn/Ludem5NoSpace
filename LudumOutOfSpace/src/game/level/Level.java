@@ -47,11 +47,14 @@ public class Level {
 	public int sectionsUntilShop = 8;
 	public int sectionNumber;
 	public SoundEffect background;
+	public int tick;
+	private int spriteY;
 
 	// public static Level spawn = new SpawnLevel("/levels/spawn.png");
 
 	public Level(int width, int height) {
 		AnimatedAll.init();
+		spriteY = -1000+375;
 		
 		SoundEffect.volume = SoundEffect.Volume.LOW;
 		background = new SoundEffect("background.wav", true);
@@ -84,7 +87,7 @@ public class Level {
 
 		sectionNumber = 1;
 
-		sprite = new Sprite(270, 375, 0, 0, SpriteSheet.background);
+		sprite = new Sprite(270, 1000, 0, 0, SpriteSheet.background);
 		score = new UILabel(new Vector2i(120, 120), 0 + "");
 		coin = new UILabel(new Vector2i(200, 120), 0 + "");
 		section = new UILabel(new Vector2i(300, 120), 0 + "");
@@ -98,7 +101,12 @@ public class Level {
 	public int levelid;
 
 	public void update() {
-
+		tick++;
+		if(tick % 30 == 0) {
+			spriteY++;
+			if(spriteY > 0)
+				spriteY = -1000+375;
+		}
 		AnimatedAll.update();
 
 		for (int i = 0; i < entities.size(); i++) {
@@ -199,7 +207,7 @@ public class Level {
 	 */
 
 	public void render(Screen screen) {
-		screen.renderSprite(0, 0, sprite, false);
+		screen.renderSprite(0, spriteY, sprite, false);
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
 
