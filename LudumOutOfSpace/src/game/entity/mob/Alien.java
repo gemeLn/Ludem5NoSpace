@@ -27,8 +27,8 @@ public class Alien extends Enemy{
 		x += xVel * dir;
 		hitbox.x = x;
 		hitbox.y = y;
-		System.out.println(dy);
-		if((!(connected.contains((int)x,(int)y+33)))||(!(connected.contains((int)x+32,(int)y+33))) || (Level.wall1.getHitbox().contains((int)x-1,(int)(int)Level.wall1.getY()-20)) || (Level.wall2.getHitbox().contains((int)x+33,(int)Level.wall2.getY()+20))) {
+		System.out.println(Level.wall2.getXD());	
+		if((!(connected.contains((int)x,(int)y+33)))||(!(connected.contains((int)x+32,(int)y+33))) || (((int)Level.wall1.getXD()) + Level.wall1.getWD() > x - 1) || ((Level.wall2.getXD() < x + 33))) {
 			dir *= -1;
 			x += xVel * dir;
 		}
