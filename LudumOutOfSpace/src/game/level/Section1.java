@@ -1,14 +1,10 @@
 package game.level;
 
-import java.awt.Rectangle;
-
 import game.Game;
-import game.entity.Block;
 import game.entity.Coin;
-import game.entity.Interactable;
 import game.entity.Platform;
 import game.entity.Spike;
-import game.graphics.Screen;
+import game.entity.mob.Alien;
 
 public class Section1 extends Section {
 
@@ -23,6 +19,13 @@ public class Section1 extends Section {
 		platforms.add(new Platform(0, 0 - start, Game.getWindowWidth(), 10));
 		spikes.add(new Spike(255, 230-start));
 		spikes.add(new Spike(0, 230-start));
+		spikes.add(new Spike((Game.getWindowWidth()/2), 210-start));
+		spikes.add(new Spike((Game.getWindowWidth()/2)-16, 210-start));
+		spikes.add(new Spike((Game.getWindowWidth()/2)-32, 210-start));
+		spikes.add(new Spike((Game.getWindowWidth()/2)-48, 210-start));
+		spikes.add(new Spike((Game.getWindowWidth()/2)+16, 210-start));
+		spikes.add(new Spike((Game.getWindowWidth()/2)+32, 210-start));
+		aliens.add(new Alien(platforms.get(0)));
 		height = 375;
 		hitbox(start);
 

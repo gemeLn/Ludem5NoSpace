@@ -236,6 +236,7 @@ public class Game extends Canvas implements Runnable {
 
 	public void restart() {
 		state = GAMESTATE;
+		System.out.println(state + "dasdsdsad");
 		level = new Level(getWindowWidth(), getWindowHeight());
 	}
 

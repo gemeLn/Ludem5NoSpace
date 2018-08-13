@@ -79,7 +79,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 		}
 	}
 
-	public void mouseClicked(MouseEvent e) {
+	public void mousePressed(MouseEvent e) {
 		Point p = e.getPoint();
 		if (e.getButton() == MouseEvent.BUTTON3) {
 			System.out.println(e.getX() / 2 + "," + e.getY() / 2);
@@ -129,7 +129,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	public void mouseExited(MouseEvent e) {
 	}
 
-	public void mousePressed(MouseEvent e) {
+	public void mouseClicked(MouseEvent e) {
 	}
 
 	public void mouseReleased(MouseEvent e) {
