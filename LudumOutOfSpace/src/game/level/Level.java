@@ -168,7 +168,7 @@ public class Level {
 	}
 
 	public void addSection() {
-		switch ((int) (Math.random())) {
+		switch ((int) (Math.random()) + 4) {
 		case 0:
 			sections.add(new Section1(nextLevel));
 			nextLevel += Section1.getSectionHeight();
@@ -212,8 +212,7 @@ public class Level {
 	 */
 
 	public void render(Screen screen) {
-		screen.renderSprite(0, spriteY, SpriteSheet.backgrounds.getSprites()[0], false);
-		screen.renderSprite(0, spriteY, SpriteSheet.backgrounds.getSprites()[1], false);
+		screen.renderSprite(0, spriteY, sprite, false);
 		screen.drawRect(0, 320, Game.getWindowWidth(), 1, 0xffffff, false);
 		screen.drawRect(0, 150, Game.getWindowWidth(), 1, 0xffffff, false);
 
