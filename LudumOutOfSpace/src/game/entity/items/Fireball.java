@@ -7,10 +7,10 @@ public class Fireball extends Item {
 		name = "Fireball";
 		cost = 10;
 		cd = 10;
-		description = "Shoots fireball costs " + cost;
+		description = "Shoots fireball";
 		icon = SpriteSheet.fireball;
-		hitbox.width = 32;
-		hitbox.height = 32;
+		hitbox.width = 64;
+		hitbox.height = 64;
 	}
 
 }
