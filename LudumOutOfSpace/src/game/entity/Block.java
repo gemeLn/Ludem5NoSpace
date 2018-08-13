@@ -10,6 +10,8 @@ public class Block extends Rectangle {
 	private static final long serialVersionUID = -4952865016088589373L;
 	int segments = 0;
 	Sprite block = new Sprite(10, 10, 0, 0, SpriteSheet.block);
+	public double angle;
+	public double angleComp;
 
 	public Block(int x, int y, int w, int h) {
 		this.x = x;
@@ -20,6 +22,8 @@ public class Block extends Rectangle {
 			System.err.println("WDITH MUST BE DIV 10");
 		}
 		segments = w / 10;
+		angle = Math.atan((double) h / w);
+		angleComp = Math.PI - angle;
 	}
 
 	public void update() {
@@ -27,8 +31,8 @@ public class Block extends Rectangle {
 
 	public void render(Screen screen, int dy) {
 		screen.drawRect(x, y + dy, width, height, 0x00ff00, true);
-		for(int i=0;i<segments;i++) {
-			screen.renderSprite(x+10*i, y+dy, block, false);
+		for (int i = 0; i < segments; i++) {
+			screen.renderSprite(x + 10 * i, y + dy, block, false);
 		}
 	}
 }

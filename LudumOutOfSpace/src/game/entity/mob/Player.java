@@ -29,14 +29,16 @@ public class Player extends Mob {
 	int halfwidth;
 	int spriteSize = 32;
 	int halfSpriteSize = spriteSize / 2;
-	//private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 1);
-	//private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3);
+	// private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32,
+	// 32, 1);
+	// private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32,
+	// 3);
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 6);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 6);
 	private AnimatedSprite jumpAni = new AnimatedSprite(SpriteSheet.player_jump, 32, 32, 1);
 
 	private AnimatedSprite animSprite = right;
-	
+
 	Sprite player_jump;
 
 	public int coins;
@@ -85,7 +87,7 @@ public class Player extends Mob {
 		h = 32;
 		hitbox = new Rectangle(x, y, w, h);
 		sprite = animSprite.getSprite();
-				
+
 		// Player default attributes
 		health = 100;
 
@@ -108,7 +110,7 @@ public class Player extends Mob {
 		collisions();
 		hitbox.x = x + halfSpriteSize - halfwidth;
 		hitbox.y = y;
-		
+
 	}
 
 	public int getRealX() {
@@ -125,7 +127,8 @@ public class Player extends Mob {
 				int cy1 = b.y + (int) (b.height / 2.0);
 				int cx2 = x + halfSpriteSize;
 				int cy2 = y + halfSpriteSize;
-				if (Math.abs(cx1 - cx2) > Math.abs(cy1 - cy2)) {
+				double ang = Math.atan2(cy1 - cy2, cx2 - cx1);
+				if ((ang < b.angle && ang > -b.angle) || (ang > b.angleComp && ang < -b.angleComp)) {
 					xOK = false;
 					if (cx2 > cx1) {
 						x = b.x + b.width - halfSpriteSize + halfwidth;
@@ -133,6 +136,7 @@ public class Player extends Mob {
 					System.out.println("XCOL");
 				} else {
 					System.out.println("YCOL");
+
 					yOK = false;
 					if (yVel > 0) {
 						jump = 1;
@@ -277,8 +281,7 @@ public class Player extends Mob {
 				if (xVel < speed)
 					xVel += 2;
 			}
-		}
-		else {
+		} else {
 			walking = false;
 		}
 	}
@@ -299,10 +302,10 @@ public class Player extends Mob {
 	public void render(Screen screen, int dy) {
 		int flip = 0;
 		sprite = animSprite.getSprite();
-		if(!walking && jump >= 1)
+		if (!walking && jump >= 1)
 			screen.renderSprite(x, y + dy, Sprite.player_forward, false, animSprite.equals(left));
-		else if(jump >= 1) {
-			screen.renderSprite(x, y + dy, sprite, false);	
+		else if (jump >= 1) {
+			screen.renderSprite(x, y + dy, sprite, false);
 		} else
 			screen.renderSprite(x, y + dy, jumpAni.getSprite(), false, animSprite.equals(left));
 		screen.drawRect(hitbox.x, hitbox.y + dy, hitbox.width, hitbox.height, 0xff0000, false);
