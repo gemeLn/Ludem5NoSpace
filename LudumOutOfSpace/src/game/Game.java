@@ -157,12 +157,13 @@ public class Game extends Canvas implements Runnable {
 		screen.clear();
 
 		if (state == GAMESTATE) {
+			Graphics g = bs.getDrawGraphics();
 			level.render(screen);
 
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = screen.pixels[i];
 			}
-			Graphics g = bs.getDrawGraphics();
+			
 			g.setColor(new Color(0xff00ff));
 			g.fillRect(0, 0, getWidth(), getHeight());
 			g.drawImage(image, 0, 0, width * scale, height * scale, null);
