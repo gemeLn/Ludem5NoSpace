@@ -37,6 +37,7 @@ public class Shop {
 	Sprite battery;
 	Sprite bigcoin;
 	Sprite coin;
+	Sprite bg;
 	public Rectangle speedButton = new Rectangle(30, 125, 64, 64);
 	public Rectangle jumpButton = new Rectangle(30, 250, 64, 64);
 	public Rectangle exitButton = new Rectangle(10, 10, 64, 64);
@@ -50,6 +51,7 @@ public class Shop {
 		battery = new Sprite(200, 32, 0, 0, SpriteSheet.battery);
 		bigcoin = new Sprite(32, 32, 0, 0, SpriteSheet.bigcoin);
 		coin = new Sprite(16, 16, 0, 0, SpriteSheet.animatedCoin);
+		bg = new Sprite(270, 375, 0, 0, SpriteSheet.shopbg);
 	}
 
 	public void update() {
@@ -59,14 +61,14 @@ public class Shop {
 		int itemsize = availableShop.size();
 		for (int i = 0; i < itemsize; i++) {
 			availableShop.get(i).hitbox.x = 2 * (10 + i * 32);
-			availableShop.get(i).hitbox.y = 2 * (190);
+			availableShop.get(i).hitbox.y = 2 * (180);
 		}
 
 	}
 
 	public void buySpeed() {
 		if (speed < speedCosts.length) {
-			if (player.coins > speedCosts[speed]) {
+			if (player.coins >= speedCosts[speed]) {
 				player.coins -= speedCosts[speed];
 				speed++;
 				player.incSpeed();
@@ -82,7 +84,7 @@ public class Shop {
 
 	public void buyJump() {
 		if (jump < jumpCosts.length) {
-			if (player.coins > jumpCosts[jump]) {
+			if (player.coins >= jumpCosts[jump]) {
 				player.coins -= jumpCosts[jump];
 				jump++;
 				player.incJumpheight();
@@ -101,49 +103,63 @@ public class Shop {
 	}
 
 	public void render(Screen screen) {
+		screen.renderSprite(0, 0, bg, false);
 		screen.renderSprite(speedButton.x / 2, speedButton.y / 2, plus, false);
 		screen.renderSprite(jumpButton.x / 2, jumpButton.y / 2, plus, false);
 		screen.renderSprite(exitButton.x / 2, exitButton.y / 2, x, false);
 		screen.renderSprite(80, exitButton.y / 2, bigcoin, false);
 
-		screen.renderSprite(speedButton.x / 2 + 40, speedButton.y / 2, battery, false);
-		screen.renderSprite(jumpButton.x / 2 + 40, jumpButton.y / 2, battery, false);
+		screen.renderSprite(speedButton.x / 2 + 30, speedButton.y / 2, battery, false);
+		screen.renderSprite(jumpButton.x / 2 + 30, jumpButton.y / 2, battery, false);
 
 		screen.renderSprite(smallcoinx, 45, coin, false);
 		screen.renderSprite(smallcoinx, 105, coin, false);
 
+		screen.drawRect(2, 226, 50, 1, 0x00ff00, false);
+		screen.drawRect(54, 226, 210, 1, 0xff0000, false);
+		
 		for (int i = 0; i < speed; i++) {
-			screen.fillRect(speedButton.x / 2 + 44, speedButton.y / 2 + 4, speedLength, 24, 0xffff00, false);
+			screen.fillRect(speedButton.x / 2 + 34, speedButton.y / 2 + 4, speedLength, 24, 0xffff00, false);
 		}
 		for (int i = 0; i < jump; i++) {
-			screen.fillRect(jumpButton.x / 2 + 44, jumpButton.y / 2 + 4, jumpLength, 24, 0xffff00, false);
+			screen.fillRect(jumpButton.x / 2 + 34, jumpButton.y / 2 + 4, jumpLength, 24, 0xffff00, false);
 		}
 		int itemsize = availableShop.size();
 		for (int i = 0; i < itemsize; i++) {
-			screen.renderSprite(10 + i * 32, 190, availableShop.get(i).icon, false);
+			screen.renderSprite(10 + i * 32, 180, availableShop.get(i).icon, false);
+		}
+		int inventorysize = player.inventory.size();
+		for (int i = 0; i < inventorysize; i++) {
+			screen.renderSprite(10 + i * 32, 230, player.inventory.get(i).icon, false);
 		}
 
 	}
 
 	public void drawStrings(Graphics g) {
-		g.setColor(Color.white);
+		g.setColor(Color.black);
 		g.setFont(Game.bigShopFont);
 		g.drawString("x " + player.coins, 230, exitButton.y + 45);
 		g.setFont(Game.smallShopFont);
-		g.drawString("Available Items", 210, 350);
+		g.drawString("ITEMS FOR SALE", 180, 350);
 		g.drawString("Speed +1", 2 * smallcoinx - 100, 115);
 		g.drawString("Jump +1", 2 * smallcoinx - 100, 235);
 		g.drawString(speedCost, 2 * smallcoinx + 40, 115);
 		g.drawString(jumpCost, 2 * smallcoinx + 40, 235);
+		g.setColor(Color.red);
+		g.drawString("INVENTORY", 210, 450);
+		g.setColor(Color.green);
+		g.drawString("Equipped", 10, 450);
+		g.setColor(Color.BLUE);
 		if (tooltipOn) {
-			g.drawString(tooltipItem.description, tooltipItem.hitbox.x, tooltipItem.hitbox.y);
-			g.drawString("Cost: " + tooltipItem.cost, tooltipItem.hitbox.x, tooltipItem.hitbox.y + 20);
+			g.drawString(tooltipItem.description, tooltipItem.hitbox.x, tooltipItem.hitbox.y - 20);
+			g.drawString("Cost: " + tooltipItem.cost, tooltipItem.hitbox.x, tooltipItem.hitbox.y);
 		}
 
 	}
 
 	public void buy(Item shopitem) {
-		if (player.coins > shopitem.cost) {
+		if (player.coins >= shopitem.cost) {
+			player.coins -= shopitem.cost;
 			availableShop.remove(shopitem);
 			player.inventory.add(shopitem);
 		}

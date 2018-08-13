@@ -141,7 +141,7 @@ public class Player extends Mob {
 				System.out.println("dead");
 			}
 		}
-		
+
 		for (Alien alien : level.getAlien()) {
 			if (alien.getHitbox().intersects(hitbox)) {
 				System.out.println("dead");
